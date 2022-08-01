@@ -1014,13 +1014,6 @@ struct Int32_t680FF22E76F6EFAD4375103CBBFFA0421349384C
 	int32_t ___m_value_0;
 };
 
-// System.Int64
-struct Int64_t092CFB123BE63C28ACDAF65C68F21A526050DBA3 
-{
-	// System.Int64 System.Int64::m_value
-	int64_t ___m_value_0;
-};
-
 // System.IntPtr
 struct IntPtr_t 
 {
@@ -2892,18 +2885,6 @@ inline void List_1__ctor_m447372C1EF7141193B93090A77395B786C72C7BC (List_1_tB951
 }
 // System.Void UnityEngine.MonoBehaviour::.ctor()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MonoBehaviour__ctor_m592DB0105CA0BC97AA1C5F4AD27B12D68A3B7C1E (MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71* __this, const RuntimeMethod* method) ;
-// System.Int64 UnityEngine.Profiling.Profiler::GetTotalAllocatedMemoryLong()
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int64_t Profiler_GetTotalAllocatedMemoryLong_m84EB61110C7DACAA1034109B2E112F8ADE309FBD (const RuntimeMethod* method) ;
-// System.Void Tayx.Graphy.Ram.G_RamMonitor::set_AllocatedRam(System.Single)
-IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void G_RamMonitor_set_AllocatedRam_m52D51EA699D03E085A4C40FF8B8FED8E0DD65687_inline (G_RamMonitor_t2EA25089512AAA5712638C72DCD97ACF2CD66136* __this, float ___value0, const RuntimeMethod* method) ;
-// System.Int64 UnityEngine.Profiling.Profiler::GetTotalReservedMemoryLong()
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int64_t Profiler_GetTotalReservedMemoryLong_m7D5E3E5A22E01E373C8CF77C617ADFB0C3168E11 (const RuntimeMethod* method) ;
-// System.Void Tayx.Graphy.Ram.G_RamMonitor::set_ReservedRam(System.Single)
-IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void G_RamMonitor_set_ReservedRam_m4DC94ACD7550FD57A42B04AF892735D8F70E2D6C_inline (G_RamMonitor_t2EA25089512AAA5712638C72DCD97ACF2CD66136* __this, float ___value0, const RuntimeMethod* method) ;
-// System.Int64 UnityEngine.Profiling.Profiler::GetMonoUsedSizeLong()
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int64_t Profiler_GetMonoUsedSizeLong_mCDD779E458BC852AF19E5A9299F87A82F64F95F6 (const RuntimeMethod* method) ;
-// System.Void Tayx.Graphy.Ram.G_RamMonitor::set_MonoRam(System.Single)
-IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void G_RamMonitor_set_MonoRam_m53463D9B103BD4BB133DDF55DCD6B9814A28B023_inline (G_RamMonitor_t2EA25089512AAA5712638C72DCD97ACF2CD66136* __this, float ___value0, const RuntimeMethod* method) ;
 // System.Void Tayx.Graphy.Ram.G_RamText::Init()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void G_RamText_Init_m74FE0A953F3E2112D9E5738B79B52FCADF25D76B (G_RamText_tB837D5ADDBD8EE3E7BBF7896143CA70B68497B72* __this, const RuntimeMethod* method) ;
 // System.Single UnityEngine.Time::get_unscaledDeltaTime()
@@ -9881,18 +9862,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void G_RamMonitor_set_MonoRam_m53463D9B103BD4
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void G_RamMonitor_Update_mEBC28ECB65A251BC590C13DC5AE3FD3EAA5C246C (G_RamMonitor_t2EA25089512AAA5712638C72DCD97ACF2CD66136* __this, const RuntimeMethod* method) 
 {
 	{
-		// AllocatedRam = Profiler.GetTotalAllocatedMemoryLong()/ 1048576f;
-		int64_t L_0;
-		L_0 = Profiler_GetTotalAllocatedMemoryLong_m84EB61110C7DACAA1034109B2E112F8ADE309FBD(NULL);
-		G_RamMonitor_set_AllocatedRam_m52D51EA699D03E085A4C40FF8B8FED8E0DD65687_inline(__this, ((float)(((float)L_0)/(1048576.0f))), NULL);
-		// ReservedRam  = Profiler.GetTotalReservedMemoryLong() / 1048576f;
-		int64_t L_1;
-		L_1 = Profiler_GetTotalReservedMemoryLong_m7D5E3E5A22E01E373C8CF77C617ADFB0C3168E11(NULL);
-		G_RamMonitor_set_ReservedRam_m4DC94ACD7550FD57A42B04AF892735D8F70E2D6C_inline(__this, ((float)(((float)L_1)/(1048576.0f))), NULL);
-		// MonoRam      = Profiler.GetMonoUsedSizeLong()        / 1048576f;
-		int64_t L_2;
-		L_2 = Profiler_GetMonoUsedSizeLong_mCDD779E458BC852AF19E5A9299F87A82F64F95F6(NULL);
-		G_RamMonitor_set_MonoRam_m53463D9B103BD4BB133DDF55DCD6B9814A28B023_inline(__this, ((float)(((float)L_2)/(1048576.0f))), NULL);
 		// }
 		return;
 	}
@@ -16237,33 +16206,6 @@ IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Color_tD001788D726C3A7F1379BEED02
 		// public Color BackgroundColor                    { get { return m_backgroundColor; }
 		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_0 = __this->___m_backgroundColor_10;
 		return L_0;
-	}
-}
-IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void G_RamMonitor_set_AllocatedRam_m52D51EA699D03E085A4C40FF8B8FED8E0DD65687_inline (G_RamMonitor_t2EA25089512AAA5712638C72DCD97ACF2CD66136* __this, float ___value0, const RuntimeMethod* method) 
-{
-	{
-		// public float AllocatedRam { get; private set; }
-		float L_0 = ___value0;
-		__this->___U3CAllocatedRamU3Ek__BackingField_4 = L_0;
-		return;
-	}
-}
-IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void G_RamMonitor_set_ReservedRam_m4DC94ACD7550FD57A42B04AF892735D8F70E2D6C_inline (G_RamMonitor_t2EA25089512AAA5712638C72DCD97ACF2CD66136* __this, float ___value0, const RuntimeMethod* method) 
-{
-	{
-		// public float ReservedRam { get; private set; }
-		float L_0 = ___value0;
-		__this->___U3CReservedRamU3Ek__BackingField_5 = L_0;
-		return;
-	}
-}
-IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void G_RamMonitor_set_MonoRam_m53463D9B103BD4BB133DDF55DCD6B9814A28B023_inline (G_RamMonitor_t2EA25089512AAA5712638C72DCD97ACF2CD66136* __this, float ___value0, const RuntimeMethod* method) 
-{
-	{
-		// public float MonoRam { get; private set; }
-		float L_0 = ___value0;
-		__this->___U3CMonoRamU3Ek__BackingField_6 = L_0;
-		return;
 	}
 }
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t GraphyManager_get_FpsGraphResolution_m91D698E24DF49FCFC85A445EEC26CC0E1B0592B1_inline (GraphyManager_t9A7BF9F9986594578D75DD40F623083CC828F7B7* __this, const RuntimeMethod* method) 

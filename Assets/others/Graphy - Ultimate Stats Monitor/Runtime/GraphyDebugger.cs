@@ -550,7 +550,7 @@ namespace Tayx.Graphy
 #if UNITY_2017_1_OR_NEWER
                     ScreenCapture.CaptureScreenshot(path);
 #else
-                    Application.CaptureScreenshot(path);
+                    //Application.CaptureScreenshot(path);
 #endif
                 }
 

@@ -150,10 +150,13 @@ Library: lib_burst_generated
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Tayx.Graphy.dll
+--root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Assembly-CSharp-firstpass.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.RenderPipeline.Universal.ShaderLibrary.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Services.Core.Internal.dll
+--root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\LiteNetLib.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Services.Core.Analytics.dll
+--root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Services.Core.Scheduler.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.AI.Navigation.Samples.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Services.Core.Registration.dll
@@ -161,9 +164,7 @@ Library: lib_burst_generated
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Services.Core.Threading.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Services.Core.Networking.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Recorder.dll
---root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Services.Core.dll
---root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Assembly-CSharp-firstpass.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Recorder.Base.dll
 --root-assembly=D:\NONandroid\SpacePilots\Temp\StagingArea\Data\Managed\Unity.Services.Core.Configuration.dll
