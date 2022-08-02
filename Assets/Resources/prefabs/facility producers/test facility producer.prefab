@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31009d6827ca5a743b70bcbb67cfd365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMovableProducing: 0
+  currentMovableToProduce: 0
   pointOfInterest: {fileID: 7459718131293329967}
 --- !u!65 &8655792973004226954
 BoxCollider:
@@ -110,7 +110,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7932467675002276716
 Transform:

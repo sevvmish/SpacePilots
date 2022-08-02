@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FacilityConsumer : MonoBehaviour, IPointOfInteraction
 {
-    [SerializeField] private Movables currentMovableToConsume;
+    [SerializeField] private Supplies currentMovableToConsume;
     [SerializeField] private Transform pointOfInterest;
 
     public Vector3 GetPointOfInteraction()
@@ -17,7 +17,7 @@ public class FacilityConsumer : MonoBehaviour, IPointOfInteraction
         _movable.transform.SetParent(this.transform);
         _movable.transform.localPosition = Vector3.one;
     }
-    public Movables GetFacilityConsumerMovableType()
+    public Supplies GetFacilityConsumerSupplyType()
     {
         return currentMovableToConsume;
     }

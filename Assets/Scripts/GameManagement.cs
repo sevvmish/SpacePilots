@@ -11,10 +11,10 @@ public class GameManagement : MonoBehaviour
     [SerializeField] private Camera mainCam;
     [SerializeField] private Transform cameraBody;
     private Vector3 cameraDefaultBodyShift = Vector3.zero;
-    private Vector3 cameraDefaultBodyAngle = new Vector3(70, 0, 0);
+    private Vector3 cameraDefaultBodyAngle = new Vector3(65, 0, 0);
 
-    private readonly Vector3 CAMERA_SHIFT_CLOSE = new Vector3(0, 10, -4.5f);
-    private readonly Vector3 CAMERA_SHIFT_MEDIUM = new Vector3(0, 13, -6f);
+    private readonly Vector3 CAMERA_SHIFT_CLOSE = new Vector3(0, 11f, -5.5f);    
+    private readonly Vector3 CAMERA_SHIFT_MEDIUM = new Vector3(0, 13f, -6.4f);
 
     //floating effect
     private bool isFloating;
@@ -24,7 +24,6 @@ public class GameManagement : MonoBehaviour
     private float currentTimer = 4;
     private float floatKoeff = 1;
     private readonly float defaultTimer = 4;
-    
 
     private Ray ray;
     private RaycastHit hit;
@@ -33,7 +32,7 @@ public class GameManagement : MonoBehaviour
     private Transform highlighter;
     private GameObject selectedGameObject;
     private Dictionary<GameObject, CrewManager> crewMembers = new Dictionary<GameObject, CrewManager>();
-    private Transform mainShipTransform;
+    private ShipManager shipManager;
 
     // Start is called before the first frame update
     void Start()
@@ -47,24 +46,17 @@ public class GameManagement : MonoBehaviour
         Camera.main.aspect = 16f/9f;
 #endif
 
-
-
         //init level===================
         GameObject player = Instantiate(Resources.Load<GameObject>("prefabs/highlight"), Vector3.zero, Quaternion.Euler(0, 0, 0), GameObject.Find("Crew").transform);
         highlighter = player.transform;
         highlighter.gameObject.SetActive(false);
-
+                
+        AddMainShip();
+        shipManager.mainShipTransform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(75,105), 0);
         AddCrewMember(CrewSpecialization.tester, new Vector3(2, 0, 0));
         AddCrewMember(CrewSpecialization.tester, new Vector3(-2, 0, 0));
-        AddMainShip();
-        mainShipTransform.rotation = Quaternion.Euler(0, 90, 0);
 
 
-        //camera lookup===================
-        cameraBody.position = cameraDefaultBodyShift;
-        cameraBody.rotation = Quaternion.Euler(cameraDefaultBodyAngle);
-        isFloating = true;
-        HandleFloatingEffect += MakeFloatingEffect;
     }
 
     // Update is called once per frame
@@ -110,9 +102,16 @@ public class GameManagement : MonoBehaviour
     private void AddMainShip()
     {
         GameObject ship = Instantiate(Resources.Load<GameObject>("prefabs/ships/test ship1"), new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), GameObject.Find("SpaceShip").transform);
-        mainShipTransform = ship.transform;
+        ship.SetActive(true);
+        shipManager = ship.GetComponent<ShipManager>();
         cameraDefaultBodyShift = CAMERA_SHIFT_CLOSE;
         floatKoeff = 1;
+
+        //camera lookup===================
+        cameraBody.position = cameraDefaultBodyShift;
+        cameraBody.rotation = Quaternion.Euler(cameraDefaultBodyAngle);
+        isFloating = true;
+        HandleFloatingEffect += MakeFloatingEffect;
     }
 
     private void MakeFloatingEffect()

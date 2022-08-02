@@ -14,6 +14,7 @@ public class CrewManager : MonoBehaviour
     private NavMeshAgent navAgent;
     private Transform currentTransform;
 
+    
     //moving to points
     private GameObject PlaceOfDestination;
     private GameObject PlaceOfCurrentLocation;
@@ -45,6 +46,16 @@ public class CrewManager : MonoBehaviour
             crewState = CrewMemberStates.idle;
         }
 
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (currentTakenObject.GetComponent<Supply>()!=null)
+            {
+                currentTakenObject.GetComponent<Transform>().SetParent(GameObject.Find("SpaceShip").transform);
+                currentTakenObject.GetComponent<Supply>().SetStateIsThrownAway();                
+                currentTakenObject = null;
+            }
+        }
+
     }
 
     public void MoveCrewMemberTo(Vector3 destination, GameObject _objectOfDestination) 
@@ -73,7 +84,7 @@ public class CrewManager : MonoBehaviour
                 if (currentTakenObject == null)
                 {
                     print("interacted with FacilityProducer");
-                    GetMovableFromProducer(other.gameObject.GetComponent<FacilityProducer>().GetMovableFromProducer());
+                    GetMovableFromProducer(other.gameObject.GetComponent<FacilityProducer>().GetSupplyFromProducer());
                 }
                 
                 PlaceOfCurrentLocation = null;
@@ -82,7 +93,7 @@ public class CrewManager : MonoBehaviour
 
             if (other.gameObject.CompareTag("FacilityConsumer"))
             {
-                if (currentTakenObject != null && currentTakenObject.GetComponent<Movable>()!=null && currentTakenObject.GetComponent<Movable>().GetMovableType() == PlaceOfCurrentLocation.GetComponent<FacilityConsumer>().GetFacilityConsumerMovableType() )
+                if (currentTakenObject != null && currentTakenObject.GetComponent<Supply>()!=null && currentTakenObject.GetComponent<Supply>().GetMovableType() == PlaceOfCurrentLocation.GetComponent<FacilityConsumer>().GetFacilityConsumerSupplyType() )
                 {
                     print("interacted with FacilityConsumer");
                     GetMovableToConsumer(PlaceOfCurrentLocation.GetComponent<FacilityConsumer>());
