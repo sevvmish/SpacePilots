@@ -16,7 +16,7 @@ public interface IPointOfInteraction
 
 public interface ITakenAndMovable
 {
-    public System.Object GetTypeOfTakeble();
+    public System.Object GetSupplyTypeOfSupply();
     public GameObject GiveAwayTakeble();
 }
 

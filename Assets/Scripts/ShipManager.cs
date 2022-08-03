@@ -9,6 +9,9 @@ public class ShipManager : MonoBehaviour
     public Transform DefaultPointOfCrewResp;
     public Transform mainShipTransform;
 
+    [SerializeField] private float shipHealth;
+    [SerializeField] private float shipSpeed;
+
     private void OnEnable()
     {
         mainShipTransform = GetComponent<Transform>();

@@ -11,7 +11,7 @@ public class CrewManager : MonoBehaviour, IHighlightable
     [SerializeField] private readonly CrewSpecialization crewSpec;
     [SerializeField] private int health;
     [SerializeField] private float speed;
-    [SerializeField] private Transform currentTransform;
+    [SerializeField] private Transform currentBaseTransform, currentModelTransform;
     [SerializeField] private settings GeneralSettings;
 
     private NavMeshAgent navAgent;    
@@ -33,7 +33,7 @@ public class CrewManager : MonoBehaviour, IHighlightable
     {
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = speed;
-     
+        currentBaseTransform = transform;
         crewState = CrewMemberStates.idle;
     }
 
@@ -98,19 +98,26 @@ public class CrewManager : MonoBehaviour, IHighlightable
                 if (other.gameObject.GetComponent<ITakenAndMovable>() != null)
                 {
                     ITakenAndMovable objectToTake = other.gameObject.GetComponent<ITakenAndMovable>();
-                    print(objectToTake.GetTypeOfTakeble() + " is taken");
+                    print(objectToTake.GetSupplyTypeOfSupply() + " is taken");
                     TakeAnyObjectToCarry(objectToTake.GiveAwayTakeble());
                 }
             }
             else if (currentTakenObject != null)
             {
-                //print(((SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfTakeble() == SuppliesType.tester).ToString());
+                //print(((SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetSupplyTypeOfSupply() == SuppliesType.tester).ToString());
 
-                if (other.gameObject.CompareTag("FacilityConsumer") && (SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfTakeble() == other.gameObject.GetComponent<FacilityConsumer>().GetFacilityConsumerSupplyType())
+                if (other.gameObject.CompareTag("FacilityConsumer") && (SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetSupplyTypeOfSupply() == other.gameObject.GetComponent<FacilityConsumer>().GetFacilityConsumerSupplyType())
                 {
                     print("interacted with FacilityConsumer");                    
                     other.gameObject.GetComponent<FacilityConsumer>().ConsumeMovable(currentTakenObject);
                     currentTakenObject = null;
+                }
+
+                if (other.gameObject.CompareTag("Incident") && (SuppliesType)currentTakenObject.GetComponent<Supply>().GetSupplyTypeOfSupply() == other.gameObject.GetComponent<Incident>().GetSupplyTypeToDealWithIncident())
+                {
+                    print("WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!");
+
+                    currentBaseTransform.LookAt(new Vector3(other.gameObject.transform.position.x, 0, other.gameObject.transform.position.z));
                 }
             }
 
@@ -129,7 +136,7 @@ public class CrewManager : MonoBehaviour, IHighlightable
     {
         currentTakenObject = _currentTakenObject;
         currentTakenObject.SetActive(true);
-        currentTakenObject.transform.SetParent(currentTransform);
+        currentTakenObject.transform.SetParent(currentBaseTransform);
         currentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.72f);
     }
 
@@ -141,7 +148,7 @@ public class CrewManager : MonoBehaviour, IHighlightable
     public IEnumerator HandleCurrentHighlight()
     {
         isHighlightEffectInProgress = true;
-        currentTransform.DOShakeScale(GeneralSettings.TimeForShakeForCrew, GeneralSettings.StrenghtOfShakeOnHighlightingCrew, 10, 90, true);
+        currentModelTransform.DOShakeScale(GeneralSettings.TimeForShakeForCrew, GeneralSettings.StrenghtOfShakeOnHighlightingCrew, 10, 90, true);
         
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForCrew);
         isHighlightEffectInProgress = false;

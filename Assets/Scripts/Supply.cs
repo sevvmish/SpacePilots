@@ -5,40 +5,17 @@ using UnityEngine.AI;
 
 public class Supply : MonoBehaviour, ITakenAndMovable
 {
-    [SerializeField] private SuppliesType currentSupplyType;
-    [SerializeField] private SupplyState currentMovableState;    
-    [SerializeField] private SphereCollider currentCollider;
+    [SerializeField] private SuppliesType currentSupplyType;    
     [SerializeField] private float YCoordWhenThrownAway;
 
-    private void OnEnable()
-    {
-        currentMovableState = SupplyState.inProducer;
+    private Dictionary<Incident, float> checkCurrentDealingWithIncident = new Dictionary<Incident, float>();
 
-        currentCollider = GetComponent<SphereCollider>();
-        currentCollider.enabled = false;
-    }
-
-    public SupplyState GetCurrentState()
-    {
-        return currentMovableState;
-    }
-
-    public void SetStateInConsumer()
-    {
-        currentMovableState = SupplyState.inConsumer;
-        currentCollider.enabled = false;
-    }
-
-    public void SetStateInCrewHands()
-    {
-        currentMovableState = SupplyState.inCrewHands;
-        currentCollider.enabled = false;
-    }
+ 
 
     public void SetStateIsThrownAway()
     {
-        currentMovableState = SupplyState.isThrownAway;
-        currentCollider.enabled = true;
+        //currentMovableState = SupplyState.isThrownAway;
+        //currentCollider.enabled = true;
         GetComponent<Transform>().localPosition = new Vector3(GetComponent<Transform>().localPosition.x, YCoordWhenThrownAway, GetComponent<Transform>().localPosition.z);
     }
 
@@ -60,7 +37,7 @@ public class Supply : MonoBehaviour, ITakenAndMovable
         return result;
     }
 
-    public object GetTypeOfTakeble()
+    public object GetSupplyTypeOfSupply()
     {
         return currentSupplyType;
     }
@@ -69,5 +46,51 @@ public class Supply : MonoBehaviour, ITakenAndMovable
     {
         return gameObject;
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Incident"))
+        {
+            Incident currentIncident = other.gameObject.GetComponent<Incident>();
+
+            if (checkCurrentDealingWithIncident.ContainsKey(currentIncident))
+            {
+                checkCurrentDealingWithIncident[currentIncident]+=Time.deltaTime;                
+            }
+
+            if (currentIncident.GetSupplyTypeToDealWithIncident() == currentSupplyType && currentIncident.Health>0 && checkCurrentDealingWithIncident[currentIncident]>1)
+            {                
+                currentIncident.ActWithSupply();
+            }            
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Incident"))
+        {
+            Incident currentIncident = other.gameObject.GetComponent<Incident>();
+                        
+            if (!checkCurrentDealingWithIncident.ContainsKey(currentIncident))
+            {
+                checkCurrentDealingWithIncident.Add(currentIncident, 0);
+            }
+        }       
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Incident"))
+        {
+            Incident currentIncident = other.gameObject.GetComponent<Incident>();
+            if (checkCurrentDealingWithIncident.ContainsKey(currentIncident))
+            {
+                checkCurrentDealingWithIncident.Remove(currentIncident);
+            }
+        }
+    }
+
+
+
 }
 

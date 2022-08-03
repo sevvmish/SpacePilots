@@ -28,7 +28,7 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
         return currentPoolOfObjects.GetObject();
     }
     
-    public object GetTypeOfTakeble()
+    public object GetSupplyTypeOfSupply()
     {
         return currentMovableToProduce;
     }
