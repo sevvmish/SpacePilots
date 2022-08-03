@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
+using DG.Tweening;
 
-public class CrewManager : MonoBehaviour
+public class CrewManager : MonoBehaviour, IHighlightable
 {
     [SerializeField] private readonly string crewName;
     [SerializeField] private readonly CrewSpecialization crewSpec;
     [SerializeField] private int health;
     [SerializeField] private float speed;
+    [SerializeField] private Transform currentTransform;
+    [SerializeField] private settings GeneralSettings;
 
-    private NavMeshAgent navAgent;
-    private Transform currentTransform;
+    private NavMeshAgent navAgent;    
+    private bool isHighlightEffectInProgress;
 
-    
     //moving to points
     private GameObject PlaceOfDestination;
     private GameObject PlaceOfCurrentLocation;
@@ -31,8 +33,7 @@ public class CrewManager : MonoBehaviour
     {
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = speed;
-        currentTransform = GetComponent<Transform>();
-
+     
         crewState = CrewMemberStates.idle;
     }
 
@@ -66,6 +67,19 @@ public class CrewManager : MonoBehaviour
             return;
         }
 
+        if (crewState == CrewMemberStates.dead)
+        {
+            //show negative info
+            return;
+        }
+
+        if (_objectOfDestination.GetComponent<IHighlightable>() != null && _objectOfDestination != gameObject)
+        {
+            
+            _objectOfDestination.GetComponent<IHighlightable>().HighlightCurrentObject();
+        }
+
+        navAgent.isStopped = false;
         crewState = CrewMemberStates.moving_to;
         navAgent.SetDestination(destination);
         if (PlaceOfDestination != _objectOfDestination) PlaceOfDestination = _objectOfDestination;
@@ -78,34 +92,40 @@ public class CrewManager : MonoBehaviour
         if (PlaceOfCurrentLocation == PlaceOfDestination)
         {
             print("reached destination");
-            
-            if (other.gameObject.CompareTag("FacilityProducer"))
-            {
-                if (currentTakenObject == null)
+
+            if (currentTakenObject == null)
+            {                
+                if (other.gameObject.GetComponent<ITakenAndMovable>() != null)
                 {
-                    print("interacted with FacilityProducer");
-                    GetMovableFromProducer(other.gameObject.GetComponent<FacilityProducer>().GetSupplyFromProducer());
+                    ITakenAndMovable objectToTake = other.gameObject.GetComponent<ITakenAndMovable>();
+                    print(objectToTake.GetTypeOfTakeble() + " is taken");
+                    TakeAnyObjectToCarry(objectToTake.GiveAwayTakeble());
                 }
-                
-                PlaceOfCurrentLocation = null;
-                PlaceOfDestination = null;
+            }
+            else if (currentTakenObject != null)
+            {
+                //print(((SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfTakeble() == SuppliesType.tester).ToString());
+
+                if (other.gameObject.CompareTag("FacilityConsumer") && (SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfTakeble() == other.gameObject.GetComponent<FacilityConsumer>().GetFacilityConsumerSupplyType())
+                {
+                    print("interacted with FacilityConsumer");                    
+                    other.gameObject.GetComponent<FacilityConsumer>().ConsumeMovable(currentTakenObject);
+                    currentTakenObject = null;
+                }
             }
 
-            if (other.gameObject.CompareTag("FacilityConsumer"))
-            {
-                if (currentTakenObject != null && currentTakenObject.GetComponent<Supply>()!=null && currentTakenObject.GetComponent<Supply>().GetMovableType() == PlaceOfCurrentLocation.GetComponent<FacilityConsumer>().GetFacilityConsumerSupplyType() )
-                {
-                    print("interacted with FacilityConsumer");
-                    GetMovableToConsumer(PlaceOfCurrentLocation.GetComponent<FacilityConsumer>());
-                }                
-                
-                PlaceOfCurrentLocation = null;
-                PlaceOfDestination = null;
-            }
+            navAgent.isStopped = true;
+            PlaceOfCurrentLocation = null;
+            PlaceOfDestination = null;
         }
     }
 
-    private void GetMovableFromProducer(GameObject _currentTakenObject)
+    public GameObject GetDestinationPointGameObject()
+    {
+        return PlaceOfDestination;
+    }
+
+    private void TakeAnyObjectToCarry(GameObject _currentTakenObject)
     {
         currentTakenObject = _currentTakenObject;
         currentTakenObject.SetActive(true);
@@ -113,34 +133,17 @@ public class CrewManager : MonoBehaviour
         currentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.72f);
     }
 
-    private void GetMovableToConsumer(FacilityConsumer _consumer)
-    {   
-        _consumer.ConsumeMovable(currentTakenObject);
-        currentTakenObject = null;        
+    public void HighlightCurrentObject()
+    {
+        if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
     }
 
-
-
-
-}
-
-public enum CrewSpecialization
-{
-    tester = 0,
-    Captain,
-    Engineer,
-    Soldier,
-    Scientist
-}
-
-public enum CrewMemberStates
-{
-    idle = 0,
-    moving_to,
-    repairing,
-    fire_extinguish,
-    stunned,
-    carring
-
-
+    public IEnumerator HandleCurrentHighlight()
+    {
+        isHighlightEffectInProgress = true;
+        currentTransform.DOShakeScale(GeneralSettings.TimeForShakeForCrew, GeneralSettings.StrenghtOfShakeOnHighlightingCrew, 10, 90, true);
+        
+        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForCrew);
+        isHighlightEffectInProgress = false;
+    }
 }

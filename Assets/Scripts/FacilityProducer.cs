@@ -1,27 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
-public class FacilityProducer : MonoBehaviour, IPointOfInteraction
+public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMovable, IHighlightable
 {
-    [SerializeField] private Supplies currentMovableToProduce;
-    [SerializeField] private Transform pointOfInterest;
-    private ObjectPooling currentPoolOfObjects;
+    [SerializeField] private SuppliesType currentMovableToProduce;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform;
+    [SerializeField] private int amountOfStockSupply = 10;
+    [SerializeField] private settings GeneralSettings;
 
+    private ObjectPooling currentPoolOfObjects;
+    private bool isHighlightEffectInProgress;
 
     private void OnEnable()
     {
-        currentPoolOfObjects = new ObjectPooling(10, Supply.GetMovablePrefab(currentMovableToProduce), this.transform);
-    }
-
-    public GameObject GetSupplyFromProducer()
-    {
-        return currentPoolOfObjects.GetObject();
+        currentPoolOfObjects = new ObjectPooling(amountOfStockSupply, Supply.GetSupplyPrefab(currentMovableToProduce), transform);
     }
 
     public Vector3 GetPointOfInteraction()
     {
-        return pointOfInterest.position;
+        return Vector3.Lerp(pointOfInterestFROM.position, pointOfInterestTO.position, UnityEngine.Random.Range(0.1f, 1f));
+    }
+
+    public GameObject GiveAwayTakeble()
+    {
+        return currentPoolOfObjects.GetObject();
+    }
+    
+    public object GetTypeOfTakeble()
+    {
+        return currentMovableToProduce;
+    }
+
+    public void HighlightCurrentObject()
+    {
+        if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
+    }
+
+    public IEnumerator HandleCurrentHighlight()
+    {
+        isHighlightEffectInProgress = true;
+        currentVisualTransform.DOShakeScale(GeneralSettings.TimeForShakeForFacility, GeneralSettings.StrenghtOfShakeOnHighlightingFacility, 10, 90, true);
+
+        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForFacility);
+        isHighlightEffectInProgress = false;
     }
 }
 

@@ -53,9 +53,8 @@ public class GameManagement : MonoBehaviour
                 
         AddMainShip();
         shipManager.mainShipTransform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(75,105), 0);
-        AddCrewMember(CrewSpecialization.tester, new Vector3(2, 0, 0));
-        AddCrewMember(CrewSpecialization.tester, new Vector3(-2, 0, 0));
-
+        AddCrewMember(CrewSpecialization.tester, shipManager.GetPointOfRespForCrew(0));
+        AddCrewMember(CrewSpecialization.tester, shipManager.GetPointOfRespForCrew(1));
 
     }
 
@@ -68,14 +67,16 @@ public class GameManagement : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("Crew"))
+                if (hit.collider.CompareTag("Crew") && selectedGameObject != hit.collider.gameObject)
                 {
                     selectedGameObject = hit.collider.gameObject;
+                    
+                    selectedGameObject.GetComponent<IHighlightable>().HighlightCurrentObject();
                     HighlightSelectedCrewMember(hit.collider.gameObject.transform);
                 }
                 else
                 {
-                    if (selectedGameObject!=null && selectedGameObject.CompareTag("Crew"))
+                    if (selectedGameObject!=null && selectedGameObject.CompareTag("Crew") && selectedGameObject != hit.collider.gameObject)
                     {
                         IPointOfInteraction _point = hit.collider.gameObject.GetComponent<IPointOfInteraction>();
                         Vector3 pointToMove = _point == null ? hit.point : _point.GetPointOfInteraction();
@@ -147,9 +148,5 @@ public class GameManagement : MonoBehaviour
 
 }
 
-public interface IPointOfInteraction
-{
-    public Vector3 GetPointOfInteraction();
-}
 
 

@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Supply : MonoBehaviour
+public class Supply : MonoBehaviour, ITakenAndMovable
 {
-    [SerializeField] private Supplies currentMovableType;
-    [SerializeField] private SupplyState currentMovableState;
-    //[SerializeField] private NavMeshAgent currentNavMeshAgent;
+    [SerializeField] private SuppliesType currentSupplyType;
+    [SerializeField] private SupplyState currentMovableState;    
     [SerializeField] private SphereCollider currentCollider;
     [SerializeField] private float YCoordWhenThrownAway;
 
     private void OnEnable()
     {
         currentMovableState = SupplyState.inProducer;
-
-        //currentNavMeshAgent = GetComponent<NavMeshAgent>();
-        //currentNavMeshAgent.enabled = false;
 
         currentCollider = GetComponent<SphereCollider>();
         currentCollider.enabled = false;
@@ -30,27 +26,24 @@ public class Supply : MonoBehaviour
     public void SetStateInConsumer()
     {
         currentMovableState = SupplyState.inConsumer;
-        //currentNavMeshAgent.enabled = false;
         currentCollider.enabled = false;
     }
 
     public void SetStateInCrewHands()
     {
         currentMovableState = SupplyState.inCrewHands;
-        //currentNavMeshAgent.enabled = false;
         currentCollider.enabled = false;
     }
 
     public void SetStateIsThrownAway()
     {
         currentMovableState = SupplyState.isThrownAway;
-        //currentNavMeshAgent.enabled = true;
         currentCollider.enabled = true;
         GetComponent<Transform>().localPosition = new Vector3(GetComponent<Transform>().localPosition.x, YCoordWhenThrownAway, GetComponent<Transform>().localPosition.z);
     }
 
 
-    public static GameObject GetMovablePrefab(Supplies _movable)
+    public static GameObject GetSupplyPrefab(SuppliesType _movable)
     {
         GameObject result = default;
 
@@ -59,30 +52,22 @@ public class Supply : MonoBehaviour
             case 0:
                 result = Resources.Load<GameObject>("prefabs/supplies/test movable");
                 break;
+            case 3:
+                result = Resources.Load<GameObject>("prefabs/supplies/fire extinguisher");
+                break;
         }
 
         return result;
     }
 
-    public Supplies GetMovableType()
+    public object GetTypeOfTakeble()
     {
-        return currentMovableType;
+        return currentSupplyType;
+    }
+
+    public GameObject GiveAwayTakeble()
+    {
+        return gameObject;
     }
 }
 
-public enum Supplies
-{
-    tester = 0,
-    engine_fuel,
-    repairer,
-    fire_extinguisher
-
-}
-
-public enum SupplyState
-{
-    inProducer = 0,
-    inConsumer,
-    inCrewHands,
-    isThrownAway
-}

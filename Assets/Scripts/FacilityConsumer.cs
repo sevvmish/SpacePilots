@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FacilityConsumer : MonoBehaviour, IPointOfInteraction
 {
-    [SerializeField] private Supplies currentMovableToConsume;
-    [SerializeField] private Transform pointOfInterest;
+    [SerializeField] private SuppliesType currentSupplyToConsume;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO;
 
     public Vector3 GetPointOfInteraction()
     {
-        return pointOfInterest.position;
+        return Vector3.Lerp(pointOfInterestFROM.position, pointOfInterestTO.position, UnityEngine.Random.Range(0.1f, 1f));
     }
 
     public void ConsumeMovable(GameObject _movable)
@@ -17,8 +17,8 @@ public class FacilityConsumer : MonoBehaviour, IPointOfInteraction
         _movable.transform.SetParent(this.transform);
         _movable.transform.localPosition = Vector3.one;
     }
-    public Supplies GetFacilityConsumerSupplyType()
+    public SuppliesType GetFacilityConsumerSupplyType()
     {
-        return currentMovableToConsume;
+        return currentSupplyToConsume;
     }
 }
