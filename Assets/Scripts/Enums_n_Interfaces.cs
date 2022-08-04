@@ -16,8 +16,10 @@ public interface IPointOfInteraction
 
 public interface ITakenAndMovable
 {
-    public System.Object GetSupplyTypeOfSupply();
-    public GameObject GiveAwayTakeble();
+    public System.Object GetTypeOfObject();
+    public GameObject GiveAwayTakeble();    
+    public void MakeThrownAway();
+    public bool IsCanBeTakenByCrew();
 }
 
 public interface IHighlightable
@@ -41,7 +43,8 @@ public enum CrewSpecialization
 public enum CrewMemberStates
 {
     idle = 0,
-    moving_to,
+    run,
+    walk,
     repairing,
     fire_extinguish,
     stunned,
@@ -55,9 +58,7 @@ public enum SuppliesType
 {
     tester = 0,
     engine_fuel,
-    shell_for_cannon,
-    fire_extinguisher,
-    repair_kit
+    shell_for_cannon    
 }
 
 public enum SupplyState
@@ -70,4 +71,19 @@ public enum SupplyState
 //===================================================================
 
 
+//INCIDENTS ENUMS======================================================
+public enum IncidentsType
+{
+    tester = 0,
+    fire    
+}
+//===================================================================
 
+//INSTRUMENTS ENUMS======================================================
+public enum InstrumentsType
+{
+    tester,
+    fire_extinguisher,
+    repair_kit
+}
+//===================================================================

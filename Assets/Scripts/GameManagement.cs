@@ -53,9 +53,11 @@ public class GameManagement : MonoBehaviour
                 
         AddMainShip();
         shipManager.mainShipTransform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(75,105), 0);
-        AddCrewMember(CrewSpecialization.tester, shipManager.GetPointOfRespForCrew(0));
-        AddCrewMember(CrewSpecialization.tester, shipManager.GetPointOfRespForCrew(1));
+        AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
+        //AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
 
+        GameObject inci = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
+        inci.transform.localPosition = new Vector3(2.5f, 0, 4);
     }
 
     // Update is called once per frame
@@ -67,7 +69,7 @@ public class GameManagement : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("Crew") && selectedGameObject != hit.collider.gameObject)
+                if (hit.collider.GetComponent<CrewManager>() != null && selectedGameObject != hit.collider.gameObject)
                 {
                     selectedGameObject = hit.collider.gameObject;
                     
@@ -76,7 +78,7 @@ public class GameManagement : MonoBehaviour
                 }
                 else
                 {
-                    if (selectedGameObject!=null && selectedGameObject.CompareTag("Crew") && selectedGameObject != hit.collider.gameObject)
+                    if (selectedGameObject!=null && selectedGameObject.GetComponent<CrewManager>() != null && selectedGameObject != hit.collider.gameObject)
                     {
                         IPointOfInteraction _point = hit.collider.gameObject.GetComponent<IPointOfInteraction>();
                         Vector3 pointToMove = _point == null ? hit.point : _point.GetPointOfInteraction();
@@ -95,9 +97,9 @@ public class GameManagement : MonoBehaviour
 
     private void AddCrewMember(CrewSpecialization _spec, Vector3 location)
     {
-        GameObject player = Instantiate(Resources.Load<GameObject>("prefabs/crew/DefaultPlayer1"), location, Quaternion.Euler(0, 0, 0), GameObject.Find("Crew").transform);
+        GameObject player = Instantiate(CrewManager.GetCrewPrefab(_spec), location, Quaternion.Euler(0, 0, 0), GameObject.Find("Crew").transform);
         crewMembers.Add(player, player.GetComponent<CrewManager>());
-
+        player.GetComponent<CrewManager>().SetRespawnPoint(location);
     }
 
     private void AddMainShip()

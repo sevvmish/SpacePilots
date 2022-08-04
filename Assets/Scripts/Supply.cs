@@ -7,15 +7,12 @@ public class Supply : MonoBehaviour, ITakenAndMovable
 {
     [SerializeField] private SuppliesType currentSupplyType;    
     [SerializeField] private float YCoordWhenThrownAway;
+    private bool isCanBeTakenByCrew = false;
 
-    private Dictionary<Incident, float> checkCurrentDealingWithIncident = new Dictionary<Incident, float>();
 
- 
-
-    public void SetStateIsThrownAway()
+    public void MakeThrownAway()
     {
-        //currentMovableState = SupplyState.isThrownAway;
-        //currentCollider.enabled = true;
+        isCanBeTakenByCrew = true;
         GetComponent<Transform>().localPosition = new Vector3(GetComponent<Transform>().localPosition.x, YCoordWhenThrownAway, GetComponent<Transform>().localPosition.z);
     }
 
@@ -29,64 +26,32 @@ public class Supply : MonoBehaviour, ITakenAndMovable
             case 0:
                 result = Resources.Load<GameObject>("prefabs/supplies/test movable");
                 break;
-            case 3:
-                result = Resources.Load<GameObject>("prefabs/supplies/fire extinguisher");
-                break;
+            
         }
 
         return result;
     }
 
-    public object GetSupplyTypeOfSupply()
+    public object GetTypeOfObject()
     {
         return currentSupplyType;
     }
 
+    public bool IsCanBeTakenByCrew()
+    {
+        return isCanBeTakenByCrew;
+    }
+
     public GameObject GiveAwayTakeble()
     {
-        return gameObject;
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Incident"))
+        if (isCanBeTakenByCrew)
         {
-            Incident currentIncident = other.gameObject.GetComponent<Incident>();
-
-            if (checkCurrentDealingWithIncident.ContainsKey(currentIncident))
-            {
-                checkCurrentDealingWithIncident[currentIncident]+=Time.deltaTime;                
-            }
-
-            if (currentIncident.GetSupplyTypeToDealWithIncident() == currentSupplyType && currentIncident.Health>0 && checkCurrentDealingWithIncident[currentIncident]>1)
-            {                
-                currentIncident.ActWithSupply();
-            }            
+            isCanBeTakenByCrew = false;
+            return gameObject;
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Incident"))
+        else
         {
-            Incident currentIncident = other.gameObject.GetComponent<Incident>();
-                        
-            if (!checkCurrentDealingWithIncident.ContainsKey(currentIncident))
-            {
-                checkCurrentDealingWithIncident.Add(currentIncident, 0);
-            }
-        }       
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Incident"))
-        {
-            Incident currentIncident = other.gameObject.GetComponent<Incident>();
-            if (checkCurrentDealingWithIncident.ContainsKey(currentIncident))
-            {
-                checkCurrentDealingWithIncident.Remove(currentIncident);
-            }
+            return null;
         }
     }
 

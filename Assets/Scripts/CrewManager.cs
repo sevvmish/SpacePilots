@@ -5,17 +5,26 @@ using Unity.AI.Navigation;
 using UnityEngine.AI;
 using DG.Tweening;
 
+[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Animator))]
 public class CrewManager : MonoBehaviour, IHighlightable
 {
-    [SerializeField] private readonly string crewName;
-    [SerializeField] private readonly CrewSpecialization crewSpec;
+    [SerializeField] private string crewName;
+    [SerializeField] private CrewSpecialization crewSpec;
+    [SerializeField] private CrewMemberStates crewState;
     [SerializeField] private int health;
     [SerializeField] private float speed;
     [SerializeField] private Transform currentBaseTransform, currentModelTransform;
     [SerializeField] private settings GeneralSettings;
-
-    private NavMeshAgent navAgent;    
-    private bool isHighlightEffectInProgress;
+    
+    private Animator animator;
+    private Vector3 pointOfRespawn, currentPos, previousPos;
+    private float currentSpeed;
+    private NavMeshAgent navAgent;
+    private Rigidbody rigidBody;
+    private bool isHighlightEffectInProgress, isCarringSomething;
 
     //moving to points
     private GameObject PlaceOfDestination;
@@ -24,8 +33,27 @@ public class CrewManager : MonoBehaviour, IHighlightable
     //interaction
     private GameObject currentTakenObject;
 
-    [SerializeField] private CrewMemberStates crewState;
-    
+    public GameObject CurrentTakenObject
+    {
+        get
+        {
+            return currentTakenObject;
+        }
+
+        set
+        {
+            if (value != null)
+            {
+                makeCarry();
+            }
+            else
+            {
+                makeCarryOff();
+            }
+
+            currentTakenObject = value;
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -35,6 +63,9 @@ public class CrewManager : MonoBehaviour, IHighlightable
         navAgent.speed = speed;
         currentBaseTransform = transform;
         crewState = CrewMemberStates.idle;
+        animator = GetComponent<Animator>();
+        animator.SetLayerWeight(1, 0);
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     
@@ -42,21 +73,35 @@ public class CrewManager : MonoBehaviour, IHighlightable
     // Update is called once per frame
     void Update()
     {
-        if (crewState == CrewMemberStates.moving_to && navAgent.remainingDistance <=0.1f)
+        //print(crewState);
+        currentPos = currentBaseTransform.position;
+        currentSpeed = Vector3.Distance(currentPos, previousPos);
+        
+
+        if (currentSpeed <= 0.01f) 
         {
-            crewState = CrewMemberStates.idle;
+            makeIdle();
+        }
+        else if (currentSpeed > 0.01f && currentSpeed <= 0.03f)
+        {
+            makeWalk();
+        }
+        else if (currentSpeed > 0.03f)
+        {
+            makeRun();
         }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (currentTakenObject.GetComponent<Supply>()!=null)
+            if (CurrentTakenObject.GetComponent<ITakenAndMovable>()!=null)
             {
-                currentTakenObject.GetComponent<Transform>().SetParent(GameObject.Find("SpaceShip").transform);
-                currentTakenObject.GetComponent<Supply>().SetStateIsThrownAway();                
-                currentTakenObject = null;
+                CurrentTakenObject.GetComponent<Transform>().SetParent(GameObject.Find("SpaceShip").transform);
+                CurrentTakenObject.GetComponent<ITakenAndMovable>().MakeThrownAway();
+                CurrentTakenObject = null;
             }
         }
 
+        previousPos = currentPos;
     }
 
     public void MoveCrewMemberTo(Vector3 destination, GameObject _objectOfDestination) 
@@ -79,8 +124,8 @@ public class CrewManager : MonoBehaviour, IHighlightable
             _objectOfDestination.GetComponent<IHighlightable>().HighlightCurrentObject();
         }
 
-        navAgent.isStopped = false;
-        crewState = CrewMemberStates.moving_to;
+        
+        navAgent.isStopped = false;        
         navAgent.SetDestination(destination);
         if (PlaceOfDestination != _objectOfDestination) PlaceOfDestination = _objectOfDestination;
     }
@@ -93,27 +138,27 @@ public class CrewManager : MonoBehaviour, IHighlightable
         {
             print("reached destination");
 
-            if (currentTakenObject == null)
+            if (CurrentTakenObject == null)
             {                
-                if (other.gameObject.GetComponent<ITakenAndMovable>() != null)
+                if (other.gameObject.GetComponent<ITakenAndMovable>() != null && other.gameObject.GetComponent<ITakenAndMovable>().IsCanBeTakenByCrew())
                 {
                     ITakenAndMovable objectToTake = other.gameObject.GetComponent<ITakenAndMovable>();
-                    print(objectToTake.GetSupplyTypeOfSupply() + " is taken");
+                    print(objectToTake.GetTypeOfObject() + " is taken");
                     TakeAnyObjectToCarry(objectToTake.GiveAwayTakeble());
                 }
             }
-            else if (currentTakenObject != null)
+            else if (CurrentTakenObject != null)
             {
                 //print(((SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetSupplyTypeOfSupply() == SuppliesType.tester).ToString());
 
-                if (other.gameObject.CompareTag("FacilityConsumer") && (SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetSupplyTypeOfSupply() == other.gameObject.GetComponent<FacilityConsumer>().GetFacilityConsumerSupplyType())
+                if (other.gameObject.GetComponent<FacilityConsumer>() != null && (SuppliesType)CurrentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfObject() == other.gameObject.GetComponent<FacilityConsumer>().GetFacilityConsumerSupplyType())
                 {
                     print("interacted with FacilityConsumer");                    
-                    other.gameObject.GetComponent<FacilityConsumer>().ConsumeMovable(currentTakenObject);
-                    currentTakenObject = null;
+                    other.gameObject.GetComponent<FacilityConsumer>().ConsumeMovable(CurrentTakenObject);
+                    CurrentTakenObject = null;
                 }
 
-                if (other.gameObject.CompareTag("Incident") && (SuppliesType)currentTakenObject.GetComponent<Supply>().GetSupplyTypeOfSupply() == other.gameObject.GetComponent<Incident>().GetSupplyTypeToDealWithIncident())
+                if (other.gameObject.GetComponent<Incident>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == other.gameObject.GetComponent<Incident>().GetInstrumentTypeToDealWithIncident())
                 {
                     print("WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!");
 
@@ -124,7 +169,13 @@ public class CrewManager : MonoBehaviour, IHighlightable
             navAgent.isStopped = true;
             PlaceOfCurrentLocation = null;
             PlaceOfDestination = null;
+                            
         }
+    }
+
+    public void SetRespawnPoint(Vector3 _point)
+    {
+        pointOfRespawn = _point;
     }
 
     public GameObject GetDestinationPointGameObject()
@@ -134,10 +185,10 @@ public class CrewManager : MonoBehaviour, IHighlightable
 
     private void TakeAnyObjectToCarry(GameObject _currentTakenObject)
     {
-        currentTakenObject = _currentTakenObject;
-        currentTakenObject.SetActive(true);
-        currentTakenObject.transform.SetParent(currentBaseTransform);
-        currentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.72f);
+        CurrentTakenObject = _currentTakenObject;
+        CurrentTakenObject.SetActive(true);
+        CurrentTakenObject.transform.SetParent(currentBaseTransform);
+        CurrentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.72f);
     }
 
     public void HighlightCurrentObject()
@@ -152,5 +203,58 @@ public class CrewManager : MonoBehaviour, IHighlightable
         
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForCrew);
         isHighlightEffectInProgress = false;
+    }
+
+    public static GameObject GetCrewPrefab(CrewSpecialization _crewSpec)
+    {
+        GameObject result = default;
+
+        switch ((int)_crewSpec)
+        {
+            case 0:
+                result = Resources.Load<GameObject>("prefabs/crew/DefaultPlayer1");
+                break;
+
+            case 1: //captain
+                result = Resources.Load<GameObject>("prefabs/crew/captain01");
+                break;
+
+        }
+
+        return result;
+    }
+
+    private void makeRun()
+    {
+        if (crewState == CrewMemberStates.run) return;
+        crewState = CrewMemberStates.run;
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) animator.Play("Run");
+        print("came from dest to - " + crewState);
+    }
+
+    private void makeIdle()
+    {
+        if (crewState == CrewMemberStates.idle) return;
+        crewState = CrewMemberStates.idle;
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.Play("Idle");
+    }
+
+    private void makeWalk()
+    {
+        if (crewState == CrewMemberStates.walk) return;
+        crewState = CrewMemberStates.walk;
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) animator.Play("Walk");
+    }
+
+    private void makeCarry()
+    {
+        //if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Carry")) animator.Play("Carry");
+        if (animator.GetLayerWeight(1)<1) animator.SetLayerWeight(1, 1);
+    }
+
+    private void makeCarryOff()
+    {
+        //if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Carry")) animator.Play("Carry");
+        if (animator.GetLayerWeight(1) > 0) animator.SetLayerWeight(1, 0);
     }
 }

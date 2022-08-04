@@ -17,6 +17,7 @@ public class FacilityConsumer : MonoBehaviour, IPointOfInteraction
         _movable.transform.SetParent(this.transform);
         _movable.transform.localPosition = Vector3.one;
     }
+
     public SuppliesType GetFacilityConsumerSupplyType()
     {
         return currentSupplyToConsume;

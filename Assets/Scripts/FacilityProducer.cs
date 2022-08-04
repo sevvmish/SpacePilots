@@ -28,7 +28,7 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
         return currentPoolOfObjects.GetObject();
     }
     
-    public object GetSupplyTypeOfSupply()
+    public object GetTypeOfObject()
     {
         return currentMovableToProduce;
     }
@@ -45,6 +45,15 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
 
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForFacility);
         isHighlightEffectInProgress = false;
+    }
+
+    public void MakeThrownAway()
+    {
+        //FORBIDDEN
+    }
+    public bool IsCanBeTakenByCrew()
+    {
+        return true;
     }
 }
 
