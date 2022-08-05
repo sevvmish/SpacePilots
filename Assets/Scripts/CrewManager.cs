@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
 using DG.Tweening;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -16,9 +17,11 @@ public class CrewManager : MonoBehaviour, IHighlightable
     [SerializeField] private CrewMemberStates crewState;
     [SerializeField] private int health;
     [SerializeField] private float speed;
-    [SerializeField] private Transform currentBaseTransform, currentModelTransform;
+    [SerializeField] private Transform currentBaseTransform, currentModelTransform, headPoint;
     [SerializeField] private settings GeneralSettings;
     
+    private Camera mainCam;
+    private RectTransform UITransforms;
     private Animator animator;
     private Vector3 pointOfRespawn, currentPos, previousPos;
     private float currentSpeed;
@@ -66,6 +69,10 @@ public class CrewManager : MonoBehaviour, IHighlightable
         animator = GetComponent<Animator>();
         animator.SetLayerWeight(1, 0);
         rigidBody = GetComponent<Rigidbody>();
+
+        mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        GameObject UIPanel = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.health_bar), GameObject.Find("MainCanvas").transform);
+        UITransforms = UIPanel.GetComponent<RectTransform>();
     }
 
     
@@ -73,6 +80,9 @@ public class CrewManager : MonoBehaviour, IHighlightable
     // Update is called once per frame
     void Update()
     {
+        Vector3 OnScreenPosition = mainCam.WorldToScreenPoint(headPoint.position);
+        UITransforms.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
+
         //print(crewState);
         currentPos = currentBaseTransform.position;
         currentSpeed = Vector3.Distance(currentPos, previousPos);
@@ -209,13 +219,13 @@ public class CrewManager : MonoBehaviour, IHighlightable
     {
         GameObject result = default;
 
-        switch ((int)_crewSpec)
+        switch (_crewSpec)
         {
-            case 0:
+            case CrewSpecialization.tester:
                 result = Resources.Load<GameObject>("prefabs/crew/DefaultPlayer1");
                 break;
 
-            case 1: //captain
+            case CrewSpecialization.Captain: //captain
                 result = Resources.Load<GameObject>("prefabs/crew/captain01");
                 break;
 

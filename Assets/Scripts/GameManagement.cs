@@ -34,13 +34,14 @@ public class GameManagement : MonoBehaviour
     private Dictionary<GameObject, CrewManager> crewMembers = new Dictionary<GameObject, CrewManager>();
     private ShipManager shipManager;
 
+  
     // Start is called before the first frame update
     void Start()
     {
         //screen set==============================================            
         Screen.SetResolution(GeneralSettings.ScreenWidth, GeneralSettings.ScreenHeight, true);
         Camera.main.aspect = GeneralSettings.AspectRatio;
-        Application.targetFrameRate = GeneralSettings.targetFrameRate;
+        //Application.targetFrameRate = GeneralSettings.targetFrameRate;
 
 #if (UNITY_EDITOR)
         Camera.main.aspect = 16f/9f;
@@ -54,7 +55,7 @@ public class GameManagement : MonoBehaviour
         AddMainShip();
         shipManager.mainShipTransform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(75,105), 0);
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
-        //AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
+        AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
 
         GameObject inci = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
         inci.transform.localPosition = new Vector3(2.5f, 0, 4);
