@@ -19,7 +19,7 @@ public class GameManagement : MonoBehaviour
     //floating effect
     private bool isFloating;
     private bool isOneWay;
-    private Action HandleFloatingEffect;
+    private Action HandleShipFloatingEffect;
     private Vector3 floatingEffectVector = Vector3.zero;
     private float currentTimer = 4;
     private float floatKoeff = 1;
@@ -33,6 +33,12 @@ public class GameManagement : MonoBehaviour
     private GameObject selectedGameObject;
     private Dictionary<GameObject, CrewManager> crewMembers = new Dictionary<GameObject, CrewManager>();
     private ShipManager shipManager;
+
+
+    //crew UI delegates
+    public delegate void BaseUIHandler(Camera camera);
+    public static BaseUIHandler MainCrewUIHandler;
+    
 
   
     // Start is called before the first frame update
@@ -57,13 +63,15 @@ public class GameManagement : MonoBehaviour
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
 
-        GameObject inci = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
-        inci.transform.localPosition = new Vector3(2.5f, 0, 4);
+
+        GameObject incident = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
+        incident.transform.localPosition = new Vector3(2.5f, 0, 4);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetMouseButtonDown(0))
         {
             ray = mainCam.ScreenPointToRay(Input.mousePosition);
@@ -91,16 +99,19 @@ public class GameManagement : MonoBehaviour
         }
 
 
+        //ship
+        if (isFloating) HandleShipFloatingEffect?.Invoke();
 
-        if (isFloating) HandleFloatingEffect?.Invoke();
+        //crew UI
+        if (MainCrewUIHandler != null) MainCrewUIHandler(mainCam);
     }
 
-
+   
     private void AddCrewMember(CrewSpecialization _spec, Vector3 location)
     {
         GameObject player = Instantiate(CrewManager.GetCrewPrefab(_spec), location, Quaternion.Euler(0, 0, 0), GameObject.Find("Crew").transform);
         crewMembers.Add(player, player.GetComponent<CrewManager>());
-        player.GetComponent<CrewManager>().SetRespawnPoint(location);
+        player.GetComponent<CrewManager>().SetRespawnPoint(location);        
     }
 
     private void AddMainShip()
@@ -115,7 +126,7 @@ public class GameManagement : MonoBehaviour
         cameraBody.position = cameraDefaultBodyShift;
         cameraBody.rotation = Quaternion.Euler(cameraDefaultBodyAngle);
         isFloating = true;
-        HandleFloatingEffect += MakeFloatingEffect;
+        HandleShipFloatingEffect += MakeFloatingEffect;
     }
 
     private void MakeFloatingEffect()

@@ -20,10 +20,8 @@ public class CrewManager : MonoBehaviour, IHighlightable
     [SerializeField] private Transform currentBaseTransform, currentModelTransform, headPoint;
     [SerializeField] private settings GeneralSettings;
     
-    private Camera mainCam;
-    private RectTransform UITransforms;
     private Animator animator;
-    private Vector3 pointOfRespawn, currentPos, previousPos;
+    private Vector3 pointOfRespawn, currentPos, previousPos, OnScreenPosition;
     private float currentSpeed;
     private NavMeshAgent navAgent;
     private Rigidbody rigidBody;
@@ -35,6 +33,10 @@ public class CrewManager : MonoBehaviour, IHighlightable
 
     //interaction
     private GameObject currentTakenObject;
+
+    //health bar UI
+    private GameObject uiHealthBar;
+    private RectTransform uiHealthBarRect;
 
     public GameObject CurrentTakenObject
     {
@@ -70,18 +72,24 @@ public class CrewManager : MonoBehaviour, IHighlightable
         animator.SetLayerWeight(1, 0);
         rigidBody = GetComponent<Rigidbody>();
 
-        mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        GameObject UIPanel = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.health_bar), GameObject.Find("MainCanvas").transform);
-        UITransforms = UIPanel.GetComponent<RectTransform>();
+        uiHealthBar = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.health_bar), GameObject.Find("MainCanvas").transform);
+        uiHealthBarRect = uiHealthBar.GetComponent<RectTransform>();
+        GameManagement.MainCrewUIHandler += ShowUIHealthBar;
+
+
     }
 
+    public void ShowUIHealthBar(Camera camera)
+    {
+        OnScreenPosition = camera.WorldToScreenPoint(headPoint.position);
+        uiHealthBarRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
+    }
     
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 OnScreenPosition = mainCam.WorldToScreenPoint(headPoint.position);
-        UITransforms.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
+        
 
         //print(crewState);
         currentPos = currentBaseTransform.position;
