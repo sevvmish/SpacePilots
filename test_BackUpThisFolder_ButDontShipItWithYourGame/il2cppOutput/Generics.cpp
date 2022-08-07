@@ -705,8 +705,6 @@ struct Action_1_t05F6A7FC9FBB588EC4A828E23375838E340354CB;
 struct Action_1_tB9951FC7E63341E8FF985E49D0A293DA6DDACC77;
 // System.Action`1<UnityEngine.UILineInfo>
 struct Action_1_t59246BF77C1095A0F51FE1BCDD0A2A914173131C;
-// System.Action`1<UIObject>
-struct Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812;
 // System.Action`1<UnityEngine.UIVertex>
 struct Action_1_t1F149523898B0E3185EF5726203627492497D292;
 // System.Action`1<System.UInt16>
@@ -1301,8 +1299,6 @@ struct Page_tB4EA8095DF85BAF22AB8FCA71400121E721B57C9;
 struct ProbeReferenceVolumeProfile_t7E258E0C21DBA74C68F6F73D272EB9B56A15C7A5;
 // UnityEngine.Experimental.Rendering.ProbeVolumeAsset
 struct ProbeVolumeAsset_t06802A1A4A4B3197799AEC2D220AFEBBCC458D8B;
-// UnityEngine.RectTransform
-struct RectTransform_t6C5DA5E41A89E0F488B001E45E58963480E543A5;
 // System.Text.RegularExpressions.Regex
 struct Regex_tE773142C2BE45C5D362B0F815AFF831707A51772;
 // UnityEngine.UIElements.UIR.RenderChainCommand
@@ -5130,31 +5126,6 @@ struct UILineInfo_tC6FF4F85BD2316FADA2148A1789B3FF0B05A6CAC
 	float ___topY_2;
 	// System.Single UnityEngine.UILineInfo::leading
 	float ___leading_3;
-};
-
-// UIObject
-struct UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3 
-{
-	// UnityEngine.Transform UIObject::transform
-	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___transform_0;
-	// UnityEngine.RectTransform UIObject::rectTransform
-	RectTransform_t6C5DA5E41A89E0F488B001E45E58963480E543A5* ___rectTransform_1;
-	// UIPanelTypes UIObject::currentPanel
-	int32_t ___currentPanel_2;
-};
-// Native definition for P/Invoke marshalling of UIObject
-struct UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3_marshaled_pinvoke
-{
-	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___transform_0;
-	RectTransform_t6C5DA5E41A89E0F488B001E45E58963480E543A5* ___rectTransform_1;
-	int32_t ___currentPanel_2;
-};
-// Native definition for COM marshalling of UIObject
-struct UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3_marshaled_com
-{
-	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___transform_0;
-	RectTransform_t6C5DA5E41A89E0F488B001E45E58963480E543A5* ___rectTransform_1;
-	int32_t ___currentPanel_2;
 };
 
 // System.UInt16
@@ -9329,11 +9300,6 @@ struct Action_1_tB9951FC7E63341E8FF985E49D0A293DA6DDACC77  : public MulticastDel
 
 // System.Action`1<UnityEngine.UILineInfo>
 struct Action_1_t59246BF77C1095A0F51FE1BCDD0A2A914173131C  : public MulticastDelegate_t
-{
-};
-
-// System.Action`1<UIObject>
-struct Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812  : public MulticastDelegate_t
 {
 };
 
@@ -25301,84 +25267,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Action_1__ctor_m3D0E29640D8C5C47DC521E92
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Action_1_Invoke_m6A5FDF7FE3DE3CE36942837160308BB7D10AC2F6_gshared (Action_1_t59246BF77C1095A0F51FE1BCDD0A2A914173131C* __this, UILineInfo_tC6FF4F85BD2316FADA2148A1789B3FF0B05A6CAC ___obj0, const RuntimeMethod* method) 
 {
 	typedef void (*FunctionPointerType) (RuntimeObject*, UILineInfo_tC6FF4F85BD2316FADA2148A1789B3FF0B05A6CAC, const RuntimeMethod*);
-	((FunctionPointerType)__this->___invoke_impl_1)((Il2CppObject*)__this->___method_code_6, ___obj0, reinterpret_cast<RuntimeMethod*>(__this->___method_3));
-}
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Winvalid-offsetof"
-#pragma clang diagnostic ignored "-Wunused-variable"
-#endif
-void Action_1_Invoke_mC6C2E01DD7E362EBFE2C15EED1047CB54B884879_Multicast(Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812* __this, UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3 ___obj0, const RuntimeMethod* method)
-{
-	il2cpp_array_size_t length = __this->___delegates_13->max_length;
-	Delegate_t** delegatesToInvoke = reinterpret_cast<Delegate_t**>(__this->___delegates_13->GetAddressAtUnchecked(0));
-	for (il2cpp_array_size_t i = 0; i < length; i++)
-	{
-		Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812* currentDelegate = reinterpret_cast<Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812*>(delegatesToInvoke[i]);
-		typedef void (*FunctionPointerType) (RuntimeObject*, UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3, const RuntimeMethod*);
-		((FunctionPointerType)currentDelegate->___invoke_impl_1)((Il2CppObject*)currentDelegate->___method_code_6, ___obj0, reinterpret_cast<RuntimeMethod*>(currentDelegate->___method_3));
-	}
-}
-void Action_1_Invoke_mC6C2E01DD7E362EBFE2C15EED1047CB54B884879_OpenInst(Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812* __this, UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3 ___obj0, const RuntimeMethod* method)
-{
-	typedef void (*FunctionPointerType) (UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3, const RuntimeMethod*);
-	((FunctionPointerType)__this->___method_ptr_0)(___obj0, method);
-}
-void Action_1_Invoke_mC6C2E01DD7E362EBFE2C15EED1047CB54B884879_OpenStatic(Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812* __this, UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3 ___obj0, const RuntimeMethod* method)
-{
-	typedef void (*FunctionPointerType) (UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3, const RuntimeMethod*);
-	((FunctionPointerType)__this->___method_ptr_0)(___obj0, method);
-}
-void Action_1_Invoke_mC6C2E01DD7E362EBFE2C15EED1047CB54B884879_OpenStaticInvoker(Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812* __this, UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3 ___obj0, const RuntimeMethod* method)
-{
-	InvokerActionInvoker1< UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3 >::Invoke(__this->___method_ptr_0, method, NULL, ___obj0);
-}
-void Action_1_Invoke_mC6C2E01DD7E362EBFE2C15EED1047CB54B884879_ClosedStaticInvoker(Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812* __this, UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3 ___obj0, const RuntimeMethod* method)
-{
-	InvokerActionInvoker2< RuntimeObject*, UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3 >::Invoke(__this->___method_ptr_0, method, NULL, __this->___m_target_2, ___obj0);
-}
-// System.Void System.Action`1<UIObject>::.ctor(System.Object,System.IntPtr)
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Action_1__ctor_mA71EF45616ED91D81F5617F761AFC44371B11C0A_gshared (Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812* __this, RuntimeObject* ___object0, intptr_t ___method1, const RuntimeMethod* method) 
-{
-	__this->___method_ptr_0 = il2cpp_codegen_get_virtual_call_method_pointer((RuntimeMethod*)___method1);
-	__this->___method_3 = ___method1;
-	__this->___m_target_2 = ___object0;
-	Il2CppCodeGenWriteBarrier((void**)(&__this->___m_target_2), (void*)___object0);
-	int parameterCount = il2cpp_codegen_method_parameter_count((RuntimeMethod*)___method1);
-	__this->___method_code_6 = (intptr_t)__this;
-	if (MethodIsStatic((RuntimeMethod*)___method1))
-	{
-		bool isOpen = parameterCount == 1;
-		if (il2cpp_codegen_call_method_via_invoker((RuntimeMethod*)___method1))
-			if (isOpen)
-				__this->___invoke_impl_1 = (intptr_t)&Action_1_Invoke_mC6C2E01DD7E362EBFE2C15EED1047CB54B884879_OpenStaticInvoker;
-			else
-				__this->___invoke_impl_1 = (intptr_t)&Action_1_Invoke_mC6C2E01DD7E362EBFE2C15EED1047CB54B884879_ClosedStaticInvoker;
-		else
-			if (isOpen)
-				__this->___invoke_impl_1 = (intptr_t)&Action_1_Invoke_mC6C2E01DD7E362EBFE2C15EED1047CB54B884879_OpenStatic;
-			else
-				{
-					__this->___invoke_impl_1 = (intptr_t)__this->___method_ptr_0;
-					__this->___method_code_6 = (intptr_t)__this->___m_target_2;
-				}
-	}
-	else
-	{
-		if (___object0 == NULL)
-			il2cpp_codegen_raise_exception(il2cpp_codegen_get_argument_exception(NULL, "Delegate to an instance method cannot have null 'this'."), NULL);
-		__this->___invoke_impl_1 = (intptr_t)__this->___method_ptr_0;
-		__this->___method_code_6 = (intptr_t)__this->___m_target_2;
-	}
-	__this->___extra_arg_5 = (intptr_t)&Action_1_Invoke_mC6C2E01DD7E362EBFE2C15EED1047CB54B884879_Multicast;
-}
-// System.Void System.Action`1<UIObject>::Invoke(T)
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Action_1_Invoke_mC6C2E01DD7E362EBFE2C15EED1047CB54B884879_gshared (Action_1_t2934380DA4D27174FD7D2E8256898E0C6ADDB812* __this, UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3 ___obj0, const RuntimeMethod* method) 
-{
-	typedef void (*FunctionPointerType) (RuntimeObject*, UIObject_tF33CD2DF274156AB1F8380AA66AE0730861B73A3, const RuntimeMethod*);
 	((FunctionPointerType)__this->___invoke_impl_1)((Il2CppObject*)__this->___method_code_6, ___obj0, reinterpret_cast<RuntimeMethod*>(__this->___method_3));
 }
 #ifdef __clang__

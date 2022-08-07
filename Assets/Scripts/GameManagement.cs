@@ -13,8 +13,8 @@ public class GameManagement : MonoBehaviour
     private Vector3 cameraDefaultBodyShift = Vector3.zero;
     private Vector3 cameraDefaultBodyAngle = new Vector3(65, 0, 0);
 
-    private readonly Vector3 CAMERA_SHIFT_CLOSE = new Vector3(0, 11f, -5.5f);    
-    private readonly Vector3 CAMERA_SHIFT_MEDIUM = new Vector3(0, 13f, -6.4f);
+    private Vector3 CAMERA_SHIFT_CLOSE = new Vector3(0, 11f, -5.5f);    
+    private Vector3 CAMERA_SHIFT_MEDIUM = new Vector3(0, 13f, -6.4f);
 
     //floating effect
     private bool isFloating;
@@ -37,7 +37,7 @@ public class GameManagement : MonoBehaviour
 
     //crew UI delegates
     public delegate void BaseUIHandler(Camera camera);
-    public static BaseUIHandler MainCrewUIHandler;
+    public static BaseUIHandler MainUIHandler;
     
 
   
@@ -59,13 +59,16 @@ public class GameManagement : MonoBehaviour
         highlighter.gameObject.SetActive(false);
                 
         AddMainShip();
-        shipManager.mainShipTransform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(75,105), 0);
+        //shipManager.mainShipTransform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(75,105), 0);
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
 
 
         GameObject incident = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
         incident.transform.localPosition = new Vector3(2.5f, 0, 4);
+
+        GameObject wren = Instantiate(Instrument.GetInstrumentPrefab(InstrumentsType.repair_kit), new Vector3(-2.5f, 0.5f, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
+        wren.GetComponent<Instrument>().MakeThrownAway();
     }
 
     // Update is called once per frame
@@ -103,7 +106,7 @@ public class GameManagement : MonoBehaviour
         if (isFloating) HandleShipFloatingEffect?.Invoke();
 
         //crew UI
-        if (MainCrewUIHandler != null) MainCrewUIHandler(mainCam);
+        if (MainUIHandler != null) MainUIHandler(mainCam);
     }
 
    
@@ -125,6 +128,12 @@ public class GameManagement : MonoBehaviour
         //camera lookup===================
         cameraBody.position = cameraDefaultBodyShift;
         cameraBody.rotation = Quaternion.Euler(cameraDefaultBodyAngle);
+
+        float angle = UnityEngine.Random.Range(-10f, 10f);
+        
+        cameraBody.position = new Vector3(cameraDefaultBodyShift.x + (angle / -10f), cameraDefaultBodyShift.y, cameraDefaultBodyShift.z);
+        cameraDefaultBodyAngle = new Vector3(cameraDefaultBodyAngle.x, cameraDefaultBodyAngle.y + angle, cameraDefaultBodyAngle.z);
+
         isFloating = true;
         HandleShipFloatingEffect += MakeFloatingEffect;
     }

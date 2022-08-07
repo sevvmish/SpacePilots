@@ -5,14 +5,43 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private Camera mainCam;
 
-    private List<UIObject> UITransforms = new List<UIObject>();
-
-    private void Start()
+    public static Sprite GetUIIconSprite(UIIconTypes _panel)
     {
-        mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        //Vector3 OnScreenPosition = mainCam.WorldToScreenPoint(OtherGamers[i].PlayerTransform.position);
+        Sprite result = default;
+
+        switch (_panel)
+        {
+            case UIIconTypes.fire_extinguisher:
+                result = Resources.Load<Sprite>("prefabs/sprites/fire ext");
+                break;
+
+            case UIIconTypes.wrench:
+                result = Resources.Load<Sprite>("prefabs/sprites/wrench");
+                break;
+
+            case UIIconTypes.energy_fuel:
+                result = Resources.Load<Sprite>("prefabs/sprites/energy barrel");
+                break;
+
+            case UIIconTypes.shell_for_cannon:
+                result = Resources.Load<Sprite>("prefabs/sprites/shell cannon");
+                break;
+
+            case UIIconTypes.fire:
+                result = Resources.Load<Sprite>("prefabs/sprites/fire sign");
+                break;
+
+            case UIIconTypes.frost:
+                result = Resources.Load<Sprite>("prefabs/sprites/cold sign");
+                break;
+
+            case UIIconTypes.energy:
+                result = Resources.Load<Sprite>("prefabs/sprites/energy sign");
+                break;
+        }
+
+        return result;
     }
 
     public static GameObject GetUIPrefab(UIPanelTypes _panel)
@@ -37,39 +66,6 @@ public class UIManager : MonoBehaviour
         return result;
     }
 
-    public void AddNewUIObject(Transform _transform, UIPanelTypes _currentPanel)
-    {
-        print("added");
-        GameObject UIPanel = Instantiate(GetUIPrefab(_currentPanel), GameObject.Find("MainCanvas").transform);
-        UITransforms.Add(new UIObject(_transform, UIPanel.GetComponent<RectTransform>(), _currentPanel));
-    }
+  
 
-    private void Update()
-    {
-        print("rfreger");
-
-        if (UITransforms.Count>0)
-        {
-            for (int i = 0; i < UITransforms.Count; i++)
-            {
-                Vector3 OnScreenPosition = mainCam.WorldToScreenPoint(UITransforms[i].transform.position);
-                UITransforms[i].rectTransform.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y);
-            }
-        }
-    }
-
-}
-
-public struct UIObject
-{
-    public Transform transform;
-    public RectTransform rectTransform;
-    public UIPanelTypes currentPanel;
-
-    public UIObject(Transform _transform, RectTransform _rectTransform, UIPanelTypes _currentPanel)
-    {
-        transform = _transform;
-        rectTransform = _rectTransform;
-        currentPanel = _currentPanel;
-    }
 }

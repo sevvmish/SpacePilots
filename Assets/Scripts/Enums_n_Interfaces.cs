@@ -20,6 +20,7 @@ public interface ITakenAndMovable
     public GameObject GiveAwayTakeble();    
     public void MakeThrownAway();
     public bool IsCanBeTakenByCrew();
+    public void RotateWhileThrownAway();
 }
 
 public interface IHighlightable
@@ -97,4 +98,18 @@ public enum UIPanelTypes
     information_mark,
     health_bar
 }
+
+public enum UIIconTypes
+{
+    fire_extinguisher,
+    wrench,
+    energy_fuel,
+    shell_for_cannon,
+    fire,
+    frost,
+    energy,
+    repair,
+    radiation
+}
+
 //===================================================================

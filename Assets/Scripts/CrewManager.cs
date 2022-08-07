@@ -17,7 +17,7 @@ public class CrewManager : MonoBehaviour, IHighlightable
     [SerializeField] private CrewMemberStates crewState;
     [SerializeField] private int health;
     [SerializeField] private float speed;
-    [SerializeField] private Transform currentBaseTransform, currentModelTransform, headPoint;
+    [SerializeField] private Transform currentBaseTransform, currentModelTransform, UIPositionPoint;
     [SerializeField] private settings GeneralSettings;
     
     private Animator animator;
@@ -74,14 +74,14 @@ public class CrewManager : MonoBehaviour, IHighlightable
 
         uiHealthBar = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.health_bar), GameObject.Find("MainCanvas").transform);
         uiHealthBarRect = uiHealthBar.GetComponent<RectTransform>();
-        GameManagement.MainCrewUIHandler += ShowUIHealthBar;
+        GameManagement.MainUIHandler += ShowUIHealthBar;
 
 
     }
 
-    public void ShowUIHealthBar(Camera camera)
+    private void ShowUIHealthBar(Camera camera)
     {
-        OnScreenPosition = camera.WorldToScreenPoint(headPoint.position);
+        OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
         uiHealthBarRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
     }
     
@@ -206,7 +206,30 @@ public class CrewManager : MonoBehaviour, IHighlightable
         CurrentTakenObject = _currentTakenObject;
         CurrentTakenObject.SetActive(true);
         CurrentTakenObject.transform.SetParent(currentBaseTransform);
-        CurrentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.72f);
+
+        
+        if (_currentTakenObject.GetComponent<Instrument>() != null)
+        {
+            switch((InstrumentsType)_currentTakenObject.GetComponent<Instrument>().GetTypeOfObject())
+            {
+                case InstrumentsType.fire_extinguisher:
+                    CurrentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.65f);
+                    CurrentTakenObject.transform.localEulerAngles = new Vector3(0, 90, 0);
+                    break;
+
+                case InstrumentsType.repair_kit:
+                    CurrentTakenObject.transform.localPosition = new Vector3(0, 0.64f, 0.52f);
+                    CurrentTakenObject.transform.localEulerAngles = new Vector3(-60, -44, 63);
+                    break;
+
+            }
+        }
+        else
+        {
+            CurrentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.72f);
+        }
+       
+        
     }
 
     public void HighlightCurrentObject()
@@ -247,7 +270,7 @@ public class CrewManager : MonoBehaviour, IHighlightable
         if (crewState == CrewMemberStates.run) return;
         crewState = CrewMemberStates.run;
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) animator.Play("Run");
-        print("came from dest to - " + crewState);
+        
     }
 
     private void makeIdle()
@@ -265,14 +288,12 @@ public class CrewManager : MonoBehaviour, IHighlightable
     }
 
     private void makeCarry()
-    {
-        //if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Carry")) animator.Play("Carry");
+    {        
         if (animator.GetLayerWeight(1)<1) animator.SetLayerWeight(1, 1);
     }
 
     private void makeCarryOff()
-    {
-        //if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Carry")) animator.Play("Carry");
+    {        
         if (animator.GetLayerWeight(1) > 0) animator.SetLayerWeight(1, 0);
     }
 }

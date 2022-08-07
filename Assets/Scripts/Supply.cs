@@ -3,15 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(SphereCollider))]
 public class Supply : MonoBehaviour, ITakenAndMovable
 {
     [SerializeField] private SuppliesType currentSupplyType;    
     [SerializeField] private float YCoordWhenThrownAway;
-    private bool isCanBeTakenByCrew = false;
+    [SerializeField] private SphereCollider currentCollider;
+    [SerializeField] private Transform currentVisualTransform, currentTransform;
 
+    private bool isCanBeTakenByCrew = false;
+    private float modelAngle;
+    private Vector3 modelStandartRotation;
+
+    private void OnEnable()
+    {
+        currentTransform = GetComponent<Transform>();
+                
+        modelStandartRotation = currentVisualTransform.localEulerAngles;
+    }
+
+    public void RotateWhileThrownAway()
+    {
+        if (isCanBeTakenByCrew)
+        {
+            modelAngle += Time.deltaTime * 30;
+            currentVisualTransform.localEulerAngles = new Vector3(modelStandartRotation.x, modelStandartRotation.y + modelAngle, modelStandartRotation.z);
+        }
+        else
+        {
+            modelAngle = 0;
+        }
+    }
+
+
+    private void Update()
+    {
+        RotateWhileThrownAway();
+    }
 
     public void MakeThrownAway()
     {
+        currentCollider.enabled = true;
         isCanBeTakenByCrew = true;
         GetComponent<Transform>().localPosition = new Vector3(GetComponent<Transform>().localPosition.x, YCoordWhenThrownAway, GetComponent<Transform>().localPosition.z);
     }
@@ -46,7 +78,9 @@ public class Supply : MonoBehaviour, ITakenAndMovable
     {
         if (isCanBeTakenByCrew)
         {
+            currentCollider.enabled = false;
             isCanBeTakenByCrew = false;
+            currentVisualTransform.localEulerAngles = modelStandartRotation;
             return gameObject;
         }
         else

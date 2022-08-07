@@ -1,17 +1,49 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(SphereCollider))]
-public class Instrument : MonoBehaviour, ITakenAndMovable
+public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 {
     [SerializeField] private InstrumentsType currentInstrumentType;
+    [SerializeField] private UIIconTypes currentIconType;
     [SerializeField] private float YCoordWhenThrownAway;
+    [SerializeField] private Transform currentVisualTransform, UIPositionPoint, currentTransform;
+    [SerializeField] private SphereCollider currentCollider;
+    [SerializeField] private settings GeneralSettings;
 
     private bool isCanBeTakenByCrew = false;
+    private bool isHighlightEffectInProgress;
+    private Vector3 modelStandartRotation;
+    private float modelAngle;
     
+    //UI information mark
+    private GameObject uiInformationMark;
+    private RectTransform uiInformationMarkRect;
+    private Vector3 OnScreenPosition;
 
     private Dictionary<Incident, float> checkCurrentDealingWithIncident = new Dictionary<Incident, float>();
+
+    private void OnEnable()
+    {
+        currentTransform = GetComponent<Transform>();
+
+        modelStandartRotation = currentVisualTransform.localEulerAngles;
+                
+        uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
+        uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(currentIconType);
+        uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
+        GameManagement.MainUIHandler += ShowUIInformationMark;
+        uiInformationMarkRect.gameObject.SetActive(false);
+    }
+
+    private void ShowUIInformationMark(Camera camera)
+    {
+        OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
+        uiInformationMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
+    }
 
     public static GameObject GetInstrumentPrefab(InstrumentsType _instrument)
     {
@@ -26,7 +58,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable
                 result = Resources.Load<GameObject>("prefabs/instruments/fire extinguisher");
                 break;
             case 2:
-                result = Resources.Load<GameObject>("prefabs/instruments/fire extinguisher");
+                result = Resources.Load<GameObject>("prefabs/instruments/wrench");
                 break;
 
         }
@@ -39,6 +71,26 @@ public class Instrument : MonoBehaviour, ITakenAndMovable
 
     }
 
+    public void RotateWhileThrownAway()
+    {
+        if (isCanBeTakenByCrew)
+        {
+            modelAngle += Time.deltaTime * 30;
+            currentVisualTransform.localEulerAngles = new Vector3(modelStandartRotation.x, modelStandartRotation.y + modelAngle, modelStandartRotation.z);
+        }
+        else
+        {
+            modelAngle = 0;
+        }
+    }
+
+
+    private void Update()
+    {
+        RotateWhileThrownAway();
+    }
+
+   
     public object GetTypeOfObject()
     {
         return currentInstrumentType;
@@ -53,7 +105,10 @@ public class Instrument : MonoBehaviour, ITakenAndMovable
     {
         if (isCanBeTakenByCrew)
         {
+            currentCollider.enabled = false;
             isCanBeTakenByCrew = false;
+            currentVisualTransform.localEulerAngles = modelStandartRotation;
+            uiInformationMarkRect.gameObject.SetActive(false);
             return gameObject;
         }
         else
@@ -64,7 +119,10 @@ public class Instrument : MonoBehaviour, ITakenAndMovable
 
     public void MakeThrownAway()
     {
+        currentTransform.rotation = Quaternion.Euler(Vector3.zero);
         isCanBeTakenByCrew = true;
+        currentCollider.enabled = true;
+        uiInformationMarkRect.gameObject.SetActive(true);
         GetComponent<Transform>().localPosition = new Vector3(GetComponent<Transform>().localPosition.x, YCoordWhenThrownAway, GetComponent<Transform>().localPosition.z);
     }
 
@@ -113,4 +171,17 @@ public class Instrument : MonoBehaviour, ITakenAndMovable
         }
     }
 
+    public void HighlightCurrentObject()
+    {
+        if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
+    }
+
+    public IEnumerator HandleCurrentHighlight()
+    {
+        isHighlightEffectInProgress = true;
+        currentVisualTransform.DOShakeScale(GeneralSettings.TimeForShakeForCrew, GeneralSettings.StrenghtOfShakeOnHighlightingCrew, 10, 90, true);
+
+        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForCrew);
+        isHighlightEffectInProgress = false;
+    }
 }

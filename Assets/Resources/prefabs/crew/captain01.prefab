@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5133991696588073910}
   m_Layer: 0
-  m_Name: headPoint
+  m_Name: UI Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1182,7 +1182,7 @@ MonoBehaviour:
   speed: 6
   currentBaseTransform: {fileID: 0}
   currentModelTransform: {fileID: 2165839101111809852}
-  headPoint: {fileID: 5133991696588073910}
+  UIPositionPoint: {fileID: 5133991696588073910}
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
 --- !u!136 &2462614125281188806
 CapsuleCollider:

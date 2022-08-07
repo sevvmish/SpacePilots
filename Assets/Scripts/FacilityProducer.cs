@@ -51,6 +51,12 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
     {
         //FORBIDDEN
     }
+
+    public void RotateWhileThrownAway()
+    {
+        //FORBIDDEN
+    }
+
     public bool IsCanBeTakenByCrew()
     {
         return true;

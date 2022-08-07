@@ -59,10 +59,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53355d9f149575c4fa75e2645615a327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMovableType: 0
-  currentMovableState: 0
-  currentCollider: {fileID: 0}
+  currentSupplyType: 0
   YCoordWhenThrownAway: 0.5
+  currentCollider: {fileID: 6769829031849230630}
+  currentVisualTransform: {fileID: 8778313523231250546}
+  currentTransform: {fileID: 2745987330405145273}
 --- !u!1 &9078706865366742480
 GameObject:
   m_ObjectHideFlags: 0
