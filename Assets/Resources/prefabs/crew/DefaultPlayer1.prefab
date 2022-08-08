@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 5349384730654152197}
   - component: {fileID: 2243331737003323773}
   - component: {fileID: 5649970178930599901}
+  - component: {fileID: 2913641168794332914}
   m_Layer: 0
   m_Name: DefaultPlayer1
   m_TagString: Crew
@@ -275,12 +276,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b673d5ee169de84496bb7b1ff4531fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  crewName: 
+  crewSpec: 0
+  crewState: 0
+  maxHealth: 10
   speed: 6
   currentBaseTransform: {fileID: 0}
   currentModelTransform: {fileID: 6536207747060366340}
+  UIPositionPoint: {fileID: 0}
+  Effects: {fileID: 0}
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
-  crewState: 0
 --- !u!136 &2243331737003323773
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -311,6 +316,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!95 &2913641168794332914
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6899476767022618055}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6899476767914267140
 GameObject:
   m_ObjectHideFlags: 0

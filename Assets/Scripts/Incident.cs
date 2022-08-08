@@ -1,60 +1,162 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
-public class Incident : MonoBehaviour, IPointOfInteraction
+
+[RequireComponent(typeof(SphereCollider))]
+public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars
 {
     [SerializeField] private InstrumentsType whatInstrumentDealThisIncident;
-    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform;
-    [SerializeField] private float health;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform, UIPositionPoint;
+    [SerializeField] private float maxHealth;
+
+    public bool isIncidentActive;
+
+    private float health;
+
+    //UI
+    private GameObject uiProgressBar;
+    private RectTransform uiProgressBarRect;
+    private Vector3 OnScreenPosition;
+    private bool isShowingUIBar;
 
     public float Health
     {
         get {return health;}
 
         set 
-        {
-            if (health<=0)
+        {            
+
+            if (value<0)
             {
                 health = 0;
+                StartCoroutine(makeThisIncidentInactive());
             }
+            else if(value >= maxHealth)
+            {
+                health = maxHealth;
+                if (!isShowingUIBar) StartCoroutine(ShowUIBarWhileActive());
+            }      
             else
             {
                 health = value;
+                if (!isShowingUIBar) StartCoroutine(ShowUIBarWhileActive());
             }
         }
     }
+
+
+    private void OnEnable()
+    {
+        health = maxHealth;
+        isIncidentActive = true;
+
+        if (uiProgressBarRect != null) HideUI();
+    }
+
+    public void InitUI()
+    {
+        uiProgressBar = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.progress_bar), GameObject.Find("MainCanvas").transform);
+        uiProgressBarRect = uiProgressBar.GetComponent<RectTransform>();
+        GameManagement.MainUIHandler += UpdateUIPosition;
+
+        HideUI();
+    }
+
+
+
+    public void ShowUI()
+    {
+        if (!uiProgressBarRect.gameObject.activeSelf) uiProgressBarRect.gameObject.SetActive(true);
+    }
+
+
+    public void HideUI()
+    {
+        if (uiProgressBarRect.gameObject.activeSelf) uiProgressBarRect.gameObject.SetActive(false);
+    }
+
+    public void UpdateUIData()
+    {
+        uiProgressBarRect.transform.GetChild(1).GetComponent<Image>().fillAmount = Health / maxHealth;
+    }
+
+    public void UpdateUIPosition(Camera camera)
+    {
+        if (uiProgressBarRect.gameObject.activeSelf)
+        {
+            OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
+            uiProgressBarRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
+        }        
+    }
+
 
     public static GameObject GetIncidentPrefab(IncidentsType _incident)
     {
         GameObject result = default;
 
-        switch ((int)_incident)
+        switch (_incident)
         {
-            case 0:
+            case IncidentsType.tester:
                 result = Resources.Load<GameObject>("prefabs/incidents/test fire");
                 break;
-            case 1:
-                result = Resources.Load<GameObject>("prefabs/incidents/test fire");
+            case IncidentsType.fire:
+                result = Resources.Load<GameObject>("prefabs/incidents/fire incident");
+                break;
+            case IncidentsType.simple_wreck:
+                result = Resources.Load<GameObject>("prefabs/incidents/simple wreck");
                 break;
         }
 
         return result;
     }
 
-    public void ActWithSupply()
+
+    public void DecreaseHealthAmount(float amount)
     {
-        Health--;
-        print(Health);
+        Health -= amount;
+        //print(Health + " - incident");
+        UpdateUIData();
     }
+
 
     public InstrumentsType GetInstrumentTypeToDealWithIncident()
     {
         return whatInstrumentDealThisIncident;
     }
 
+
     public Vector3 GetPointOfInteraction()
     {
         return Vector3.Lerp(pointOfInterestFROM.position, pointOfInterestTO.position, UnityEngine.Random.Range(0.1f, 1f));
     }
+
+
+    public IEnumerator ShowUIBarWhileActive()
+    {
+        isShowingUIBar = true;
+        ShowUI();
+        yield return new WaitForSeconds(2);
+        
+        isShowingUIBar = false;
+
+        yield return new WaitForSeconds(0.5f);
+        if (!isShowingUIBar) HideUI();
+    }
+
+    private IEnumerator makeThisIncidentInactive()
+    {
+        HideUI();
+        GetComponent<Transform>().DOScale(Vector3.zero, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        GetComponent<Transform>().localScale = Vector3.one;
+        HideUI();
+
+        isIncidentActive = false;
+        gameObject.SetActive(false);
+    }
+
+
 }

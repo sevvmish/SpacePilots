@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.AI.Navigation;
 using DG.Tweening;
 using System;
+using EZCameraShake;
 
 public class GameManagement : MonoBehaviour
 {
@@ -53,28 +54,59 @@ public class GameManagement : MonoBehaviour
         Camera.main.aspect = 16f/9f;
 #endif
 
-        //init level===================
-        GameObject player = Instantiate(Resources.Load<GameObject>("prefabs/highlight"), Vector3.zero, Quaternion.Euler(0, 0, 0), GameObject.Find("Crew").transform);
-        highlighter = player.transform;
-        highlighter.gameObject.SetActive(false);
+        
                 
-        AddMainShip();
-        //shipManager.mainShipTransform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(75,105), 0);
+        AddMainShip();        
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
 
+        //highlighting player
+        GameObject player = Instantiate(Resources.Load<GameObject>("prefabs/highlight"), Vector3.zero, Quaternion.Euler(0, 0.03f, 0), GameObject.Find("SpaceShip").transform);
+        highlighter = player.transform;
+        highlighter.gameObject.SetActive(false);
+        //============================
 
         GameObject incident = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
-        incident.transform.localPosition = new Vector3(2.5f, 0, 4);
+        GameObject incident1 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 3), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
+        GameObject incident2 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 2), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
+
+        GameObject incident3 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.simple_wreck), new Vector3(4f, 0, 2), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
+        GameObject incident4 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.simple_wreck), new Vector3(4f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
+
+        incident.GetComponent<Incident>().InitUI();
+        incident1.GetComponent<Incident>().InitUI();
+        incident2.GetComponent<Incident>().InitUI();
+        incident3.GetComponent<Incident>().InitUI();
+        incident4.GetComponent<Incident>().InitUI();
 
         GameObject wren = Instantiate(Instrument.GetInstrumentPrefab(InstrumentsType.repair_kit), new Vector3(-2.5f, 0.5f, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
         wren.GetComponent<Instrument>().MakeThrownAway();
+
+        GameObject ext = Instantiate(Instrument.GetInstrumentPrefab(InstrumentsType.fire_extinguisher), new Vector3(-2.5f, 0.5f, -4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
+        ext.GetComponent<Instrument>().MakeThrownAway();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            CameraShaker.Instance.ShakeOnce(5, 6, 2, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+
+
+            foreach (var item in crewMembers.Keys)
+            {
+                crewMembers[item].rigidBody.AddForce(Vector3.forward * 1000f, ForceMode.VelocityChange);
+                print(item.name);
+            }
+        }
+
+
+
         if (Input.GetMouseButtonDown(0))
         {
             ray = mainCam.ScreenPointToRay(Input.mousePosition);
@@ -112,9 +144,10 @@ public class GameManagement : MonoBehaviour
    
     private void AddCrewMember(CrewSpecialization _spec, Vector3 location)
     {
-        GameObject player = Instantiate(CrewManager.GetCrewPrefab(_spec), location, Quaternion.Euler(0, 0, 0), GameObject.Find("Crew").transform);
+        GameObject player = Instantiate(CrewManager.GetCrewPrefab(_spec), location, Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
         crewMembers.Add(player, player.GetComponent<CrewManager>());
-        player.GetComponent<CrewManager>().SetRespawnPoint(location);        
+        player.GetComponent<CrewManager>().SetRespawnPoint(location);
+        player.GetComponent<CrewManager>().InitUI();
     }
 
     private void AddMainShip()

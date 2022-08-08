@@ -29,6 +29,25 @@ public interface IHighlightable
 
     public IEnumerator HandleCurrentHighlight();
 }
+
+
+public interface IUIBars
+{
+    public void InitUI();
+
+    public void UpdateUIPosition(Camera camera);
+
+    public void ShowUI();
+
+    public void HideUI();
+
+    public IEnumerator ShowUIBarWhileActive();
+}
+
+
+
+
+
 //================================================================
 
 //SPECIALLY FOR CREW==============================================
@@ -76,7 +95,8 @@ public enum SupplyState
 public enum IncidentsType
 {
     tester = 0,
-    fire    
+    fire,
+    simple_wreck
 }
 //===================================================================
 
@@ -112,4 +132,13 @@ public enum UIIconTypes
     radiation
 }
 
+//===================================================================
+
+
+//CREW NEGATIVE EFFECTS ENUMS======================================================
+public enum NegativeEffects
+{
+    burning,
+    electricity
+}
 //===================================================================

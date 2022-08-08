@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
         switch(_panel)
         {
             case UIPanelTypes.progress_bar:
-                result = Resources.Load<GameObject>("prefabs/UI/progress mark");
+                result = Resources.Load<GameObject>("prefabs/UI/progress bar");
                 break;
 
             case UIPanelTypes.information_mark:

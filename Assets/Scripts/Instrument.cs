@@ -10,12 +10,14 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     [SerializeField] private InstrumentsType currentInstrumentType;
     [SerializeField] private UIIconTypes currentIconType;
     [SerializeField] private float YCoordWhenThrownAway;
-    [SerializeField] private Transform currentVisualTransform, UIPositionPoint, currentTransform;
+    [SerializeField] private Transform currentVisualTransform, UIPositionPoint, currentTransform, currentEffect, currentIncidentInAction;
     [SerializeField] private SphereCollider currentCollider;
     [SerializeField] private settings GeneralSettings;
+    [SerializeField] private float instrumentHealthEffect;
 
     private bool isCanBeTakenByCrew = false;
     private bool isHighlightEffectInProgress;
+    
     private Vector3 modelStandartRotation;
     private float modelAngle;
     
@@ -27,7 +29,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     private Dictionary<Incident, float> checkCurrentDealingWithIncident = new Dictionary<Incident, float>();
 
     private void OnEnable()
-    {
+    {        
         currentTransform = GetComponent<Transform>();
 
         modelStandartRotation = currentVisualTransform.localEulerAngles;
@@ -37,6 +39,8 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
         GameManagement.MainUIHandler += ShowUIInformationMark;
         uiInformationMarkRect.gameObject.SetActive(false);
+        HideEffectOfWorkingInstrument();
+        
     }
 
     private void ShowUIInformationMark(Camera camera)
@@ -68,7 +72,21 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
     private void ShowEffectOfWorkingInstrument()
     {
+        if (!currentEffect.gameObject.activeSelf)
+        {   
+            currentEffect.gameObject.SetActive(true);
+        }
+            
+    }
 
+    private void HideEffectOfWorkingInstrument()
+    {
+        if (currentEffect.gameObject.activeSelf) currentEffect.gameObject.SetActive(false);
+    }
+
+    public Transform GetCurrentIncidentInAction()
+    {
+        return currentIncidentInAction;
     }
 
     public void RotateWhileThrownAway()
@@ -105,7 +123,8 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     {
         if (isCanBeTakenByCrew)
         {
-            currentCollider.enabled = false;
+            //currentCollider.enabled = false;
+            
             isCanBeTakenByCrew = false;
             currentVisualTransform.localEulerAngles = modelStandartRotation;
             uiInformationMarkRect.gameObject.SetActive(false);
@@ -121,7 +140,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     {
         currentTransform.rotation = Quaternion.Euler(Vector3.zero);
         isCanBeTakenByCrew = true;
-        currentCollider.enabled = true;
+        //currentCollider.enabled = true;
         uiInformationMarkRect.gameObject.SetActive(true);
         GetComponent<Transform>().localPosition = new Vector3(GetComponent<Transform>().localPosition.x, YCoordWhenThrownAway, GetComponent<Transform>().localPosition.z);
     }
@@ -129,20 +148,25 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Incident"))
-        {
-            Incident currentIncident = other.gameObject.GetComponent<Incident>();
+        currentIncidentInAction = null;
 
+        if (other.gameObject.CompareTag("Incident"))
+        {            
+            Incident currentIncident = other.gameObject.GetComponent<Incident>();
+                        
             if (checkCurrentDealingWithIncident.ContainsKey(currentIncident))
             {
                 checkCurrentDealingWithIncident[currentIncident] += Time.deltaTime;
             }
 
-            if (currentIncident.GetInstrumentTypeToDealWithIncident() == currentInstrumentType && currentIncident.Health > 0 && checkCurrentDealingWithIncident[currentIncident] > 0.6f)
+            if (currentIncident.GetInstrumentTypeToDealWithIncident() == currentInstrumentType && currentIncident.Health > 0 && checkCurrentDealingWithIncident[currentIncident] > 0.5f)
             {
+                //if (checkCurrentDealingWithIncident[currentIncident] > 0.75f) instrumentOwner.LookAt(other.gameObject.transform);
+
+                currentIncidentInAction = other.gameObject.transform;
                 ShowEffectOfWorkingInstrument();
-                currentIncident.ActWithSupply();
-            }
+                currentIncident.DecreaseHealthAmount(instrumentHealthEffect * Time.deltaTime);
+            }              
         }
     }
 
@@ -163,12 +187,21 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     {
         if (other.gameObject.CompareTag("Incident"))
         {
+            HideEffectOfWorkingInstrument();
+
+            if (other.gameObject.transform == currentIncidentInAction)
+            {
+                currentIncidentInAction = null;
+            }
+
             Incident currentIncident = other.gameObject.GetComponent<Incident>();
             if (checkCurrentDealingWithIncident.ContainsKey(currentIncident))
             {
                 checkCurrentDealingWithIncident.Remove(currentIncident);
             }
         }
+
+        
     }
 
     public void HighlightCurrentObject()
