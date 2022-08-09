@@ -144,6 +144,9 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         currentTransform.rotation = Quaternion.Euler(Vector3.zero);
         currentTransform.localScale = Vector3.one;
         currentVisualTransform.gameObject.SetActive(true);
+        currentVisualTransform.localScale = Vector3.one;
+        currentVisualTransform.localPosition = Vector3.zero;
+
         isCanBeTakenByCrew = true;
 
         //currentCollider.enabled = true;

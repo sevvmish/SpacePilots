@@ -207,9 +207,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             
             Transform aim = CurrentTakenObject.GetComponent<Instrument>().GetCurrentIncidentInAction();
             currentBaseTransform.LookAt(new Vector3(aim.position.x, 0, aim.position.z));
-
-            print(aim.name + " !!!!!!");
-
+                     
             switch((InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject())
             {
                 case InstrumentsType.fire_extinguisher:
@@ -222,7 +220,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         }
         else if (CurrentTakenObject != null)
         {
-            print("here!!!!!!!!!!!!");
+            
             if (CurrentTakenObject.GetComponent<Instrument>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == InstrumentsType.repair_kit) 
             {
                 makeCarryOff();
@@ -379,6 +377,9 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             switch((InstrumentsType)_currentTakenObject.GetComponent<Instrument>().GetTypeOfObject())
             {
                 case InstrumentsType.fire_extinguisher:
+                    CurrentTakenObject.GetComponent<Instrument>().GetVisualTransform().localScale = new Vector3(0.8f, 0.8f, 1f);
+                    CurrentTakenObject.GetComponent<Instrument>().GetVisualTransform().localPosition = new Vector3(0.186f, 0, 0.028f);
+
                     CurrentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.65f);
                     CurrentTakenObject.transform.localEulerAngles = new Vector3(0, 90, 0);
                     break;

@@ -13,6 +13,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
     [SerializeField] private float maxHealth;
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private Material highlightMaterial;
+    [SerializeField] private AudioSource audiosource;
 
     private Material baseMaterial;
     private bool isHighlightEffectInProgress;
@@ -54,12 +55,17 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
 
     private void OnEnable()
     {
+        audiosource = GetComponent<AudioSource>();
+        audiosource.volume = GeneralSettings.AudioSourceVolume_incidents;
+
         if (baseMaterial == null) baseMaterial = Enums_n_Interfaces.GetBaseMaterial(baseHighLight);
 
         health = maxHealth;
         isIncidentActive = true;
 
         if (uiProgressBarRect != null) HideUI();
+
+        transform.localRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 270), 0);
     }
 
     public void InitUI()
