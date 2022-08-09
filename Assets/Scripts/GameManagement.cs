@@ -94,25 +94,17 @@ public class GameManagement : MonoBehaviour
             CameraShaker.Instance.ShakeOnce(5, 6, 2, 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-
-
-            foreach (var item in crewMembers.Keys)
-            {
-                crewMembers[item].rigidBody.AddForce(Vector3.forward * 1000f, ForceMode.VelocityChange);
-                print(item.name);
-            }
-        }
-
+    
 
 
         if (Input.GetMouseButtonDown(0))
         {
             ray = mainCam.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, 50))
             {
+                //if (hit.collider != null) print(hit.collider.name);
+
                 if (hit.collider.GetComponent<CrewManager>() != null && selectedGameObject != hit.collider.gameObject)
                 {
                     selectedGameObject = hit.collider.gameObject;

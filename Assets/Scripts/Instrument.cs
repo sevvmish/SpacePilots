@@ -10,17 +10,19 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     [SerializeField] private InstrumentsType currentInstrumentType;
     [SerializeField] private UIIconTypes currentIconType;
     [SerializeField] private float YCoordWhenThrownAway;
-    [SerializeField] private Transform currentVisualTransform, UIPositionPoint, currentTransform, currentEffect, currentIncidentInAction;
+    [SerializeField] private Transform currentVisualTransform, UIPositionPoint, currentTransform, currentEffect, currentIncidentInAction, baseHighLight;
     [SerializeField] private SphereCollider currentCollider;
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private float instrumentHealthEffect;
+    [SerializeField] private Material highlightMaterial;
 
+    private Material baseMaterial;
     private bool isCanBeTakenByCrew = false;
     private bool isHighlightEffectInProgress;
-    
+
     private Vector3 modelStandartRotation;
     private float modelAngle;
-    
+
     //UI information mark
     private GameObject uiInformationMark;
     private RectTransform uiInformationMarkRect;
@@ -29,18 +31,19 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     private Dictionary<Incident, float> checkCurrentDealingWithIncident = new Dictionary<Incident, float>();
 
     private void OnEnable()
-    {        
+    {
+        if (baseMaterial == null) baseMaterial = Enums_n_Interfaces.GetBaseMaterial(baseHighLight);
         currentTransform = GetComponent<Transform>();
 
         modelStandartRotation = currentVisualTransform.localEulerAngles;
-                
+
         uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
         uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(currentIconType);
         uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
         GameManagement.MainUIHandler += ShowUIInformationMark;
         uiInformationMarkRect.gameObject.SetActive(false);
         HideEffectOfWorkingInstrument();
-        
+
     }
 
     private void ShowUIInformationMark(Camera camera)
@@ -73,10 +76,10 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     private void ShowEffectOfWorkingInstrument()
     {
         if (!currentEffect.gameObject.activeSelf)
-        {   
+        {
             currentEffect.gameObject.SetActive(true);
         }
-            
+
     }
 
     private void HideEffectOfWorkingInstrument()
@@ -108,7 +111,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         RotateWhileThrownAway();
     }
 
-   
+
     public object GetTypeOfObject()
     {
         return currentInstrumentType;
@@ -124,7 +127,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         if (isCanBeTakenByCrew)
         {
             //currentCollider.enabled = false;
-            
+
             isCanBeTakenByCrew = false;
             currentVisualTransform.localEulerAngles = modelStandartRotation;
             uiInformationMarkRect.gameObject.SetActive(false);
@@ -139,12 +142,16 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     public void MakeThrownAway()
     {
         currentTransform.rotation = Quaternion.Euler(Vector3.zero);
+        currentTransform.localScale = Vector3.one;
+        currentVisualTransform.gameObject.SetActive(true);
         isCanBeTakenByCrew = true;
+
         //currentCollider.enabled = true;
         uiInformationMarkRect.gameObject.SetActive(true);
         GetComponent<Transform>().localPosition = new Vector3(GetComponent<Transform>().localPosition.x, YCoordWhenThrownAway, GetComponent<Transform>().localPosition.z);
     }
 
+    public Transform GetVisualTransform() {return currentVisualTransform;}
 
     private void OnTriggerStay(Collider other)
     {
@@ -212,9 +219,14 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     public IEnumerator HandleCurrentHighlight()
     {
         isHighlightEffectInProgress = true;
-        currentVisualTransform.DOShakeScale(GeneralSettings.TimeForShakeForCrew, GeneralSettings.StrenghtOfShakeOnHighlightingCrew, 10, 90, true);
 
-        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForCrew);
+        Enums_n_Interfaces.ChangeMaterial(highlightMaterial, baseHighLight);
+        
+        currentVisualTransform.DOShakeScale(GeneralSettings.TimeForShakeForInstruments, GeneralSettings.StrenghtOfShakeOnHighlightingInstruments, 10, 90, true);
+
+        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForInstruments);
         isHighlightEffectInProgress = false;
+
+        Enums_n_Interfaces.ChangeMaterial(baseMaterial, baseHighLight);
     }
 }

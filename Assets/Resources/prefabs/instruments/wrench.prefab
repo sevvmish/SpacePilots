@@ -162,9 +162,12 @@ MonoBehaviour:
   UIPositionPoint: {fileID: 4000478593747665379}
   currentTransform: {fileID: 2280389313727574165}
   currentEffect: {fileID: 5193976289591161261}
+  currentIncidentInAction: {fileID: 0}
+  baseHighLight: {fileID: 8151772289341753627}
   currentCollider: {fileID: 781289717747312249}
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
   instrumentHealthEffect: 1
+  highlightMaterial: {fileID: 2100000, guid: b1f164095bfc29942bc0b83d8b8cee4e, type: 2}
 --- !u!1001 &8550735664363859696
 PrefabInstance:
   m_ObjectHideFlags: 0

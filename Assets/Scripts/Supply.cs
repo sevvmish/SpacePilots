@@ -43,6 +43,8 @@ public class Supply : MonoBehaviour, ITakenAndMovable
 
     public void MakeThrownAway()
     {
+        currentTransform.rotation = Quaternion.Euler(Vector3.zero);
+        currentTransform.localScale = Vector3.one;
         currentCollider.enabled = true;
         isCanBeTakenByCrew = true;
         GetComponent<Transform>().localPosition = new Vector3(GetComponent<Transform>().localPosition.x, YCoordWhenThrownAway, GetComponent<Transform>().localPosition.z);

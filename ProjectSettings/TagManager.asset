@@ -9,6 +9,7 @@ TagManager:
   - FacilityConsumer
   - Supply
   - Incident
+  - Floor
   layers:
   - Default
   - TransparentFX

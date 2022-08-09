@@ -6,12 +6,16 @@ using DG.Tweening;
 
 
 [RequireComponent(typeof(SphereCollider))]
-public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars
+public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlightable
 {
     [SerializeField] private InstrumentsType whatInstrumentDealThisIncident;
-    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform, UIPositionPoint;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform, UIPositionPoint, baseHighLight;
     [SerializeField] private float maxHealth;
+    [SerializeField] private settings GeneralSettings;
+    [SerializeField] private Material highlightMaterial;
 
+    private Material baseMaterial;
+    private bool isHighlightEffectInProgress;
     public bool isIncidentActive;
 
     private float health;
@@ -50,6 +54,8 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars
 
     private void OnEnable()
     {
+        if (baseMaterial == null) baseMaterial = Enums_n_Interfaces.GetBaseMaterial(baseHighLight);
+
         health = maxHealth;
         isIncidentActive = true;
 
@@ -158,5 +164,22 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars
         gameObject.SetActive(false);
     }
 
+    public void HighlightCurrentObject()
+    {
+        if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
+    }
 
+    public IEnumerator HandleCurrentHighlight()
+    {
+        isHighlightEffectInProgress = true;
+
+        Enums_n_Interfaces.ChangeMaterial(highlightMaterial, baseHighLight);
+
+        currentVisualTransform.DOShakeScale(GeneralSettings.TimeForShakeForInstruments, GeneralSettings.StrenghtOfShakeOnHighlightingInstruments, 10, 90, true);
+
+        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForInstruments);
+        isHighlightEffectInProgress = false;
+
+        Enums_n_Interfaces.ChangeMaterial(baseMaterial, baseHighLight);
+    }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3468859442340283015}
   - component: {fileID: 1509362320850589143}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: burned ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,7 +213,10 @@ MonoBehaviour:
   pointOfInterestTO: {fileID: 6790045982333647525}
   currentVisualTransform: {fileID: 5896322866731227590}
   UIPositionPoint: {fileID: 8227832151424388120}
+  baseHighLight: {fileID: 2440995124249495542}
   maxHealth: 2
+  GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: b1f164095bfc29942bc0b83d8b8cee4e, type: 2}
   isIncidentActive: 0
 --- !u!114 &1997811221032551428
 MonoBehaviour:

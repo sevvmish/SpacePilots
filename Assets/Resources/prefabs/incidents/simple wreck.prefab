@@ -86,7 +86,10 @@ MonoBehaviour:
   pointOfInterestTO: {fileID: 3322474679021013365}
   currentVisualTransform: {fileID: 2446352208454798236}
   UIPositionPoint: {fileID: 3690782349309397805}
+  baseHighLight: {fileID: 1004736659353272834}
   maxHealth: 2
+  GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: b1f164095bfc29942bc0b83d8b8cee4e, type: 2}
   isIncidentActive: 0
 --- !u!135 &242547561693541877
 SphereCollider:
@@ -144,7 +147,7 @@ GameObject:
   - component: {fileID: 8482560181761876412}
   - component: {fileID: 8245890516411106657}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: burned ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

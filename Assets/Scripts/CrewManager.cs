@@ -18,10 +18,12 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     [SerializeField] private CrewMemberStates crewState;
     [SerializeField] private float maxHealth;
     [SerializeField] private float speed;
-    [SerializeField] private Transform currentBaseTransform, currentModelTransform, UIPositionPoint, Effects;
+    [SerializeField] private Transform currentBaseTransform, currentModelTransform, UIPositionPoint, Effects, baseHighLight, leftHand, rightHand;
     [SerializeField] private settings GeneralSettings;
-    
+    [SerializeField] private Material highlightMaterial;
+    [SerializeField] private Transform wrenchExample, hammerExample;
 
+    private Material baseMaterial;
     private Animator animator;
     private Vector3 pointOfRespawn, currentPos, previousPos, OnScreenPosition;
     private float currentSpeed;
@@ -96,6 +98,8 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     // Start is called before the first frame update
     void OnEnable()
     {
+        if (baseMaterial == null) baseMaterial = Enums_n_Interfaces.GetBaseMaterial(baseHighLight);
+
         health = maxHealth;
         currentBaseTransform.position = pointOfRespawn;
 
@@ -119,6 +123,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         if (uiHealthBarRect != null) HideUI();
         makeIdle();
         navAgent.isStopped = true;
+        DeactivateAnyHandsInstruments();
     }
 
     public void InitUI()
@@ -164,8 +169,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
 
     // Update is called once per frame
     void Update()
-    {        
-
+    {
         //print(crewState);
         currentPos = currentBaseTransform.position;
         currentSpeed = Vector3.Distance(currentPos, previousPos);
@@ -190,6 +194,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             {
                 CurrentTakenObject.GetComponent<Transform>().SetParent(GameObject.Find("SpaceShip").transform);
                 CurrentTakenObject.GetComponent<ITakenAndMovable>().MakeThrownAway();
+                DeactivateAnyHandsInstruments();
                 CurrentTakenObject = null;
             }
         }
@@ -203,6 +208,8 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             Transform aim = CurrentTakenObject.GetComponent<Instrument>().GetCurrentIncidentInAction();
             currentBaseTransform.LookAt(new Vector3(aim.position.x, 0, aim.position.z));
 
+            print(aim.name + " !!!!!!");
+
             switch((InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject())
             {
                 case InstrumentsType.fire_extinguisher:
@@ -215,7 +222,16 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         }
         else if (CurrentTakenObject != null)
         {
-            makeCarry();
+            print("here!!!!!!!!!!!!");
+            if (CurrentTakenObject.GetComponent<Instrument>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == InstrumentsType.repair_kit) 
+            {
+                makeCarryOff();
+            }
+            else 
+            {
+                makeCarry();
+            }
+            
         }
         else if (CurrentTakenObject == null)
         {
@@ -248,7 +264,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         
         navAgent.isStopped = false;        
         navAgent.SetDestination(destination);
-        if (PlaceOfDestination != _objectOfDestination) PlaceOfDestination = _objectOfDestination;
+        if (PlaceOfDestination != _objectOfDestination && !_objectOfDestination.CompareTag("Floor")) PlaceOfDestination = _objectOfDestination;
     }
 
     private void OnTriggerStay(Collider other)
@@ -267,6 +283,8 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
                     print(objectToTake.GetTypeOfObject() + " is taken");
                     TakeAnyObjectToCarry(objectToTake.GiveAwayTakeble());
                 }
+
+                
             }
             else if (CurrentTakenObject != null)
             {
@@ -366,8 +384,16 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
                     break;
 
                 case InstrumentsType.repair_kit:
-                    CurrentTakenObject.transform.localPosition = new Vector3(0, 0.64f, 0.52f);
-                    CurrentTakenObject.transform.localEulerAngles = new Vector3(-60, -44, 63);
+                    CurrentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.65f);
+                    CurrentTakenObject.GetComponent<Instrument>().GetVisualTransform().gameObject.SetActive(false);
+
+                    hammerExample.gameObject.SetActive(true);
+                    wrenchExample.gameObject.SetActive(true);
+
+                    //CurrentTakenObject.transform.localScale = Vector3.one / 2f;
+                    //CurrentTakenObject.transform.SetParent(rightHand);
+                    //CurrentTakenObject.transform.localPosition = Vector3.zero;
+
                     break;
 
             }
@@ -388,10 +414,12 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     public IEnumerator HandleCurrentHighlight()
     {
         isHighlightEffectInProgress = true;
+        Enums_n_Interfaces.ChangeMaterial(highlightMaterial, baseHighLight);
         currentModelTransform.DOShakeScale(GeneralSettings.TimeForShakeForCrew, GeneralSettings.StrenghtOfShakeOnHighlightingCrew, 10, 90, true);
         
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForCrew);
         isHighlightEffectInProgress = false;
+        Enums_n_Interfaces.ChangeMaterial(baseMaterial, baseHighLight);
     }
 
     public static GameObject GetCrewPrefab(CrewSpecialization _crewSpec)
@@ -443,7 +471,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     private void makeCarryOff()
     {        
         if (animator.GetLayerWeight(1) > 0) animator.SetLayerWeight(1, 0);
-        if (!animator.GetCurrentAnimatorStateInfo(1).IsName("idle 2")) animator.Play("isle 2");        
+        if (!animator.GetCurrentAnimatorStateInfo(1).IsName("idle 2")) animator.Play("idle 2");        
     }
 
     private void makeRepair()
@@ -452,6 +480,11 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Repair") && !animator.GetCurrentAnimatorStateInfo(1).IsName("Repair 1")) animator.Play("Repair");
     }
 
+    private void DeactivateAnyHandsInstruments()
+    {
+        wrenchExample.gameObject.SetActive(false);
+        hammerExample.gameObject.SetActive(false);
+    }
 
     public IEnumerator ShowUIBarWhileActive()
     {

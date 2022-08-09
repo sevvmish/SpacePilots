@@ -151,9 +151,12 @@ MonoBehaviour:
   UIPositionPoint: {fileID: 1287252223642288774}
   currentTransform: {fileID: 913981233735810086}
   currentEffect: {fileID: 7131097062829484671}
+  currentIncidentInAction: {fileID: 0}
+  baseHighLight: {fileID: 5203490960400326024}
   currentCollider: {fileID: 3125737692838370808}
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
   instrumentHealthEffect: 1
+  highlightMaterial: {fileID: 2100000, guid: b1f164095bfc29942bc0b83d8b8cee4e, type: 2}
 --- !u!1 &3072156210241315588
 GameObject:
   m_ObjectHideFlags: 0
@@ -5088,6 +5091,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f38c4287b18535b46b5a37c64903096a, type: 3}
       propertyPath: m_Name
       value: fire ext
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f38c4287b18535b46b5a37c64903096a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f38c4287b18535b46b5a37c64903096a, type: 3}
