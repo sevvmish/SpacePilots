@@ -22,7 +22,9 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private Transform wrenchExample, hammerExample;
+    [SerializeField] private AudioSource audio;
 
+    private AudioClip grabSound, grabOff;
     private Material baseMaterial;
     private Animator animator;
     private Vector3 pointOfRespawn, currentPos, previousPos, OnScreenPosition;
@@ -56,16 +58,17 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
 
         set
         {
-            /*
-            if (value != null && (crewState == CrewMemberStates.walk || crewState == CrewMemberStates.run))
+            if (currentTakenObject == null && value != null)
             {
-                makeCarry();
+                audio.clip = grabSound;
+                audio.Play();
             }
-            else if(value == null)
+
+            if (currentTakenObject != null && value == null)
             {
-                makeCarryOff();
+                audio.clip = grabOff;
+                audio.Play();
             }
-            */
 
             currentTakenObject = value;
         }
@@ -94,10 +97,18 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         }
     }
 
+    private void Start()
+    {
+        grabSound = Resources.Load<AudioClip>("audio/sounds/grab something");
+        grabOff = Resources.Load<AudioClip>("audio/sounds/grab off");
+    }
+
 
     // Start is called before the first frame update
     void OnEnable()
-    {
+    {        
+        if (audio == null) audio = GetComponent<AudioSource>();
+        audio.volume = GeneralSettings.AudioSourceVolume_crew;
         if (baseMaterial == null) baseMaterial = Enums_n_Interfaces.GetBaseMaterial(baseHighLight);
 
         health = maxHealth;

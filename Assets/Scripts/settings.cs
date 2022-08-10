@@ -33,7 +33,9 @@ public class settings : ScriptableObject
     public float TimeForShakeForInstruments = 0.5f;
 
     //SOUND=================================
-    public float AudioSourceVolume_incidents = 0.1f;
-    public float AudioSourceVolume_instruments = 0.3f;
+    public float AudioSourceVolume_incidents = 0.2f;
+    public float AudioSourceVolume_instruments = 0.5f;
+    public float AudioSourceVolume_crew = 0.5f;
+    public float AudioSourceVolume_UI = 1f;
 
 }

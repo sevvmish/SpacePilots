@@ -65,7 +65,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
 
         if (uiProgressBarRect != null) HideUI();
 
-        transform.localRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 270), 0);
+        
     }
 
     public void InitUI()

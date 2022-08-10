@@ -15,3 +15,14 @@ MonoBehaviour:
   ScreenHeight: 720
   ScreenWidth: 1280
   AspectRatio: 2
+  targetFrameRate: 60
+  StrenghtOfShakeOnHighlightingCrew: {x: 0.6, y: 0.15, z: 0.6}
+  TimeForShakeForCrew: 0.5
+  StrenghtOfShakeOnHighlightingFacility: {x: 0.6, y: 0.3, z: 0.6}
+  TimeForShakeForFacility: 0.5
+  StrenghtOfShakeOnHighlightingInstruments: {x: 0.6, y: 0.3, z: 0.6}
+  TimeForShakeForInstruments: 0.5
+  AudioSourceVolume_incidents: 0.2
+  AudioSourceVolume_instruments: 0.5
+  AudioSourceVolume_crew: 0.5
+  AudioSourceVolume_UI: 1

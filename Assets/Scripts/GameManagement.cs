@@ -6,11 +6,16 @@ using DG.Tweening;
 using System;
 using EZCameraShake;
 
+
+
 public class GameManagement : MonoBehaviour
 {
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private Camera mainCam;
     [SerializeField] private Transform cameraBody;
+    [SerializeField] private AudioManager audio;
+    
+
     private Vector3 cameraDefaultBodyShift = Vector3.zero;
     private Vector3 cameraDefaultBodyAngle = new Vector3(65, 0, 0);
 
@@ -54,17 +59,14 @@ public class GameManagement : MonoBehaviour
         Camera.main.aspect = 16f/9f;
 #endif
 
-        
-                
+        InitHighlightPlayer();
+
+
         AddMainShip();        
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
 
-        //highlighting player
-        GameObject player = Instantiate(Resources.Load<GameObject>("prefabs/highlight"), Vector3.zero, Quaternion.Euler(0, 0.03f, 0), GameObject.Find("SpaceShip").transform);
-        highlighter = player.transform;
-        highlighter.gameObject.SetActive(false);
-        //============================
+        
 
         GameObject incident = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
         GameObject incident1 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 3), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
@@ -103,14 +105,22 @@ public class GameManagement : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 50))
             {
-                //if (hit.collider != null) print(hit.collider.name);
+                
+                if (hit.collider != null && !hit.collider.CompareTag("Floor"))
+                {
+                    //print(hit.collider.name);
+                    audio.MakeClick();
+                }
+                
 
+                
                 if (hit.collider.GetComponent<CrewManager>() != null && selectedGameObject != hit.collider.gameObject)
                 {
                     selectedGameObject = hit.collider.gameObject;
                     
                     selectedGameObject.GetComponent<IHighlightable>().HighlightCurrentObject();
                     HighlightSelectedCrewMember(hit.collider.gameObject.transform);
+                    audio.MakeClick();
                 }
                 else
                 {
@@ -136,7 +146,7 @@ public class GameManagement : MonoBehaviour
    
     private void AddCrewMember(CrewSpecialization _spec, Vector3 location)
     {
-        GameObject player = Instantiate(CrewManager.GetCrewPrefab(_spec), location, Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
+        GameObject player = Instantiate(CrewManager.GetCrewPrefab(_spec), location, Quaternion.Euler(0, 0, 0), GameObject.Find("SpaceShip").transform);
         crewMembers.Add(player, player.GetComponent<CrewManager>());
         player.GetComponent<CrewManager>().SetRespawnPoint(location);
         player.GetComponent<CrewManager>().InitUI();
@@ -192,6 +202,16 @@ public class GameManagement : MonoBehaviour
         highlighter.SetParent(crewMember);
         highlighter.gameObject.SetActive(true);
         highlighter.localPosition = Vector3.zero;
+    }
+
+    private void InitHighlightPlayer()
+    {
+        //highlighting player system
+        GameObject player = Instantiate(Resources.Load<GameObject>("prefabs/highlight"), Vector3.zero, Quaternion.Euler(0, 0.03f, 0), GameObject.Find("SpaceShip").transform);
+        highlighter = player.transform;
+        highlighter.gameObject.SetActive(true);
+        highlighter.position = new Vector3(0, -1, 0);
+        //============================
     }
 
 }
