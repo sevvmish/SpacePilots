@@ -471,7 +471,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     {
         if (crewState == CrewMemberStates.walk) return;
         crewState = CrewMemberStates.walk;
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) animator.Play("Walk");
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) animator.Play("Walk");
     }
 
     private void makeCarry()

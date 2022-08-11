@@ -73,8 +73,7 @@ public interface IHighlightable
 
 
 public interface IUIBars
-{
-    public void InitUI();
+{    
 
     public void UpdateUIPosition(Camera camera);
 

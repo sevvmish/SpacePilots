@@ -19,7 +19,7 @@ public class ObjectPooling : MonoBehaviour
 
         for (int i = 0; i < Index; i++)
         {
-            GameObject _object = Instantiate(Example, Storage);
+            GameObject _object = Instantiate(Example, Vector3.zero, Quaternion.identity, Storage);
             _object.SetActive(false);
             poolOfObjects.Enqueue(_object);
         }

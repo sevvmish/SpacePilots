@@ -27,6 +27,8 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
     private Vector3 OnScreenPosition;
     private bool isShowingUIBar;
 
+    
+
     public float Health
     {
         get {return health;}
@@ -63,12 +65,18 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
         health = maxHealth;
         isIncidentActive = true;
 
-        if (uiProgressBarRect != null) HideUI();
-
-        
+        if (uiProgressBarRect == null)
+        {
+            InitUI();
+        }
+        else
+        {
+            HideUI();
+        }        
     }
 
-    public void InitUI()
+
+    private void InitUI()
     {
         uiProgressBar = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.progress_bar), GameObject.Find("MainCanvas").transform);
         uiProgressBarRect = uiProgressBar.GetComponent<RectTransform>();

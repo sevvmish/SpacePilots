@@ -15,6 +15,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private float instrumentHealthEffect;
     [SerializeField] private Material highlightMaterial;
+    [SerializeField] private bool isItSingleAttheBegining;
 
     private Material baseMaterial;
     private bool isCanBeTakenByCrew = false;
@@ -43,7 +44,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         GameManagement.MainUIHandler += ShowUIInformationMark;
         uiInformationMarkRect.gameObject.SetActive(false);
         HideEffectOfWorkingInstrument();
-
+        if (isItSingleAttheBegining) MakeThrownAway();
     }
 
     private void ShowUIInformationMark(Camera camera)

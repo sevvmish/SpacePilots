@@ -6271,14 +6271,14 @@ struct U3CMouseDragOutsideRectU3Ed__193_t6BAFDAF23416ED05BB588191EB3C2D1AF53FF89
 	InputField_tABEA115F23FBD374EBE80D4FAC1D15BD6E37A140* ___U3CU3E4__this_3;
 };
 
-// Instrument/<HandleCurrentHighlight>d__39
-struct U3CHandleCurrentHighlightU3Ed__39_t7ECD7C4DB8B22D37B4B19076E50199E4B571F5BF  : public RuntimeObject
+// Instrument/<HandleCurrentHighlight>d__40
+struct U3CHandleCurrentHighlightU3Ed__40_t38D6080FA7C8A12C75C96EEB6BC70A85752F9162  : public RuntimeObject
 {
-	// System.Int32 Instrument/<HandleCurrentHighlight>d__39::<>1__state
+	// System.Int32 Instrument/<HandleCurrentHighlight>d__40::<>1__state
 	int32_t ___U3CU3E1__state_0;
-	// System.Object Instrument/<HandleCurrentHighlight>d__39::<>2__current
+	// System.Object Instrument/<HandleCurrentHighlight>d__40::<>2__current
 	RuntimeObject* ___U3CU3E2__current_1;
-	// Instrument Instrument/<HandleCurrentHighlight>d__39::<>4__this
+	// Instrument Instrument/<HandleCurrentHighlight>d__40::<>4__this
 	Instrument_tBD61134B8BEB6820BC4C6821AF809180BA994EF7* ___U3CU3E4__this_2;
 };
 
@@ -19606,6 +19606,14 @@ struct GameManagement_t36A893A8DFF4120446E09D9DD11B383EB1CD2348  : public MonoBe
 	Dictionary_2_t0F43A1170D488CEA5619C3C67C6A3BABB22F7DF3* ___crewMembers_23;
 	// ShipManager GameManagement::shipManager
 	ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646* ___shipManager_24;
+	// ObjectPooling GameManagement::fireIncident_pool
+	ObjectPooling_tED1829297FC7C173F0E6840E95FEA9F1A24B46C1* ___fireIncident_pool_26;
+	// ObjectPooling GameManagement::simpleWreckIncident_pool
+	ObjectPooling_tED1829297FC7C173F0E6840E95FEA9F1A24B46C1* ___simpleWreckIncident_pool_27;
+	// ObjectPooling GameManagement::fireExtInstrument_pool
+	ObjectPooling_tED1829297FC7C173F0E6840E95FEA9F1A24B46C1* ___fireExtInstrument_pool_28;
+	// ObjectPooling GameManagement::simpleRepairerInstrument_pool
+	ObjectPooling_tED1829297FC7C173F0E6840E95FEA9F1A24B46C1* ___simpleRepairerInstrument_pool_29;
 };
 
 struct GameManagement_t36A893A8DFF4120446E09D9DD11B383EB1CD2348_StaticFields
@@ -19684,24 +19692,26 @@ struct Instrument_tBD61134B8BEB6820BC4C6821AF809180BA994EF7  : public MonoBehavi
 	float ___instrumentHealthEffect_15;
 	// UnityEngine.Material Instrument::highlightMaterial
 	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___highlightMaterial_16;
+	// System.Boolean Instrument::isItSingleAttheBegining
+	bool ___isItSingleAttheBegining_17;
 	// UnityEngine.Material Instrument::baseMaterial
-	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___baseMaterial_17;
+	Material_t18053F08F347D0DCA5E1140EC7EC4533DD8A14E3* ___baseMaterial_18;
 	// System.Boolean Instrument::isCanBeTakenByCrew
-	bool ___isCanBeTakenByCrew_18;
+	bool ___isCanBeTakenByCrew_19;
 	// System.Boolean Instrument::isHighlightEffectInProgress
-	bool ___isHighlightEffectInProgress_19;
+	bool ___isHighlightEffectInProgress_20;
 	// UnityEngine.Vector3 Instrument::modelStandartRotation
-	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___modelStandartRotation_20;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___modelStandartRotation_21;
 	// System.Single Instrument::modelAngle
-	float ___modelAngle_21;
+	float ___modelAngle_22;
 	// UnityEngine.GameObject Instrument::uiInformationMark
-	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___uiInformationMark_22;
+	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___uiInformationMark_23;
 	// UnityEngine.RectTransform Instrument::uiInformationMarkRect
-	RectTransform_t6C5DA5E41A89E0F488B001E45E58963480E543A5* ___uiInformationMarkRect_23;
+	RectTransform_t6C5DA5E41A89E0F488B001E45E58963480E543A5* ___uiInformationMarkRect_24;
 	// UnityEngine.Vector3 Instrument::OnScreenPosition
-	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___OnScreenPosition_24;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___OnScreenPosition_25;
 	// System.Collections.Generic.Dictionary`2<Incident,System.Single> Instrument::checkCurrentDealingWithIncident
-	Dictionary_2_tD2FB7D991E97E3BFD75523F734BDB1134A69404B* ___checkCurrentDealingWithIncident_25;
+	Dictionary_2_tD2FB7D991E97E3BFD75523F734BDB1134A69404B* ___checkCurrentDealingWithIncident_26;
 };
 
 // InstrumentProducer
@@ -23276,7 +23286,7 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize6139 = { sizeof(U3CHandleCur
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize6140;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize6140 = { sizeof(Incident_tB1056FA2C514444FABE0B8FD2064A2D1A7108A00), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize6141;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize6141 = { sizeof(U3CHandleCurrentHighlightU3Ed__39_t7ECD7C4DB8B22D37B4B19076E50199E4B571F5BF), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize6141 = { sizeof(U3CHandleCurrentHighlightU3Ed__40_t38D6080FA7C8A12C75C96EEB6BC70A85752F9162), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize6142;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize6142 = { sizeof(Instrument_tBD61134B8BEB6820BC4C6821AF809180BA994EF7), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize6143;

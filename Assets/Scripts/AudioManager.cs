@@ -25,13 +25,15 @@ public class AudioManager : MonoBehaviour
     }
 
     public void MakeClick()
-    {        
+    {
+        if (audiosourse.isPlaying && audiosourse.clip == simpleClick) return;
         audiosourse.clip = simpleClick;
         audiosourse.Play();
     }
 
     public void MakeGrab()
     {
+        if (audiosourse.isPlaying) audiosourse.Stop();
         audiosourse.clip = simpleClick;
         audiosourse.Play();
     }

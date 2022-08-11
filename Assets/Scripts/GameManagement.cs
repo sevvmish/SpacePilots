@@ -7,7 +7,7 @@ using System;
 using EZCameraShake;
 
 
-
+[RequireComponent(typeof(AudioManager))]
 public class GameManagement : MonoBehaviour
 {
     [SerializeField] private settings GeneralSettings;
@@ -44,9 +44,12 @@ public class GameManagement : MonoBehaviour
     //crew UI delegates
     public delegate void BaseUIHandler(Camera camera);
     public static BaseUIHandler MainUIHandler;
+
+    //incidents
+    private ObjectPooling fireIncident_pool, simpleWreckIncident_pool, fireExtInstrument_pool, simpleRepairerInstrument_pool;
     
 
-  
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,15 +62,32 @@ public class GameManagement : MonoBehaviour
         Camera.main.aspect = 16f/9f;
 #endif
 
+        //init highlight and audio listener
         InitHighlightPlayer();
 
-
+        //ship and crew
         AddMainShip();        
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
 
-        
+        //objectpooling 
+        fireIncident_pool = new ObjectPooling(10, Incident.GetIncidentPrefab(IncidentsType.fire), shipManager.mainShipTransform);
+        simpleWreckIncident_pool = new ObjectPooling(10, Incident.GetIncidentPrefab(IncidentsType.simple_wreck), shipManager.mainShipTransform);
+        fireExtInstrument_pool = new ObjectPooling(10, Instrument.GetInstrumentPrefab(InstrumentsType.fire_extinguisher), shipManager.mainShipTransform);
+        simpleRepairerInstrument_pool = new ObjectPooling(10, Instrument.GetInstrumentPrefab(InstrumentsType.repair_kit), shipManager.mainShipTransform);
 
+
+        AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 4));
+        AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 3));
+        AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 2));
+
+        AddIncident(IncidentsType.simple_wreck, new Vector3(4f, 0, 2));
+        AddIncident(IncidentsType.simple_wreck, new Vector3(4f, 0, 4));
+
+        AddInstrument(InstrumentsType.repair_kit, new Vector3(-2.5f, 0.5f, 4));
+        AddInstrument(InstrumentsType.fire_extinguisher, new Vector3(-2.5f, 0.5f, -4));
+
+        /*
         GameObject incident = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
         GameObject incident1 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 3), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
         GameObject incident2 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 2), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
@@ -75,17 +95,13 @@ public class GameManagement : MonoBehaviour
         GameObject incident3 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.simple_wreck), new Vector3(4f, 0, 2), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
         GameObject incident4 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.simple_wreck), new Vector3(4f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
 
-        incident.GetComponent<Incident>().InitUI();
-        incident1.GetComponent<Incident>().InitUI();
-        incident2.GetComponent<Incident>().InitUI();
-        incident3.GetComponent<Incident>().InitUI();
-        incident4.GetComponent<Incident>().InitUI();
 
         GameObject wren = Instantiate(Instrument.GetInstrumentPrefab(InstrumentsType.repair_kit), new Vector3(-2.5f, 0.5f, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
         wren.GetComponent<Instrument>().MakeThrownAway();
 
         GameObject ext = Instantiate(Instrument.GetInstrumentPrefab(InstrumentsType.fire_extinguisher), new Vector3(-2.5f, 0.5f, -4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
         ext.GetComponent<Instrument>().MakeThrownAway();
+        */
     }
 
     // Update is called once per frame
@@ -154,7 +170,7 @@ public class GameManagement : MonoBehaviour
 
     private void AddMainShip()
     {
-        GameObject ship = Instantiate(Resources.Load<GameObject>("prefabs/ships/test ship1"), new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), GameObject.Find("SpaceShip").transform);
+        GameObject ship = Instantiate(Resources.Load<GameObject>("prefabs/ships/small ship 1"), new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), GameObject.Find("SpaceShip").transform);
         ship.SetActive(true);
         shipManager = ship.GetComponent<ShipManager>();
         cameraDefaultBodyShift = CAMERA_SHIFT_CLOSE;
@@ -213,6 +229,49 @@ public class GameManagement : MonoBehaviour
         highlighter.position = new Vector3(0, -1, 0);
         //============================
     }
+
+    private void AddIncident(IncidentsType _type, Vector3 position)
+    {
+        GameObject incident = default;
+
+        switch(_type)
+        {
+            case IncidentsType.fire:
+                incident = fireIncident_pool.GetObject();
+                break;
+
+            case IncidentsType.simple_wreck:
+                incident = simpleWreckIncident_pool.GetObject();
+                break;
+
+        }
+
+        incident.SetActive(true);
+        incident.transform.position = position;        
+    }
+
+  
+    private void AddInstrument(InstrumentsType _type, Vector3 position)
+    {
+        GameObject instrument = default;
+
+        switch (_type)
+        {
+            case InstrumentsType.fire_extinguisher:
+                instrument = fireExtInstrument_pool.GetObject();
+                break;
+
+            case InstrumentsType.repair_kit:
+                instrument = simpleRepairerInstrument_pool.GetObject();
+                break;
+        }
+
+        instrument.SetActive(true);
+        instrument.transform.position = position;        
+        instrument.GetComponent<Instrument>().MakeThrownAway();
+    }
+
+    
 
 }
 
