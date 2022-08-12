@@ -265,6 +265,7 @@ MonoBehaviour:
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
   instrumentHealthEffect: 1
   highlightMaterial: {fileID: 2100000, guid: b1f164095bfc29942bc0b83d8b8cee4e, type: 2}
+  isItSingleAttheBegining: 0
 --- !u!1001 &8550735664363859696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -278,15 +279,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7d6d7e2e62009784990becc5b640d1be, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.035
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7d6d7e2e62009784990becc5b640d1be, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.04
+      value: 0.035
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7d6d7e2e62009784990becc5b640d1be, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.05
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7d6d7e2e62009784990becc5b640d1be, type: 3}
       propertyPath: m_LocalPosition.x

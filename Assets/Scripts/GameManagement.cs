@@ -17,9 +17,9 @@ public class GameManagement : MonoBehaviour
     
 
     private Vector3 cameraDefaultBodyShift = Vector3.zero;
-    private Vector3 cameraDefaultBodyAngle = new Vector3(65, 0, 0);
+    private Vector3 cameraDefaultBodyAngle = new Vector3(60, 0, 0);
 
-    private Vector3 CAMERA_SHIFT_CLOSE = new Vector3(0, 11f, -5.5f);    
+    private Vector3 CAMERA_SHIFT_CLOSE = new Vector3(0, 10f, -6f);    
     private Vector3 CAMERA_SHIFT_MEDIUM = new Vector3(0, 13f, -6.4f);
 
     //floating effect
@@ -81,11 +81,11 @@ public class GameManagement : MonoBehaviour
         AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 3));
         AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 2));
 
-        AddIncident(IncidentsType.simple_wreck, new Vector3(4f, 0, 2));
-        AddIncident(IncidentsType.simple_wreck, new Vector3(4f, 0, 4));
+        AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 2));
+        AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 4));
 
-        AddInstrument(InstrumentsType.repair_kit, new Vector3(-2.5f, 0.5f, 4));
-        AddInstrument(InstrumentsType.fire_extinguisher, new Vector3(-2.5f, 0.5f, -4));
+        //AddInstrument(InstrumentsType.repair_kit, new Vector3(-2.5f, 0.5f, 4));
+        //AddInstrument(InstrumentsType.fire_extinguisher, new Vector3(-2.5f, 0.5f, -4));
 
         /*
         GameObject incident = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);

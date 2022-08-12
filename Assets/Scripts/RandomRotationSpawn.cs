@@ -1,19 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class RandomRotationSpawn : MonoBehaviour
 {
-    [SerializeField] private float rotationX, rotationY, rotationZ;
+    [SerializeField] private float delta;
+    [SerializeField] private Axis axiz;
+
+    private float rotationX, rotationY, rotationZ;
 
     private void OnEnable()
-    {       
+    {
+        print(transform.localEulerAngles.x + " 1");
 
+        rotationX = axiz == Axis.X ? UnityEngine.Random.Range(0, delta) : transform.localEulerAngles.x;
+        rotationY = axiz == Axis.Y ? UnityEngine.Random.Range(0, delta) : transform.localEulerAngles.y;
+        rotationZ = axiz == Axis.Z ? UnityEngine.Random.Range(0, delta) : transform.localEulerAngles.z;
 
-        rotationX = rotationX == 0 ? transform.rotation.x : UnityEngine.Random.Range(0, rotationX);
-        rotationY = rotationY == 0 ? transform.rotation.y : UnityEngine.Random.Range(0, rotationY);
-        rotationZ = rotationZ == 0 ? transform.rotation.z : UnityEngine.Random.Range(0, rotationZ);
-
-        transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, transform.localRotation.z);
+        transform.localRotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
+       
     }
+}
+
+public enum Axis
+{
+    X,
+    Y,
+    Z
 }
