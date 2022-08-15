@@ -20,7 +20,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     private Material baseMaterial;
     private bool isCanBeTakenByCrew = false;
     private bool isHighlightEffectInProgress;
-
+    
     private Vector3 modelStandartRotation;
     private float modelAngle;
 
@@ -171,9 +171,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
             }
 
             if (currentIncident.GetInstrumentTypeToDealWithIncident() == currentInstrumentType && currentIncident.Health > 0 && checkCurrentDealingWithIncident[currentIncident] > 0.5f)
-            {
-                //if (checkCurrentDealingWithIncident[currentIncident] > 0.75f) instrumentOwner.LookAt(other.gameObject.transform);
-
+            {                
                 currentIncidentInAction = other.gameObject.transform;
                 ShowEffectOfWorkingInstrument();
                 currentIncident.DecreaseHealthAmount(instrumentHealthEffect * Time.deltaTime);

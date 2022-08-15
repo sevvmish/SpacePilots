@@ -12,7 +12,7 @@ GameObject:
   m_Layer: 0
   m_Name: UI position point
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -344,3 +344,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7d6d7e2e62009784990becc5b640d1be, type: 3}
   m_PrefabInstance: {fileID: 8550735664363859696}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8821207077199729569 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7d6d7e2e62009784990becc5b640d1be, type: 3}
+  m_PrefabInstance: {fileID: 8550735664363859696}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7694400772604502522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8821207077199729569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff

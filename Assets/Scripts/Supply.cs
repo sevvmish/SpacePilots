@@ -55,12 +55,16 @@ public class Supply : MonoBehaviour, ITakenAndMovable
     {
         GameObject result = default;
 
-        switch((int)_movable)
+        switch(_movable)
         {
-            case 0:
+            case SuppliesType.tester:
                 result = Resources.Load<GameObject>("prefabs/supplies/test movable");
                 break;
-            
+
+            case SuppliesType.engine_fuel:
+                result = Resources.Load<GameObject>("prefabs/supplies/fuel barrel");
+                break;
+
         }
 
         return result;

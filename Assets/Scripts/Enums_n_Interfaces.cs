@@ -136,7 +136,9 @@ public enum IncidentsType
 {
     tester = 0,
     fire,
-    simple_wreck
+    simple_wreck,
+    smoke_after_fire,
+    after_wreck
 }
 //===================================================================
 

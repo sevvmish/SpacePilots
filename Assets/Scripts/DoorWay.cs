@@ -31,11 +31,12 @@ public class DoorWay : MonoBehaviour
     }
 
 
-    private void OnTriggerStay(Collider other)
+
+    private void Update()
     {
-        if (other.gameObject.CompareTag("Crew"))
+        if (crew.Count == 0 && (isDoorOpened || isDoorOpening))
         {
-            
+            StartCoroutine(doorIsClosing());
         }
     }
 

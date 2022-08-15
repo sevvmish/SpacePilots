@@ -12,8 +12,7 @@ public class RandomRotationSpawn : MonoBehaviour
 
     private void OnEnable()
     {
-        print(transform.localEulerAngles.x + " 1");
-
+        
         rotationX = axiz == Axis.X ? UnityEngine.Random.Range(0, delta) : transform.localEulerAngles.x;
         rotationY = axiz == Axis.Y ? UnityEngine.Random.Range(0, delta) : transform.localEulerAngles.y;
         rotationZ = axiz == Axis.Z ? UnityEngine.Random.Range(0, delta) : transform.localEulerAngles.z;

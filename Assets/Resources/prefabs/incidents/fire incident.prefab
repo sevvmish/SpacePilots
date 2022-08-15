@@ -211,6 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whatInstrumentDealThisIncident: 1
+  currentIncidentType: 1
   pointOfInterestFROM: {fileID: 6790045982333647525}
   pointOfInterestTO: {fileID: 6790045982333647525}
   currentVisualTransform: {fileID: 5896322866731227590}

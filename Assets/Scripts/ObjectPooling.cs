@@ -9,6 +9,26 @@ public class ObjectPooling : MonoBehaviour
 
     private Queue<GameObject> poolOfObjects;
 
+    //PUBLIC STATIC
+    //incidents
+    public static ObjectPooling fireIncident_pool, simpleWreckIncident_pool, smokeAfterFire_pool, repairAfterWreck;
+    //instruments
+    public static ObjectPooling fireExtInstrument_pool, simpleRepairerInstrument_pool;
+
+    public static void InitPools(int size, Transform transform)
+    {
+        //objectpooling 
+        //incidents
+        fireIncident_pool = new ObjectPooling(size, Incident.GetIncidentPrefab(IncidentsType.fire), transform);
+        simpleWreckIncident_pool = new ObjectPooling(size, Incident.GetIncidentPrefab(IncidentsType.simple_wreck), transform);
+        smokeAfterFire_pool = new ObjectPooling(size, Incident.GetIncidentPrefab(IncidentsType.smoke_after_fire), transform);
+        repairAfterWreck = new ObjectPooling(size, Incident.GetIncidentPrefab(IncidentsType.after_wreck), transform);
+
+        //instruments
+        fireExtInstrument_pool = new ObjectPooling(size, Instrument.GetInstrumentPrefab(InstrumentsType.fire_extinguisher), transform);
+        simpleRepairerInstrument_pool = new ObjectPooling(size, Instrument.GetInstrumentPrefab(InstrumentsType.repair_kit), transform);
+    }
+
     public ObjectPooling(int Index, GameObject Example, Transform Storage)
     {
         example = Example;

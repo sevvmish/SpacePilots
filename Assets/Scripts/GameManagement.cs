@@ -19,7 +19,7 @@ public class GameManagement : MonoBehaviour
     private Vector3 cameraDefaultBodyShift = Vector3.zero;
     private Vector3 cameraDefaultBodyAngle = new Vector3(60, 0, 0);
 
-    private Vector3 CAMERA_SHIFT_CLOSE = new Vector3(0, 10f, -6f);    
+    private Vector3 CAMERA_SHIFT_CLOSE = new Vector3(0, 9.5f, -6f);    
     private Vector3 CAMERA_SHIFT_MEDIUM = new Vector3(0, 13f, -6.4f);
 
     //floating effect
@@ -45,8 +45,7 @@ public class GameManagement : MonoBehaviour
     public delegate void BaseUIHandler(Camera camera);
     public static BaseUIHandler MainUIHandler;
 
-    //incidents
-    private ObjectPooling fireIncident_pool, simpleWreckIncident_pool, fireExtInstrument_pool, simpleRepairerInstrument_pool;
+    
     
 
 
@@ -70,12 +69,8 @@ public class GameManagement : MonoBehaviour
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
 
-        //objectpooling 
-        fireIncident_pool = new ObjectPooling(10, Incident.GetIncidentPrefab(IncidentsType.fire), shipManager.mainShipTransform);
-        simpleWreckIncident_pool = new ObjectPooling(10, Incident.GetIncidentPrefab(IncidentsType.simple_wreck), shipManager.mainShipTransform);
-        fireExtInstrument_pool = new ObjectPooling(10, Instrument.GetInstrumentPrefab(InstrumentsType.fire_extinguisher), shipManager.mainShipTransform);
-        simpleRepairerInstrument_pool = new ObjectPooling(10, Instrument.GetInstrumentPrefab(InstrumentsType.repair_kit), shipManager.mainShipTransform);
-
+        //init objects
+        ObjectPooling.InitPools(50, shipManager.mainShipTransform);
 
         AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 4));
         AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 3));
@@ -84,24 +79,7 @@ public class GameManagement : MonoBehaviour
         AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 2));
         AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 4));
 
-        //AddInstrument(InstrumentsType.repair_kit, new Vector3(-2.5f, 0.5f, 4));
-        //AddInstrument(InstrumentsType.fire_extinguisher, new Vector3(-2.5f, 0.5f, -4));
-
-        /*
-        GameObject incident = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
-        GameObject incident1 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 3), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
-        GameObject incident2 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.fire), new Vector3(2.5f, 0, 2), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
-
-        GameObject incident3 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.simple_wreck), new Vector3(4f, 0, 2), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
-        GameObject incident4 = Instantiate(Incident.GetIncidentPrefab(IncidentsType.simple_wreck), new Vector3(4f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
-
-
-        GameObject wren = Instantiate(Instrument.GetInstrumentPrefab(InstrumentsType.repair_kit), new Vector3(-2.5f, 0.5f, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
-        wren.GetComponent<Instrument>().MakeThrownAway();
-
-        GameObject ext = Instantiate(Instrument.GetInstrumentPrefab(InstrumentsType.fire_extinguisher), new Vector3(-2.5f, 0.5f, -4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
-        ext.GetComponent<Instrument>().MakeThrownAway();
-        */
+        
     }
 
     // Update is called once per frame
@@ -237,11 +215,11 @@ public class GameManagement : MonoBehaviour
         switch(_type)
         {
             case IncidentsType.fire:
-                incident = fireIncident_pool.GetObject();
+                incident = ObjectPooling.fireIncident_pool.GetObject();
                 break;
 
             case IncidentsType.simple_wreck:
-                incident = simpleWreckIncident_pool.GetObject();
+                incident = ObjectPooling.simpleWreckIncident_pool.GetObject();
                 break;
 
         }
@@ -258,11 +236,11 @@ public class GameManagement : MonoBehaviour
         switch (_type)
         {
             case InstrumentsType.fire_extinguisher:
-                instrument = fireExtInstrument_pool.GetObject();
+                instrument = ObjectPooling.fireExtInstrument_pool.GetObject();
                 break;
 
             case InstrumentsType.repair_kit:
-                instrument = simpleRepairerInstrument_pool.GetObject();
+                instrument = ObjectPooling.simpleRepairerInstrument_pool.GetObject();
                 break;
         }
 

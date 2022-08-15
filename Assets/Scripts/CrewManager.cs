@@ -17,7 +17,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     [SerializeField] private CrewSpecialization crewSpec;
     [SerializeField] private CrewMemberStates crewState;
     [SerializeField] private float maxHealth;
-    [SerializeField] private float speed;
+    [SerializeField] private float maxSpeed;
     [SerializeField] private Transform currentBaseTransform, currentModelTransform, UIPositionPoint, Effects, baseHighLight, leftHand, rightHand;
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private Material highlightMaterial;
@@ -32,7 +32,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     private NavMeshAgent navAgent;
     public Rigidbody rigidBody;
     private bool isHighlightEffectInProgress;
-    private float health;
+    private float health, speed;
     private bool isShowingUIBar;
 
     private Dictionary<GameObject, DamageDealer> damagingObjects = new Dictionary<GameObject, DamageDealer>();
@@ -97,6 +97,27 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         }
     }
 
+    public float Speed
+    {
+        get { return speed; }
+
+        set
+        {
+            if (value < 0)
+            {
+                speed = 0;
+            }
+            else if (value >= maxSpeed)
+            {
+                speed = maxSpeed;                
+            }
+            else
+            {
+                speed = value;                
+            }
+        }
+    }
+
     private void Start()
     {
         grabSound = Resources.Load<AudioClip>("audio/sounds/grab something");
@@ -124,7 +145,8 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         
 
         navAgent = GetComponent<NavMeshAgent>();
-        navAgent.speed = speed;
+        Speed = maxSpeed;
+        navAgent.speed = maxSpeed;
         currentBaseTransform = transform;
         crewState = CrewMemberStates.idle;
         animator = GetComponent<Animator>();
@@ -132,8 +154,8 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         rigidBody = GetComponent<Rigidbody>();
                 
         if (uiHealthBarRect != null) HideUI();
-        makeIdle();
-        navAgent.isStopped = true;
+        makeIdleAnimation();
+        //navAgent.isStopped = true;
         DeactivateAnyHandsInstruments();
     }
 
@@ -188,15 +210,15 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
 
         if (currentSpeed <= 0.01f) 
         {
-            makeIdle();
+            makeIdleAnimation();
         }
         else if (currentSpeed > 0.01f && currentSpeed <= 0.03f)
         {
-            makeWalk();
+            makeWalkAnimation();
         }
         else if (currentSpeed > 0.03f)
         {
-            makeRun();
+            makeRunAnimation();
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -225,7 +247,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
                     break;
 
                 case InstrumentsType.repair_kit:
-                    makeRepair();
+                    makeRepairAnimation();
                     break;
             }
         }
@@ -234,17 +256,17 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             
             if (CurrentTakenObject.GetComponent<Instrument>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == InstrumentsType.repair_kit) 
             {
-                makeCarryOff();
+                makeCarryOffAnimation();
             }
             else 
             {
-                makeCarry();
+                makeCarryAnimation();
             }
             
         }
         else if (CurrentTakenObject == null)
         {
-            makeCarryOff();
+            makeCarryOffAnimation();
         }
 
        
@@ -453,40 +475,40 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         return result;
     }
 
-    private void makeRun()
+    private void makeRunAnimation()
     {
         if (crewState == CrewMemberStates.run) return;
         crewState = CrewMemberStates.run;
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) animator.Play("Run");        
     }
 
-    private void makeIdle()
+    private void makeIdleAnimation()
     {
         if (crewState == CrewMemberStates.idle) return;
         crewState = CrewMemberStates.idle;
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.Play("Idle");
     }
 
-    private void makeWalk()
+    private void makeWalkAnimation()
     {
         if (crewState == CrewMemberStates.walk) return;
         crewState = CrewMemberStates.walk;
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) animator.Play("Walk");
     }
 
-    private void makeCarry()
+    private void makeCarryAnimation()
     {        
         if (animator.GetLayerWeight(1)<1) animator.SetLayerWeight(1, 1);
         if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Carry")) animator.Play("Carry");        
     }
 
-    private void makeCarryOff()
+    private void makeCarryOffAnimation()
     {        
         if (animator.GetLayerWeight(1) > 0) animator.SetLayerWeight(1, 0);
         if (!animator.GetCurrentAnimatorStateInfo(1).IsName("idle 2")) animator.Play("idle 2");        
     }
 
-    private void makeRepair()
+    private void makeRepairAnimation()
     {
         if (animator.GetLayerWeight(1) < 1) animator.SetLayerWeight(1, 1);
         if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Repair") && !animator.GetCurrentAnimatorStateInfo(1).IsName("Repair 1")) animator.Play("Repair");
