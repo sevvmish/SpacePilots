@@ -182,7 +182,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
             case IncidentsType.fire:
                 afterEffect = ObjectPooling.smokeAfterFire_pool.GetObject();                
                 afterEffect.transform.position = transform.position;
-                afterEffect.GetComponent<IncidentAfterEffect>().InitAfterEffect(ObjectPooling.smokeAfterFire_pool, 2);
+                afterEffect.GetComponent<IncidentAfterEffect>().InitAfterEffect(ObjectPooling.smokeAfterFire_pool, 3);
                 break;
 
             case IncidentsType.simple_wreck:

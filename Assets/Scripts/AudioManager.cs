@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
         audiosourse.loop = false;
         audiosourse.playOnAwake = false;
 
-        simpleClick = Resources.Load<AudioClip>("audio/sounds/tiny click");
+        simpleClick = Resources.Load<AudioClip>("audio/sounds/tiny click short");
         grabSound = Resources.Load<AudioClip>("audio/sounds/grab something");
     }
 

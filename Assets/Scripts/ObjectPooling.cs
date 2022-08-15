@@ -8,7 +8,7 @@ public class ObjectPooling : MonoBehaviour
     private Transform storage;
 
     private Queue<GameObject> poolOfObjects;
-
+    
     //PUBLIC STATIC
     //incidents
     public static ObjectPooling fireIncident_pool, simpleWreckIncident_pool, smokeAfterFire_pool, repairAfterWreck;

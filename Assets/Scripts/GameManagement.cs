@@ -39,7 +39,7 @@ public class GameManagement : MonoBehaviour
     private GameObject selectedGameObject;
     private Dictionary<GameObject, CrewManager> crewMembers = new Dictionary<GameObject, CrewManager>();
     private ShipManager shipManager;
-
+    private Transform STORAGE;
 
     //crew UI delegates
     public delegate void BaseUIHandler(Camera camera);
@@ -61,23 +61,12 @@ public class GameManagement : MonoBehaviour
         Camera.main.aspect = 16f/9f;
 #endif
 
+        STORAGE = GameObject.Find("pool objects").transform;
+
         //init highlight and audio listener
         InitHighlightPlayer();
-
-        //ship and crew
-        AddMainShip();        
-        AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
-        AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
-
-        //init objects
-        ObjectPooling.InitPools(50, shipManager.mainShipTransform);
-
-        AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 4));
-        AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 3));
-        AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 2));
-
-        AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 2));
-        AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 4));
+        levelDesign(GeneralSettings.CurrentLevel);
+        
 
         
     }
@@ -146,9 +135,9 @@ public class GameManagement : MonoBehaviour
         player.GetComponent<CrewManager>().InitUI();
     }
 
-    private void AddMainShip()
+    private void AddMainShip(string shipName)
     {
-        GameObject ship = Instantiate(Resources.Load<GameObject>("prefabs/ships/small ship 1"), new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), GameObject.Find("SpaceShip").transform);
+        GameObject ship = Instantiate(Resources.Load<GameObject>($"prefabs/ships/{shipName}"), new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0), GameObject.Find("SpaceShip").transform);
         ship.SetActive(true);
         shipManager = ship.GetComponent<ShipManager>();
         cameraDefaultBodyShift = CAMERA_SHIFT_CLOSE;
@@ -247,6 +236,40 @@ public class GameManagement : MonoBehaviour
         instrument.SetActive(true);
         instrument.transform.position = position;        
         instrument.GetComponent<Instrument>().MakeThrownAway();
+    }
+
+    private void levelDesign(int level)
+    {
+        switch(level)
+        {
+            case 0:
+
+                break;
+
+            case 1: //small ship #1
+                //ship and crew
+                AddMainShip("small ship 1");
+                AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
+                AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
+
+                //init objects
+                ObjectPooling.InitPools(50, STORAGE);
+
+                AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 4));
+                AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 3));
+                AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 2));
+
+                AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 2));
+                AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 4));
+                break;
+
+            case 2:
+
+                break;
+        }
+
+
+        
     }
 
     

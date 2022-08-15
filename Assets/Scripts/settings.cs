@@ -20,6 +20,10 @@ public class settings : ScriptableObject
     public float AspectRatio = 2f;
     public int targetFrameRate = 60;
 
+    //current game setting
+    public int CurrentLevel = 1;
+
+
     //crew settings
     public Vector3 StrenghtOfShakeOnHighlightingCrew = new Vector3(0.6f, 0.15f, 0.6f);
     public float TimeForShakeForCrew = 0.5f;
