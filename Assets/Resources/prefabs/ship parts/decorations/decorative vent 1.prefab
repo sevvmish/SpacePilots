@@ -619,6 +619,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c64caf868f7f0174d821ae7006e81571, type: 3}
   m_PrefabInstance: {fileID: 3509541788909885127}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4356401925165542294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c64caf868f7f0174d821ae7006e81571, type: 3}
+  m_PrefabInstance: {fileID: 3509541788909885127}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9162492675404543441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4356401925165542294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &6887238071582812741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -696,6 +717,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c64caf868f7f0174d821ae7006e81571, type: 3}
+--- !u!1 &6004718154246280980 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c64caf868f7f0174d821ae7006e81571, type: 3}
+  m_PrefabInstance: {fileID: 6887238071582812741}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5834993007336332438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6004718154246280980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!4 &6349754366907387310 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c64caf868f7f0174d821ae7006e81571, type: 3}

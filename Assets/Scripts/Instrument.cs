@@ -33,7 +33,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
     private void OnEnable()
     {
-        if (baseMaterial == null) baseMaterial = Enums_n_Interfaces.GetBaseMaterial(baseHighLight);
+        if (baseMaterial == null) baseMaterial = Highlighting.GetBaseMaterial(baseHighLight);
         currentTransform = GetComponent<Transform>();
 
         modelStandartRotation = currentVisualTransform.localEulerAngles;
@@ -52,6 +52,8 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
         uiInformationMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
     }
+
+
 
     public static GameObject GetInstrumentPrefab(InstrumentsType _instrument)
     {
@@ -110,6 +112,30 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     private void Update()
     {
         RotateWhileThrownAway();
+
+        
+
+        if (checkCurrentDealingWithIncident.Count > 0)
+        {
+            foreach (var item in checkCurrentDealingWithIncident.Keys)
+            {                
+                if (item.IncidentHealth <= 0)
+                {
+                    checkCurrentDealingWithIncident.Remove(item);
+                    break;
+                }
+                else if(item.IncidentHealth > 0 && checkCurrentDealingWithIncident[item] > 0.5f && item.GetInstrumentTypeToDealWithIncident() == currentInstrumentType)
+                {                    
+                    //ShowEffectOfWorkingInstrument();
+                }                    
+            }                        
+        }
+        else
+        {
+            HideEffectOfWorkingInstrument();
+            currentIncidentInAction = null;
+        }
+        
     }
 
 
@@ -118,10 +144,12 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         return currentInstrumentType;
     }
 
+
     public bool IsCanBeTakenByCrew()
     {
         return isCanBeTakenByCrew;
     }
+
 
     public GameObject GiveAwayTakeble()
     {
@@ -159,29 +187,35 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
     private void OnTriggerStay(Collider other)
     {
-        currentIncidentInAction = null;
+        //currentIncidentInAction = null;
 
-        if (other.gameObject.CompareTag("Incident"))
+        if (other.gameObject.GetComponent<Incident>() != null && other.gameObject.GetComponent<Incident>().IncidentHealth > 0)
         {            
             Incident currentIncident = other.gameObject.GetComponent<Incident>();
-                        
+
+            if (!checkCurrentDealingWithIncident.ContainsKey(currentIncident))
+            {
+                checkCurrentDealingWithIncident.Add(currentIncident, 0);
+            }
+
             if (checkCurrentDealingWithIncident.ContainsKey(currentIncident))
             {
                 checkCurrentDealingWithIncident[currentIncident] += Time.deltaTime;
             }
 
-            if (currentIncident.GetInstrumentTypeToDealWithIncident() == currentInstrumentType && currentIncident.Health > 0 && checkCurrentDealingWithIncident[currentIncident] > 0.5f)
+            if (currentIncident.GetInstrumentTypeToDealWithIncident() == currentInstrumentType && currentIncident.IncidentHealth > 0 && checkCurrentDealingWithIncident[currentIncident] > 0.5f)
             {                
                 currentIncidentInAction = other.gameObject.transform;
                 ShowEffectOfWorkingInstrument();
                 currentIncident.DecreaseHealthAmount(instrumentHealthEffect * Time.deltaTime);
             }              
+            
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Incident"))
+        if (other.gameObject.GetComponent<Incident>() != null && other.gameObject.GetComponent<Incident>().IncidentHealth > 0)
         {
             Incident currentIncident = other.gameObject.GetComponent<Incident>();
 
@@ -194,7 +228,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Incident"))
+        if (other.gameObject.GetComponent<Incident>() != null && other.gameObject.GetComponent<Incident>().IncidentHealth > 0)
         {
             HideEffectOfWorkingInstrument();
 
@@ -215,20 +249,20 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
     public void HighlightCurrentObject()
     {
-        if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
+        if (!isHighlightEffectInProgress && isCanBeTakenByCrew) StartCoroutine(HandleCurrentHighlight());
     }
 
     public IEnumerator HandleCurrentHighlight()
     {
         isHighlightEffectInProgress = true;
 
-        Enums_n_Interfaces.ChangeMaterial(highlightMaterial, baseHighLight);
+        Highlighting.ChangeMaterial(highlightMaterial, baseHighLight);
         
         currentVisualTransform.DOShakeScale(GeneralSettings.TimeForShakeForInstruments, GeneralSettings.StrenghtOfShakeOnHighlightingInstruments, 10, 90, true);
 
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForInstruments);
         isHighlightEffectInProgress = false;
 
-        Enums_n_Interfaces.ChangeMaterial(baseMaterial, baseHighLight);
+        Highlighting.ChangeMaterial(baseMaterial, baseHighLight);
     }
 }

@@ -8,19 +8,20 @@ using DG.Tweening;
 [RequireComponent(typeof(SphereCollider))]
 public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlightable
 {
+    public float maxHealth;
+    public bool isIncidentActive;
+
     [SerializeField] private InstrumentsType whatInstrumentDealThisIncident;
     [SerializeField] private IncidentsType currentIncidentType;
-    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform, UIPositionPoint, baseHighLight;
-    [SerializeField] private float maxHealth;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform, UIPositionPoint, baseHighLight;    
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private AudioSource audiosource;
 
     private Material baseMaterial;
     private bool isHighlightEffectInProgress;
-    public bool isIncidentActive;
-
     private float health;
+    private int timesToShowHealthBar = 0;
 
     //UI
     private GameObject uiProgressBar;
@@ -30,7 +31,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
 
     
 
-    public float Health
+    public float IncidentHealth
     {
         get {return health;}
 
@@ -45,24 +46,38 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
             else if(value >= maxHealth)
             {
                 health = maxHealth;
-                if (!isShowingUIBar) StartCoroutine(ShowUIBarWhileActive());
+                timesToShowHealthBar = 0;
             }      
             else
             {
+                if (value < health)
+                {
+                    timesToShowHealthBar++;
+                    if (timesToShowHealthBar>2 && !isShowingUIBar) StartCoroutine(ShowUIBarWhileActive());
+                }
+
                 health = value;
-                if (!isShowingUIBar) StartCoroutine(ShowUIBarWhileActive());
+                
             }
         }
     }
 
 
     private void OnEnable()
-    {
-        audiosource = GetComponent<AudioSource>();
-        audiosource.volume = GeneralSettings.AudioSourceVolume_incidents;
+    {       
+        if (audiosource!= null)
+        {
+            audiosource = GetComponent<AudioSource>();
+            audiosource.volume = GeneralSettings.AudioSourceVolume_incidents;
+        }
+        
 
-        if (baseMaterial == null) baseMaterial = Enums_n_Interfaces.GetBaseMaterial(baseHighLight);
+        if (baseHighLight != null)
+        {
+            if (baseMaterial == null) baseMaterial = Highlighting.GetBaseMaterial(baseHighLight);
+        }
 
+        timesToShowHealthBar = 0;
         health = maxHealth;
         isIncidentActive = true;
 
@@ -76,32 +91,38 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
         }        
     }
 
-
-    private void InitUI()
+    public void SetMaxHealth(float max_health, float _health)
     {
+        maxHealth = max_health;
+        IncidentHealth = _health;
+    }
+
+    public void InitUI()
+    {        
         uiProgressBar = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.progress_bar), GameObject.Find("MainCanvas").transform);
         uiProgressBarRect = uiProgressBar.GetComponent<RectTransform>();
-        GameManagement.MainUIHandler += UpdateUIPosition;
-
+        
         HideUI();
     }
 
-
-
+  
     public void ShowUI()
     {
         if (!uiProgressBarRect.gameObject.activeSelf) uiProgressBarRect.gameObject.SetActive(true);
+        GameManagement.MainUIHandler += UpdateUIPosition;
     }
 
 
     public void HideUI()
     {
         if (uiProgressBarRect.gameObject.activeSelf) uiProgressBarRect.gameObject.SetActive(false);
+        GameManagement.MainUIHandler -= UpdateUIPosition;
+        
     }
 
     public void UpdateUIData()
     {
-        uiProgressBarRect.transform.GetChild(1).GetComponent<Image>().fillAmount = Health / maxHealth;
+        uiProgressBarRect.transform.GetChild(1).GetComponent<Image>().fillAmount = IncidentHealth / maxHealth;
     }
 
     public void UpdateUIPosition(Camera camera)
@@ -110,7 +131,12 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
         {
             OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
             uiProgressBarRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
-        }        
+        }   
+        else
+        {
+            GameManagement.MainUIHandler -= UpdateUIPosition;
+            print("!!!!!!!!");
+        }
     }
 
 
@@ -143,8 +169,8 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
 
     public void DecreaseHealthAmount(float amount)
     {
-        Health -= amount;
-        //print(Health + " - incident");
+        IncidentHealth -= amount;
+        //print(IncidentHealth + " - incident");
         UpdateUIData();
     }
 
@@ -162,7 +188,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
 
 
     public IEnumerator ShowUIBarWhileActive()
-    {
+    {        
         isShowingUIBar = true;
         ShowUI();
         yield return new WaitForSeconds(2);
@@ -174,11 +200,15 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
     }
 
     private IEnumerator makeThisIncidentInactive()
-    {
+    {    
         GameObject afterEffect = default;
 
         switch (currentIncidentType)
         {
+            case IncidentsType.none:
+                
+                break;
+
             case IncidentsType.fire:
                 afterEffect = ObjectPooling.smokeAfterFire_pool.GetObject();                
                 afterEffect.transform.position = transform.position;
@@ -192,15 +222,12 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
                 break;
         }
 
-
         HideUI();
+        StopCoroutine(ShowUIBarWhileActive());
         GetComponent<Transform>().DOScale(Vector3.zero, 0.3f);
         yield return new WaitForSeconds(0.3f);
         GetComponent<Transform>().localScale = Vector3.one;
         HideUI();
-
-        
-
 
         isIncidentActive = false;
         gameObject.SetActive(false);
@@ -208,21 +235,21 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
 
     public void HighlightCurrentObject()
     {
-        if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
+        if (!isHighlightEffectInProgress && baseHighLight != null) StartCoroutine(HandleCurrentHighlight());
     }
 
     public IEnumerator HandleCurrentHighlight()
     {
         isHighlightEffectInProgress = true;
 
-        Enums_n_Interfaces.ChangeMaterial(highlightMaterial, baseHighLight);
+        Highlighting.ChangeMaterial(highlightMaterial, baseHighLight);
 
         currentVisualTransform.DOShakeScale(GeneralSettings.TimeForShakeForInstruments, GeneralSettings.StrenghtOfShakeOnHighlightingInstruments, 10, 90, true);
 
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForInstruments);
         isHighlightEffectInProgress = false;
 
-        Enums_n_Interfaces.ChangeMaterial(baseMaterial, baseHighLight);
+        Highlighting.ChangeMaterial(baseMaterial, baseHighLight);
     }
 
     

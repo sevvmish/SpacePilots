@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class ShipManager : MonoBehaviour
 {
+    public Engine[] ShipEngines;
     public Transform[] MovingEffects;
-
-    public Transform[] EngineEffects;
-
+    
     private int limitAmountOfCrew;
     public Transform[] pointsOfCrewResp;
     public Transform DefaultPointOfCrewResp;
     public Transform mainShipTransform;
 
     [SerializeField] private float shipHealth;
+    [SerializeField] private float EnginesProductivity;
     [SerializeField] private float shipSpeed;
-    [SerializeField] private float energy;
+    [SerializeField] private float energy = 0;
 
     public float Energy
     {
@@ -35,9 +35,15 @@ public class ShipManager : MonoBehaviour
             else
             {                
                 energy = value;
-
-                SetEffectsOfMovingInParticles();
-                SetEffectOfEnginesFlame();
+                
+                
+                if (ShipEngines.Length>0)
+                {
+                    for (int i = 0; i < ShipEngines.Length; i++)
+                    {
+                        ShipEngines[i].Energy = energy;
+                    }
+                }
             }
         }
     }
@@ -53,6 +59,24 @@ public class ShipManager : MonoBehaviour
         StartCoroutine(AfterSec());
     }
 
+    private void Update()
+    {
+        if (ShipEngines.Length>0)
+        {
+            EnginesProductivity = 0;
+
+            for (int i = 0; i < ShipEngines.Length; i++)
+            {
+                EnginesProductivity += ShipEngines[i].Productivity;
+            }
+
+            EnginesProductivity /= ShipEngines.Length;
+            SetEffectsOfMovingInParticles();
+        }
+
+        
+    }
+
     public Vector3 GetPointOfRespForCrew(int orderOfCrewMember)
     {
         if (orderOfCrewMember >= limitAmountOfCrew) return DefaultPointOfCrewResp.position;
@@ -64,30 +88,25 @@ public class ShipManager : MonoBehaviour
 
     private void SetEffectsOfMovingInParticles()
     {
-        float timeTL = (1 / (Energy + 0.01f) * 3f) < 10f ? (1 / (Energy + 0.01f) * 3f) : 10f;
 
-        if (Energy < 0.2f) timeTL = 0;
+        float koef = EnginesProductivity * Energy;
+
+
+        float timeTL = (1 / (koef + 0.01f) * 3f) < 10f ? (1 / (koef + 0.01f) * 3f) : 10f;
+
+        if (koef < 0.2f) timeTL = 0;
 
         if (MovingEffects.Length>0)
         {
             for (int i = 0; i < MovingEffects.Length; i++)
             {
-                MovingEffects[i].GetComponent<ParticleSystem>().startSpeed = Energy * Energy * 15f;
+                MovingEffects[i].GetComponent<ParticleSystem>().startSpeed = koef * koef * 15f;
                 MovingEffects[i].GetComponent<ParticleSystem>().startLifetime = timeTL;                
             }
         }
     }
 
-    private void SetEffectOfEnginesFlame()
-    {
-        if (EngineEffects.Length > 0)
-        {
-            for (int i = 0; i < EngineEffects.Length; i++)
-            {
-                EngineEffects[0].localScale = Vector3.one * energy;
-            }
-        }
-    }
+    
 
     public IEnumerator AfterSec()
     {

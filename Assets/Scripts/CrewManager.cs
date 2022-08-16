@@ -130,7 +130,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     {        
         if (audio == null) audio = GetComponent<AudioSource>();
         audio.volume = GeneralSettings.AudioSourceVolume_crew;
-        if (baseMaterial == null) baseMaterial = Enums_n_Interfaces.GetBaseMaterial(baseHighLight);
+        if (baseMaterial == null) baseMaterial = Highlighting.GetBaseMaterial(baseHighLight);
 
         health = maxHealth;
         currentBaseTransform.position = pointOfRespawn;
@@ -163,27 +163,34 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     {
         uiHealthBar = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.health_bar), GameObject.Find("MainCanvas").transform);
         uiHealthBarRect = uiHealthBar.GetComponent<RectTransform>();
-        GameManagement.MainUIHandler += UpdateUIPosition;
+        //GameManagement.MainUIHandler += UpdateUIPosition;
         HideUI();
     }
 
     public void UpdateUIPosition(Camera camera)
-    {
+    {        
         if (uiHealthBarRect.gameObject.activeSelf)
         {
             OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
             uiHealthBarRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
-        }        
+        }
+        else
+        {
+            GameManagement.MainUIHandler -= UpdateUIPosition;
+            print("!!!!!!!!!!!");
+        }
     }
 
     public void ShowUI()
     {
         if (!uiHealthBarRect.gameObject.activeSelf) uiHealthBarRect.gameObject.SetActive(true);
+        GameManagement.MainUIHandler += UpdateUIPosition;
     }
 
     public void HideUI()
     {
         if (uiHealthBarRect.gameObject.activeSelf) uiHealthBarRect.gameObject.SetActive(false);
+        GameManagement.MainUIHandler -= UpdateUIPosition;
     }
 
     public void UpdateUIData()
@@ -240,6 +247,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             
             Transform aim = CurrentTakenObject.GetComponent<Instrument>().GetCurrentIncidentInAction();
             currentBaseTransform.LookAt(new Vector3(aim.position.x, 0, aim.position.z));
+            //print(new Vector3(aim.position.x, 0, aim.position.z));
                      
             switch((InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject())
             {
@@ -252,8 +260,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             }
         }
         else if (CurrentTakenObject != null)
-        {
-            
+        {            
             if (CurrentTakenObject.GetComponent<Instrument>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == InstrumentsType.repair_kit) 
             {
                 makeCarryOffAnimation();
@@ -261,15 +268,12 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             else 
             {
                 makeCarryAnimation();
-            }
-            
+            }            
         }
         else if (CurrentTakenObject == null)
         {
             makeCarryOffAnimation();
-        }
-
-       
+        }       
     }
 
     public void MoveCrewMemberTo(Vector3 destination, GameObject _objectOfDestination) 
@@ -411,14 +415,14 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             {
                 case InstrumentsType.fire_extinguisher:
                     CurrentTakenObject.GetComponent<Instrument>().GetVisualTransform().localScale = new Vector3(0.8f, 0.8f, 1f);
-                    CurrentTakenObject.GetComponent<Instrument>().GetVisualTransform().localPosition = new Vector3(0.186f, 0, 0.028f);
+                    CurrentTakenObject.GetComponent<Instrument>().GetVisualTransform().localPosition = new Vector3(0.186f, 0.72f, 0.028f);
 
-                    CurrentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.65f);
+                    CurrentTakenObject.transform.localPosition = new Vector3(0, 0, 0.65f); //0.72
                     CurrentTakenObject.transform.localEulerAngles = new Vector3(0, 90, 0);
                     break;
 
                 case InstrumentsType.repair_kit:
-                    CurrentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.65f);
+                    CurrentTakenObject.transform.localPosition = new Vector3(0, 0, 0.65f);
                     CurrentTakenObject.GetComponent<Instrument>().GetVisualTransform().gameObject.SetActive(false);
 
                     hammerExample.gameObject.SetActive(true);
@@ -448,12 +452,12 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     public IEnumerator HandleCurrentHighlight()
     {
         isHighlightEffectInProgress = true;
-        Enums_n_Interfaces.ChangeMaterial(highlightMaterial, baseHighLight);
+        Highlighting.ChangeMaterial(highlightMaterial, baseHighLight);
         currentModelTransform.DOShakeScale(GeneralSettings.TimeForShakeForCrew, GeneralSettings.StrenghtOfShakeOnHighlightingCrew, 10, 90, true);
         
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForCrew);
         isHighlightEffectInProgress = false;
-        Enums_n_Interfaces.ChangeMaterial(baseMaterial, baseHighLight);
+        Highlighting.ChangeMaterial(baseMaterial, baseHighLight);
     }
 
     public static GameObject GetCrewPrefab(CrewSpecialization _crewSpec)

@@ -17,9 +17,9 @@ public class GameManagement : MonoBehaviour
     
 
     private Vector3 cameraDefaultBodyShift = Vector3.zero;
-    private Vector3 cameraDefaultBodyAngle = new Vector3(60, 0, 0);
+    private Vector3 cameraDefaultBodyAngle = new Vector3(65, 0, 0);
 
-    private Vector3 CAMERA_SHIFT_CLOSE = new Vector3(0, 9.5f, -6f);    
+    private Vector3 CAMERA_SHIFT_CLOSE = new Vector3(0, 9.5f, -5f);    
     private Vector3 CAMERA_SHIFT_MEDIUM = new Vector3(0, 13f, -6.4f);
 
     //floating effect
