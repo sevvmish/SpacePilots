@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209bf8d1fc956bb41ab3c1ee05586a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 2
+  isIncidentActive: 0
   whatInstrumentDealThisIncident: 2
   currentIncidentType: 2
   pointOfInterestFROM: {fileID: 3322474679021013365}
@@ -105,11 +107,9 @@ MonoBehaviour:
   currentVisualTransform: {fileID: 2446352208454798236}
   UIPositionPoint: {fileID: 3690782349309397805}
   baseHighLight: {fileID: 1004736659353272834}
-  maxHealth: 2
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
   highlightMaterial: {fileID: 2100000, guid: b1f164095bfc29942bc0b83d8b8cee4e, type: 2}
   audiosource: {fileID: 0}
-  isIncidentActive: 0
 --- !u!82 &9057110473042060331
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1031,3 +1031,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 44d19f5d180db944a8c78b0c8380c2e2, type: 3}
   m_PrefabInstance: {fileID: 6300247794121667656}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6606657701080615193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 44d19f5d180db944a8c78b0c8380c2e2, type: 3}
+  m_PrefabInstance: {fileID: 6300247794121667656}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4509168164117125970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6606657701080615193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff

@@ -897,12 +897,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7264cbe8167740845a8b364d11aebf63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Energy: 0
   pointOfInterestFROM: {fileID: 3045993560167596577}
   pointOfInterestTO: {fileID: 415394694080751126}
   UIPositionPoint: {fileID: 5245639231566409039}
   greenLight: {fileID: 8578474394801675812}
   redLight: {fileID: 3989469360557772527}
+  barrelExample: {fileID: 3712942866775487051}
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
+  currentSupplyToConsumeType: 2
+  standartBarrelCapacity: 1
+  barrelConsuptionSpeed: 0.02
   highlightMaterial: {fileID: 2100000, guid: b1f164095bfc29942bc0b83d8b8cee4e, type: 2}
   baseRenderersForHiglight:
   - {fileID: 518704275037118045}
@@ -1802,7 +1807,11 @@ MonoBehaviour:
   howLong: 2
   whatInterval: 1
   startingTimer: 0
+  isLeaveEnabled: 0
   mesh: {fileID: 5967739086083930391}
+  currentGameObject: {fileID: 0}
+  currentGameObjects: []
+  blinkType: 0
 --- !u!1001 &1144430681198095023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2108,31 +2117,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4352395312139657679, guid: 3b6da50989b6c124a8ba1b430a7ccdde, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8433915
+      value: 0.7680086
       objectReference: {fileID: 0}
     - target: {fileID: 4352395312139657679, guid: 3b6da50989b6c124a8ba1b430a7ccdde, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.22203696
       objectReference: {fileID: 0}
     - target: {fileID: 4352395312139657679, guid: 3b6da50989b6c124a8ba1b430a7ccdde, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.34852818
       objectReference: {fileID: 0}
     - target: {fileID: 4352395312139657679, guid: 3b6da50989b6c124a8ba1b430a7ccdde, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.53729963
+      value: 0.48927552
       objectReference: {fileID: 0}
     - target: {fileID: 4352395312139657679, guid: 3b6da50989b6c124a8ba1b430a7ccdde, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 43.008
       objectReference: {fileID: 0}
     - target: {fileID: 4352395312139657679, guid: 3b6da50989b6c124a8ba1b430a7ccdde, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -25.783
       objectReference: {fileID: 0}
     - target: {fileID: 4352395312139657679, guid: 3b6da50989b6c124a8ba1b430a7ccdde, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 65
+      value: 54.694
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b6da50989b6c124a8ba1b430a7ccdde, type: 3}

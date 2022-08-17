@@ -325,14 +325,17 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             {
                 //print(((SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetSupplyTypeOfSupply() == SuppliesType.tester).ToString());
 
-                if (other.gameObject.GetComponent<FacilityConsumer>() != null && (SuppliesType)CurrentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfObject() == other.gameObject.GetComponent<FacilityConsumer>().GetFacilityConsumerSupplyType())
+                if (other.gameObject.GetComponent<IConsumer>() != null && (SuppliesType)CurrentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfObject() == other.gameObject.GetComponent<IConsumer>().GetFacilityConsumerSupplyType())
                 {
                     print("interacted with FacilityConsumer");                    
-                    other.gameObject.GetComponent<FacilityConsumer>().ConsumeMovable(CurrentTakenObject);
-                    CurrentTakenObject = null;
+                    if (other.gameObject.GetComponent<IConsumer>().ConsumeSupply(CurrentTakenObject))
+                    {
+                        CurrentTakenObject = null;
+                    }
+                    
                 }
 
-                if (other.gameObject.GetComponent<Incident>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == other.gameObject.GetComponent<Incident>().GetInstrumentTypeToDealWithIncident())
+                if (other.gameObject.GetComponent<Incident>() != null && CurrentTakenObject.GetComponent<Instrument>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == other.gameObject.GetComponent<Incident>().GetInstrumentTypeToDealWithIncident())
                 {
                     print("WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!");
 

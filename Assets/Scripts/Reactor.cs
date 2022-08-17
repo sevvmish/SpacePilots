@@ -1,18 +1,39 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable
+public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, IConsumer
 {
-    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, UIPositionPoint, greenLight, redLight;
+    public float Energy;
+
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, UIPositionPoint, greenLight, redLight, barrelExample;
     [SerializeField] private settings GeneralSettings;
+    [SerializeField] private SuppliesType currentSupplyToConsumeType;
+    [SerializeField] private float standartBarrelCapacity = 1;
+    [SerializeField] private float barrelConsuptionSpeed = 0.02f;
 
-
+    //highlighting
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private List<MeshRenderer> baseRenderersForHiglight = new List<MeshRenderer>();
     private List<Material> baseMaterialsForHiglight = new List<Material>();
     private bool isHighlightEffectInProgress;
+    //===========
+
+    //UI information mark
+    private GameObject uiInformationMark;
+    private RectTransform uiInformationMarkRect;
+    private Vector3 OnScreenPosition;
+    
+    private Action makeBlink;
+    private Material barrelExampleMaterial;
+    private float currentTimer, limitTimer;
+    //==================
+
+    private float currentBarrelCapacity;
+    private bool isReactorLoaded, isShowMediumLevelInColor, isReactorReadyToLoadAgain;
 
 
     private void Start()
@@ -21,13 +42,148 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable
         {
             baseMaterialsForHiglight.Add(baseRenderersForHiglight[i].material);
         }
+
+        barrelExampleMaterial = Instantiate(barrelExample.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material);
+        barrelExample.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = barrelExampleMaterial;
     }
 
+    private void OnEnable()
+    {
+        //icon of overheating
+        uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
+        uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.energy_fuel);
+        uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.red;
+        uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
+        GameManagement.MainUIHandler -= UpdateUIPosition;
+        uiInformationMarkRect.gameObject.SetActive(false);
+
+        SetStateToEmpty();
+    }
+
+    private void UpdateUIPosition(Camera camera)
+    {
+        OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
+        uiInformationMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
+    }
+
+
+
+    private void ShowUI()
+    {
+        if (!uiInformationMarkRect.gameObject.activeSelf)
+        {            
+            GameManagement.MainUIHandler += UpdateUIPosition;
+            uiInformationMarkRect.gameObject.SetActive(true);
+        }
+    }
+
+    private void HideUI()
+    {
+        if (uiInformationMarkRect.gameObject.activeSelf)
+        {
+            GameManagement.MainUIHandler -= UpdateUIPosition;
+            uiInformationMarkRect.gameObject.SetActive(false);
+        }
+    }
+
+
+
+    private void SetStateToEmpty()
+    {
+        uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        makeBlink = null;
+
+        currentBarrelCapacity = 0;
+        Energy = 0;
+        isReactorLoaded = false;
+        isReactorReadyToLoadAgain = true;
+        greenLight.gameObject.SetActive(false);
+        redLight.gameObject.SetActive(true);
+        barrelExample.gameObject.SetActive(false);
+        ShowUI();
+    }
+
+
+    private void SetStateToLoaded()
+    {
+        uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        makeBlink = null;
+        isShowMediumLevelInColor = false;
+
+        barrelExample.GetChild(0).localScale = Vector3.one;
+        barrelExampleMaterial.SetColor("_BaseColor", Color.green);
+        barrelExampleMaterial.SetColor("_EmissionColor", Color.green * 1.9f);
+
+        currentBarrelCapacity = standartBarrelCapacity;
+        Energy = 1;
+        isReactorLoaded = true;
+        isReactorReadyToLoadAgain = false;
+        greenLight.gameObject.SetActive(true);
+        redLight.gameObject.SetActive(false);
+        barrelExample.gameObject.SetActive(true);
+        HideUI();
+    }
+
+
+    private void Update()
+    {
+        if (isReactorLoaded && currentBarrelCapacity>0)
+        {
+            currentBarrelCapacity -= barrelConsuptionSpeed * Time.deltaTime;
+            barrelExample.GetChild(0).localScale = new Vector3(currentBarrelCapacity/standartBarrelCapacity, 1, currentBarrelCapacity / standartBarrelCapacity);
+            
+            if (currentBarrelCapacity < (standartBarrelCapacity * 0.21f) && makeBlink == null)
+            {
+                Energy = 0.5f;
+                isReactorReadyToLoadAgain = true;
+                barrelExampleMaterial.SetColor("_BaseColor", Color.red);
+                barrelExampleMaterial.SetColor("_EmissionColor", Color.red * 1.9f);
+                uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
+                uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
+                makeBlink = makeBlinkOnLowCapacity;
+                ShowUI();
+            }
+
+            if (!isShowMediumLevelInColor && currentBarrelCapacity < (standartBarrelCapacity * 0.5f))
+            {
+                isShowMediumLevelInColor = true;
+                barrelExampleMaterial.SetColor("_BaseColor", Color.yellow);
+                barrelExampleMaterial.SetColor("_EmissionColor", Color.yellow * 1.9f);
+            }
+                        
+        }
+        else if (isReactorLoaded && currentBarrelCapacity <= 0)
+        {
+            SetStateToEmpty();
+        }
+
+        makeBlink?.Invoke();
+    }
+
+    private void makeBlinkOnLowCapacity()
+    {
+        if (currentBarrelCapacity < (standartBarrelCapacity * 0.07f))
+        {
+            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.15f;
+            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.1f;
+        }
+        else if (currentBarrelCapacity < (standartBarrelCapacity * 0.14f))
+        {
+            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.3f;
+            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.15f;
+        }
+        else if(currentBarrelCapacity < (standartBarrelCapacity * 0.21f))
+        {
+            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.5f;
+            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.3f;
+        }        
+    }
 
     public Vector3 GetPointOfInteraction()
     {
         return Vector3.Lerp(pointOfInterestFROM.position, pointOfInterestTO.position, UnityEngine.Random.Range(0.1f, 1f));
     }
+
 
     public IEnumerator HandleCurrentHighlight()
     {
@@ -67,5 +223,22 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable
         }
     }
 
+    public bool ConsumeSupply(GameObject supply)
+    {
+        if (isReactorReadyToLoadAgain)
+        {
+            supply.transform.SetParent(this.transform);
+            supply.transform.localPosition = Vector3.one;
+            supply.SetActive(false);
+            SetStateToLoaded();
+            return true;
+        }
 
+        return false;
+    }
+
+    public SuppliesType GetFacilityConsumerSupplyType()
+    {
+        return currentSupplyToConsumeType;
+    }
 }

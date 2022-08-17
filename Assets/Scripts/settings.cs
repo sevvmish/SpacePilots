@@ -33,8 +33,12 @@ public class settings : ScriptableObject
     public float TimeForShakeForFacility = 0.5f;
 
     //instrument settings
-    public Vector3 StrenghtOfShakeOnHighlightingInstruments = new Vector3(0.6f, 0.3f, 0.6f);
-    public float TimeForShakeForInstruments = 0.5f;
+    public Vector3 StrenghtOfShakeOnHighlightingInstruments = new Vector3(0.8f, 0.5f, 0.8f);
+    public float TimeForShakeForInstruments = 0.4f;
+
+    //supply settings
+    public Vector3 StrenghtOfShakeOnHighlightingSupply = new Vector3(1f, 0.6f, 1f);
+    public float TimeForShakeForSupply = 0.3f;
 
     //SOUND=================================
     public float AudioSourceVolume_incidents = 0.2f;

@@ -29,6 +29,50 @@ public class ObjectPooling : MonoBehaviour
         simpleRepairerInstrument_pool = new ObjectPooling(size, Instrument.GetInstrumentPrefab(InstrumentsType.repair_kit), transform);
     }
 
+
+    public static void AddIncident(IncidentsType _type, Vector3 position)
+    {
+        GameObject incident = default;
+
+        switch (_type)
+        {
+            case IncidentsType.fire:
+                incident = ObjectPooling.fireIncident_pool.GetObject();
+                break;
+
+            case IncidentsType.simple_wreck:
+                incident = ObjectPooling.simpleWreckIncident_pool.GetObject();
+                break;
+
+        }
+
+        incident.SetActive(true);
+        incident.transform.position = position;
+    }
+
+
+    public static void AddInstrument(InstrumentsType _type, Vector3 position)
+    {
+        GameObject instrument = default;
+
+        switch (_type)
+        {
+            case InstrumentsType.fire_extinguisher:
+                instrument = ObjectPooling.fireExtInstrument_pool.GetObject();
+                break;
+
+            case InstrumentsType.repair_kit:
+                instrument = ObjectPooling.simpleRepairerInstrument_pool.GetObject();
+                break;
+        }
+
+        instrument.SetActive(true);
+        instrument.transform.position = position;
+        instrument.GetComponent<Instrument>().MakeThrownAway();
+    }
+
+
+
     public ObjectPooling(int Index, GameObject Example, Transform Storage)
     {
         example = Example;

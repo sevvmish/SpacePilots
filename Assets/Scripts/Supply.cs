@@ -1,24 +1,43 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(SphereCollider))]
-public class Supply : MonoBehaviour, ITakenAndMovable
+public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable
 {
     [SerializeField] private SuppliesType currentSupplyType;    
     [SerializeField] private float YCoordWhenThrownAway;
     [SerializeField] private SphereCollider currentCollider;
     [SerializeField] private Transform currentVisualTransform, currentTransform;
+    [SerializeField] private bool isCanBeTakenByCrew = false;
+    [SerializeField] private settings GeneralSettings;
 
-    private bool isCanBeTakenByCrew = false;
+    //highlighting
+    [SerializeField] private Material highlightMaterial;
+    [SerializeField] private List<MeshRenderer> baseRenderersForHiglight = new List<MeshRenderer>();
+    private List<Material> baseMaterialsForHiglight = new List<Material>();
+    private bool isHighlightEffectInProgress;
+    //===========
+
+
     private float modelAngle;
     private Vector3 modelStandartRotation;
+
+    private void Start()
+    {
+        for (int i = 0; i < baseRenderersForHiglight.Count; i++)
+        {
+            baseMaterialsForHiglight.Add(baseRenderersForHiglight[i].material);
+        }      
+    }
+
 
     private void OnEnable()
     {
         currentTransform = GetComponent<Transform>();
-                
+        if (isCanBeTakenByCrew) MakeThrownAway();
         modelStandartRotation = currentVisualTransform.localEulerAngles;
     }
 
@@ -61,8 +80,12 @@ public class Supply : MonoBehaviour, ITakenAndMovable
                 result = Resources.Load<GameObject>("prefabs/supplies/test movable");
                 break;
 
-            case SuppliesType.engine_fuel:
-                result = Resources.Load<GameObject>("prefabs/supplies/fuel barrel");
+            case SuppliesType.empty_engine_fuel:
+                result = Resources.Load<GameObject>("prefabs/supplies/empty fuel barrel");
+                break;
+
+            case SuppliesType.full_engine_fuel:
+                result = Resources.Load<GameObject>("prefabs/supplies/full fuel barrel");
                 break;
 
         }
@@ -95,7 +118,46 @@ public class Supply : MonoBehaviour, ITakenAndMovable
         }
     }
 
+    public IEnumerator HandleCurrentHighlight()
+    {
+        isHighlightEffectInProgress = true;
 
+        HighLightObject();
 
+        for (int i = 0; i < baseRenderersForHiglight.Count; i++)
+        {
+            float deltaX = baseRenderersForHiglight[i].transform.localScale.x / 1f;
+            float deltaY = baseRenderersForHiglight[i].transform.localScale.y / 1f;
+            float deltaZ = baseRenderersForHiglight[i].transform.localScale.z / 1f;
+
+            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForSupply, new Vector3(GeneralSettings.StrenghtOfShakeOnHighlightingSupply.x * deltaX, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.y * deltaY, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.z * deltaZ) * 2f, 10, 90, true);
+        }
+
+        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForSupply);
+        isHighlightEffectInProgress = false;
+
+        UnHighLightObject();
+    }
+
+    public void HighlightCurrentObject()
+    {
+        if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
+    }
+
+    private void HighLightObject()
+    {
+        for (int i = 0; i < baseRenderersForHiglight.Count; i++)
+        {
+            baseRenderersForHiglight[i].material = highlightMaterial;
+        }
+    }
+
+    private void UnHighLightObject()
+    {
+        for (int i = 0; i < baseRenderersForHiglight.Count; i++)
+        {
+            baseRenderersForHiglight[i].material = baseMaterialsForHiglight[i];
+        }
+    }
 }
 

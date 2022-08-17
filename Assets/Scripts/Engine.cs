@@ -167,8 +167,9 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
         uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
         uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.fire);
         uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.red;
-        uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();        
-        HideUI();
+        uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
+        GameManagement.MainUIHandler -= UpdateUIPosition;
+        uiInformationMarkRect.gameObject.SetActive(false);
     }
 
 

@@ -197,6 +197,7 @@ public class GameManagement : MonoBehaviour
         //============================
     }
 
+    /*
     private void AddIncident(IncidentsType _type, Vector3 position)
     {
         GameObject incident = default;
@@ -237,6 +238,7 @@ public class GameManagement : MonoBehaviour
         instrument.transform.position = position;        
         instrument.GetComponent<Instrument>().MakeThrownAway();
     }
+    */
 
     private void levelDesign(int level)
     {
@@ -255,12 +257,12 @@ public class GameManagement : MonoBehaviour
                 //init objects
                 ObjectPooling.InitPools(50, STORAGE);
 
-                AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 4));
-                AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 3));
-                AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 2));
+                ObjectPooling.AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 4));
+                ObjectPooling.AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 3));
+                ObjectPooling.AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 2));
 
-                AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 2));
-                AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 4));
+                ObjectPooling.AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 2));
+                ObjectPooling.AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 4));
                 break;
 
             case 2:

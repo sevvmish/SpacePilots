@@ -44,10 +44,18 @@ public interface IUIBars
 }
 
 
+public interface IConsumer
+{
 
+    public bool ConsumeSupply(GameObject supply);
+
+    public SuppliesType GetFacilityConsumerSupplyType();
+}
 
 
 //================================================================
+
+
 
 //SPECIALLY FOR CREW==============================================
 public enum CrewSpecialization
@@ -76,7 +84,8 @@ public enum CrewMemberStates
 public enum SuppliesType
 {
     tester = 0,
-    engine_fuel,
+    empty_engine_fuel,
+    full_engine_fuel,
     shell_for_cannon    
 }
 

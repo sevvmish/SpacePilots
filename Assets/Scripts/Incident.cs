@@ -87,7 +87,8 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
         }
         else
         {
-            HideUI();
+            uiProgressBarRect.gameObject.SetActive(false);
+            GameManagement.MainUIHandler -= UpdateUIPosition;
         }        
     }
 
@@ -101,22 +102,31 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
     {        
         uiProgressBar = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.progress_bar), GameObject.Find("MainCanvas").transform);
         uiProgressBarRect = uiProgressBar.GetComponent<RectTransform>();
-        
-        HideUI();
+
+        uiProgressBarRect.gameObject.SetActive(false);
+        GameManagement.MainUIHandler -= UpdateUIPosition;
     }
 
   
     public void ShowUI()
     {
-        if (!uiProgressBarRect.gameObject.activeSelf) uiProgressBarRect.gameObject.SetActive(true);
-        GameManagement.MainUIHandler += UpdateUIPosition;
+        if (!uiProgressBarRect.gameObject.activeSelf)
+        {
+            uiProgressBarRect.gameObject.SetActive(true);
+            GameManagement.MainUIHandler += UpdateUIPosition;
+        }
+            
     }
 
 
     public void HideUI()
     {
-        if (uiProgressBarRect.gameObject.activeSelf) uiProgressBarRect.gameObject.SetActive(false);
-        GameManagement.MainUIHandler -= UpdateUIPosition;
+        if (uiProgressBarRect.gameObject.activeSelf)
+        {
+            uiProgressBarRect.gameObject.SetActive(false);
+            GameManagement.MainUIHandler -= UpdateUIPosition;
+        }
+            
         
     }
 

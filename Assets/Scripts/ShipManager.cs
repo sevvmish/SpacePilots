@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ShipManager : MonoBehaviour
 {
+    public Reactor[] ShipReactors;
+
     public Engine[] ShipEngines;
     public Transform[] MovingEffects;
     
@@ -55,8 +57,7 @@ public class ShipManager : MonoBehaviour
         limitAmountOfCrew = pointsOfCrewResp.Length;
         if (DefaultPointOfCrewResp == null) DefaultPointOfCrewResp = pointsOfCrewResp[0];
 
-        Energy = 0;
-        StartCoroutine(AfterSec());
+        Energy = 0;        
     }
 
     private void Update()
@@ -74,7 +75,19 @@ public class ShipManager : MonoBehaviour
             SetEffectsOfMovingInParticles();
         }
 
-        
+        if (ShipReactors.Length > 0)
+        {
+            float _energy = 0;
+
+            for (int i = 0; i < ShipReactors.Length; i++)
+            {
+                _energy += ShipReactors[i].Energy;
+            }
+
+            Energy = _energy / ShipReactors.Length;            
+        }
+
+
     }
 
     public Vector3 GetPointOfRespForCrew(int orderOfCrewMember)
@@ -105,15 +118,5 @@ public class ShipManager : MonoBehaviour
             }
         }
     }
-
     
-
-    public IEnumerator AfterSec()
-    {
-        yield return new WaitForSeconds(3);
-        Energy = 0.5f;
-
-        yield return new WaitForSeconds(10);
-        Energy = 1;
-    }
 }
