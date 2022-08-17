@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3047082481701877270}
   - component: {fileID: 7035576391095504252}
   - component: {fileID: 8988564839994364638}
+  - component: {fileID: 1431188659299369494}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -104,6 +105,22 @@ MonoBehaviour:
   currentGameObject: {fileID: 0}
   currentGameObjects: []
   blinkType: 0
+--- !u!114 &1431188659299369494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21995010259328309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &127853455798067818
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,6 +132,7 @@ GameObject:
   - component: {fileID: 7068473850129796928}
   - component: {fileID: 2141943774884373100}
   - component: {fileID: 7418516352065170176}
+  - component: {fileID: 853209428894773046}
   m_Layer: 0
   m_Name: Cylinder (2)
   m_TagString: Untagged
@@ -187,6 +205,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &853209428894773046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127853455798067818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &227812368155968375
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +397,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096418596035092874}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51ca9ba4b7fda1c4f9db8d1d79697d50, type: 3}
   m_Name: 
@@ -1595,6 +1629,7 @@ GameObject:
   - component: {fileID: 7584920905194502207}
   - component: {fileID: 3466800708698183222}
   - component: {fileID: 2044140529101500879}
+  - component: {fileID: 1032938897122673239}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -1687,6 +1722,22 @@ MonoBehaviour:
   currentGameObject: {fileID: 0}
   currentGameObjects: []
   blinkType: 0
+--- !u!114 &1032938897122673239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487543420399561923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &3551715814080715775
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,6 +2219,7 @@ GameObject:
   - component: {fileID: 3641493050394686417}
   - component: {fileID: 2215184536873664608}
   - component: {fileID: 8308248462255664374}
+  - component: {fileID: 8323579489926135630}
   m_Layer: 0
   m_Name: Capsule (3)
   m_TagString: Untagged
@@ -2243,6 +2295,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8323579489926135630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4792559724302803255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &5508511194412068852
 GameObject:
   m_ObjectHideFlags: 0
@@ -2827,7 +2895,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6370446702733971993}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51ca9ba4b7fda1c4f9db8d1d79697d50, type: 3}
   m_Name: 
@@ -2972,6 +3040,7 @@ GameObject:
   - component: {fileID: 6903930875563219012}
   - component: {fileID: 8721500976466301433}
   - component: {fileID: 6383463121327464589}
+  - component: {fileID: 3625917738234165078}
   m_Layer: 0
   m_Name: Sphere (2)
   m_TagString: Untagged
@@ -3064,6 +3133,22 @@ MonoBehaviour:
   currentGameObject: {fileID: 0}
   currentGameObjects: []
   blinkType: 0
+--- !u!114 &3625917738234165078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6625339832763813920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7284799468412060808
 GameObject:
   m_ObjectHideFlags: 0
@@ -3075,6 +3160,7 @@ GameObject:
   - component: {fileID: 7405759849356980715}
   - component: {fileID: 6560183973264845053}
   - component: {fileID: 2983529870006048501}
+  - component: {fileID: 7122182371903981976}
   m_Layer: 0
   m_Name: Cylinder (2)
   m_TagString: Untagged
@@ -3147,6 +3233,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7122182371903981976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7284799468412060808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7383716337370362332
 GameObject:
   m_ObjectHideFlags: 0
@@ -3386,6 +3488,7 @@ GameObject:
   - component: {fileID: 554167522366113519}
   - component: {fileID: 8607736304887044031}
   - component: {fileID: 4923807543936532740}
+  - component: {fileID: 3074780794281482420}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -3459,6 +3562,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3074780794281482420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7687132463706557274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7767028274282980966
 GameObject:
   m_ObjectHideFlags: 0
@@ -3507,6 +3626,7 @@ GameObject:
   - component: {fileID: 3362252672236429122}
   - component: {fileID: 1855963665654644841}
   - component: {fileID: 4168138143871632248}
+  - component: {fileID: 6090084848198938342}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -3579,6 +3699,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6090084848198938342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7779937573101609246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &8355674640468015136
 GameObject:
   m_ObjectHideFlags: 0
@@ -3704,6 +3840,7 @@ GameObject:
   - component: {fileID: 6287029752654888940}
   - component: {fileID: 3045047094185396505}
   - component: {fileID: 3672413309997326559}
+  - component: {fileID: 8294508309482457695}
   m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Untagged
@@ -3776,6 +3913,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8294508309482457695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378018174821205517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &8528713092102779880
 GameObject:
   m_ObjectHideFlags: 0
@@ -3787,6 +3940,7 @@ GameObject:
   - component: {fileID: 5977808099700132254}
   - component: {fileID: 7513239897403871282}
   - component: {fileID: 4937788454525367751}
+  - component: {fileID: 3615184721166735119}
   m_Layer: 0
   m_Name: Cylinder (3)
   m_TagString: Untagged
@@ -3859,6 +4013,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3615184721166735119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8528713092102779880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &8652832922731102673
 GameObject:
   m_ObjectHideFlags: 0
@@ -3998,6 +4168,7 @@ GameObject:
   - component: {fileID: 7922946922286070628}
   - component: {fileID: 3577683566879210630}
   - component: {fileID: 6387834788036172814}
+  - component: {fileID: 3148914825063177782}
   m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Untagged
@@ -4071,6 +4242,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3148914825063177782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9153678468226133280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &9223242811774807481
 GameObject:
   m_ObjectHideFlags: 0
@@ -4997,6 +5184,10 @@ PrefabInstance:
       value: inner wall type 1 (27)
       objectReference: {fileID: 0}
     - target: {fileID: 1511840092026519069, guid: 521a3b70e27cacb42b9340d00270b4bc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1511840092026519069, guid: 521a3b70e27cacb42b9340d00270b4bc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -5315,6 +5506,10 @@ PrefabInstance:
     - target: {fileID: 1511840092026519069, guid: 521a3b70e27cacb42b9340d00270b4bc, type: 3}
       propertyPath: m_Name
       value: inner wall type 1 (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1511840092026519069, guid: 521a3b70e27cacb42b9340d00270b4bc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1511840092026519069, guid: 521a3b70e27cacb42b9340d00270b4bc, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -7594,11 +7789,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 415394694080751126, guid: 11e79fa4e1b37694f9993d2579b1c683, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.511
+      value: 1.34
       objectReference: {fileID: 0}
     - target: {fileID: 415394694080751126, guid: 11e79fa4e1b37694f9993d2579b1c683, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.147
+      value: 0.79
       objectReference: {fileID: 0}
     - target: {fileID: 1144430681641212476, guid: 11e79fa4e1b37694f9993d2579b1c683, type: 3}
       propertyPath: m_RootOrder
@@ -7650,11 +7845,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3045993560167596577, guid: 11e79fa4e1b37694f9993d2579b1c683, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.643
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3045993560167596577, guid: 11e79fa4e1b37694f9993d2579b1c683, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.02
+      value: 0.87
       objectReference: {fileID: 0}
     - target: {fileID: 6718244641083891757, guid: 11e79fa4e1b37694f9993d2579b1c683, type: 3}
       propertyPath: barrelConsuptionSpeed
@@ -9088,6 +9283,10 @@ PrefabInstance:
     - target: {fileID: 8724106334033199209, guid: 14d64379dcc85aa42860499b3206b5ce, type: 3}
       propertyPath: m_Name
       value: small door (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8724106334033199209, guid: 14d64379dcc85aa42860499b3206b5ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14d64379dcc85aa42860499b3206b5ce, type: 3}

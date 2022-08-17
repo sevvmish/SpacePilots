@@ -233,6 +233,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             if (CurrentTakenObject.GetComponent<ITakenAndMovable>()!=null)
             {
                 CurrentTakenObject.GetComponent<Transform>().SetParent(GameObject.Find("SpaceShip").transform);
+                CurrentTakenObject.transform.position = currentBaseTransform.position;
                 CurrentTakenObject.GetComponent<ITakenAndMovable>().MakeThrownAway();
                 DeactivateAnyHandsInstruments();
                 CurrentTakenObject = null;
