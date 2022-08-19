@@ -9,7 +9,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
 {
     public float Energy;
 
-    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, UIPositionPoint, greenLight, redLight, barrelExample;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, UIPositionPoint, greenLight, redLight, barrelExample, loadingBarrelEffects;
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private SuppliesType currentSupplyToConsumeType;
     [SerializeField] private float standartBarrelCapacity = 1;
@@ -29,7 +29,8 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
     
     private Action makeBlink;
     private Material barrelExampleMaterial;
-    private float currentTimer, limitTimer;
+    [SerializeField] private AudioSource alarmSound;
+    private bool param1, param2, param3;
     //==================
 
     private float currentBarrelCapacity;
@@ -45,10 +46,18 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
 
         barrelExampleMaterial = Instantiate(barrelExample.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material);
         barrelExample.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = barrelExampleMaterial;
+                
+        greenLight.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.green);
+        greenLight.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.green * GeneralSettings.BaseBloomIntensityColor);
+
+        redLight.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
+        redLight.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.red * GeneralSettings.BaseBloomIntensityColor);
     }
 
     private void OnEnable()
     {
+        loadingBarrelEffects.gameObject.SetActive(false);
+
         //icon of overheating
         uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
         uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.energy_fuel);
@@ -92,6 +101,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
     {
         uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
         makeBlink = null;
+        param1 = param2 = param3 = false;
 
         currentBarrelCapacity = 0;
         Energy = 0;
@@ -108,11 +118,12 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
     {
         uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
         makeBlink = null;
+        param1 = param2 = param3 = false;
         isShowMediumLevelInColor = false;
 
         barrelExample.GetChild(0).localScale = Vector3.one;
         barrelExampleMaterial.SetColor("_BaseColor", Color.green);
-        barrelExampleMaterial.SetColor("_EmissionColor", Color.green * 1.9f);
+        barrelExampleMaterial.SetColor("_EmissionColor", Color.green * GeneralSettings.BaseBloomIntensityColor);
 
         currentBarrelCapacity = standartBarrelCapacity;
         Energy = 1;
@@ -137,7 +148,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
                 Energy = 0.5f;
                 isReactorReadyToLoadAgain = true;
                 barrelExampleMaterial.SetColor("_BaseColor", Color.red);
-                barrelExampleMaterial.SetColor("_EmissionColor", Color.red * 1.9f);
+                barrelExampleMaterial.SetColor("_EmissionColor", Color.red * GeneralSettings.BaseBloomIntensityColor);
                 uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
                 uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
                 makeBlink = makeBlinkOnLowCapacity;
@@ -148,7 +159,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
             {
                 isShowMediumLevelInColor = true;
                 barrelExampleMaterial.SetColor("_BaseColor", Color.yellow);
-                barrelExampleMaterial.SetColor("_EmissionColor", Color.yellow * 1.9f);
+                barrelExampleMaterial.SetColor("_EmissionColor", Color.yellow * GeneralSettings.BaseBloomIntensityColor);
             }
                         
         }
@@ -162,20 +173,26 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
 
     private void makeBlinkOnLowCapacity()
     {
-        if (currentBarrelCapacity < (standartBarrelCapacity * 0.07f))
+        if (currentBarrelCapacity < (standartBarrelCapacity * 0.07f) && !param1)
         {
+            param1 = true;
             uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.15f;
             uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.1f;
+            alarmSound.Play();
         }
-        else if (currentBarrelCapacity < (standartBarrelCapacity * 0.14f))
+        else if (currentBarrelCapacity < (standartBarrelCapacity * 0.14f) && !param2)
         {
+            param2 = true;
             uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.3f;
             uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.15f;
+            alarmSound.Play();
         }
-        else if(currentBarrelCapacity < (standartBarrelCapacity * 0.21f))
+        else if(currentBarrelCapacity < (standartBarrelCapacity * 0.21f) && !param3)
         {
+            param3 = true;
             uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.5f;
             uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.3f;
+            alarmSound.Play();
         }        
     }
 
@@ -231,6 +248,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
             supply.transform.localPosition = Vector3.one;
             supply.SetActive(false);
             SetStateToLoaded();
+            StartCoroutine(playBarrelLoadingEffect());
             return true;
         }
 
@@ -240,5 +258,12 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
     public SuppliesType GetFacilityConsumerSupplyType()
     {
         return currentSupplyToConsumeType;
+    }
+
+    private IEnumerator playBarrelLoadingEffect()
+    {
+        loadingBarrelEffects.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1);
+        loadingBarrelEffects.gameObject.SetActive(false);
     }
 }

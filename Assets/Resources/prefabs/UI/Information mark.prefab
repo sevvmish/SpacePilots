@@ -130,6 +130,7 @@ MonoBehaviour:
   howLong: 0
   whatInterval: 0
   startingTimer: 0
+  isLeaveEnabled: 0
   mesh: {fileID: 0}
   currentGameObject: {fileID: 0}
   currentGameObjects:

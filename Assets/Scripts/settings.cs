@@ -40,10 +40,13 @@ public class settings : ScriptableObject
     public Vector3 StrenghtOfShakeOnHighlightingSupply = new Vector3(1f, 0.6f, 1f);
     public float TimeForShakeForSupply = 0.3f;
 
+    //BLOOM
+    public float BaseBloomIntensityColor = 1.5f;
+
     //SOUND=================================
     public float AudioSourceVolume_incidents = 0.2f;
     public float AudioSourceVolume_instruments = 0.5f;
     public float AudioSourceVolume_crew = 0.5f;
-    public float AudioSourceVolume_UI = 1f;
+    public float AudioSourceVolume_UI = 0.7f;
 
 }

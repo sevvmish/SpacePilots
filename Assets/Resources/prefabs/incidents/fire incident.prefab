@@ -210,6 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209bf8d1fc956bb41ab3c1ee05586a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 2
+  isIncidentActive: 0
   whatInstrumentDealThisIncident: 1
   currentIncidentType: 1
   pointOfInterestFROM: {fileID: 6790045982333647525}
@@ -217,11 +219,9 @@ MonoBehaviour:
   currentVisualTransform: {fileID: 5896322866731227590}
   UIPositionPoint: {fileID: 8227832151424388120}
   baseHighLight: {fileID: 2440995124249495542}
-  maxHealth: 2
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
   highlightMaterial: {fileID: 2100000, guid: b1f164095bfc29942bc0b83d8b8cee4e, type: 2}
   audiosource: {fileID: 1005158078248861973}
-  isIncidentActive: 0
 --- !u!114 &1997811221032551428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +257,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 5
+  MaxDistance: 3
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

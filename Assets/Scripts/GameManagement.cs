@@ -14,7 +14,16 @@ public class GameManagement : MonoBehaviour
     [SerializeField] private Camera mainCam;
     [SerializeField] private Transform cameraBody;
     [SerializeField] private AudioManager audio;
-    
+    [SerializeField] private Light directionalLight;
+
+    //colors for directional light
+    private Color currentDirectionalLightColor;
+    private float currentDirectionalLightIntensity;
+    private Color type1_cameraBackGround_Color = new Color(26f/255f, 16f/255f, 43f/255f);
+    private Color type1_directionalLight_Color = new Color(220f/255f, 202f/255f, 233f/255f);
+    private Color type1_directionalLight_ColorPowerOff = new Color(138f/255f, 105f/255f, 162f/255f);
+    private bool isEnergyOffColors;
+
 
     private Vector3 cameraDefaultBodyShift = Vector3.zero;
     private Vector3 cameraDefaultBodyAngle = new Vector3(65, 0, 0);
@@ -74,6 +83,21 @@ public class GameManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //change light when power off, on
+        if (shipManager.Energy<=0 && !isEnergyOffColors)
+        {
+            isEnergyOffColors = true;
+            directionalLight.DOColor(type1_directionalLight_ColorPowerOff, 0.5f);
+            directionalLight.DOIntensity(1.1f, 0.5f);
+        }
+        else if(shipManager.Energy > 0 && isEnergyOffColors)
+        {
+            isEnergyOffColors = false;
+            directionalLight.DOColor(currentDirectionalLightColor, 0.5f);
+            directionalLight.DOIntensity(currentDirectionalLightIntensity, 0.5f);
+        }
+        //===============================
+
         if (Input.GetKeyDown(KeyCode.O))
         {
             CameraShaker.Instance.ShakeOnce(5, 6, 2, 1);
@@ -197,48 +221,6 @@ public class GameManagement : MonoBehaviour
         //============================
     }
 
-    /*
-    private void AddIncident(IncidentsType _type, Vector3 position)
-    {
-        GameObject incident = default;
-
-        switch(_type)
-        {
-            case IncidentsType.fire:
-                incident = ObjectPooling.fireIncident_pool.GetObject();
-                break;
-
-            case IncidentsType.simple_wreck:
-                incident = ObjectPooling.simpleWreckIncident_pool.GetObject();
-                break;
-
-        }
-
-        incident.SetActive(true);
-        incident.transform.position = position;        
-    }
-
-  
-    private void AddInstrument(InstrumentsType _type, Vector3 position)
-    {
-        GameObject instrument = default;
-
-        switch (_type)
-        {
-            case InstrumentsType.fire_extinguisher:
-                instrument = ObjectPooling.fireExtInstrument_pool.GetObject();
-                break;
-
-            case InstrumentsType.repair_kit:
-                instrument = ObjectPooling.simpleRepairerInstrument_pool.GetObject();
-                break;
-        }
-
-        instrument.SetActive(true);
-        instrument.transform.position = position;        
-        instrument.GetComponent<Instrument>().MakeThrownAway();
-    }
-    */
 
     private void levelDesign(int level)
     {
@@ -249,6 +231,13 @@ public class GameManagement : MonoBehaviour
                 break;
 
             case 1: //small ship #1
+
+                directionalLight.intensity = 1.4f;
+                currentDirectionalLightIntensity = 1.4f;
+                directionalLight.color = type1_directionalLight_Color;
+                currentDirectionalLightColor = type1_directionalLight_Color;
+                mainCam.backgroundColor = type1_cameraBackGround_Color;
+
                 //ship and crew
                 AddMainShip("small ship 1");
                 AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));

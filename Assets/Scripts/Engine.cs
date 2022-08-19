@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using EZCameraShake;
+using System;
 
 public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
 {
     [SerializeField] private MeshRenderer termoRenderer;
     [SerializeField] private float temperatureDelta;
     [SerializeField] private float fireExtHardness = 0.75f;
-    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, UIPositionPoint;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, UIPositionPoint, overheatVisualEff;
     [SerializeField] private settings GeneralSettings;    
     [SerializeField] private Incident heatIncident;
-
+    [SerializeField] private AudioSource startEngineSound, machinerySound;
+    private AudioClip startSound, stopSound;
 
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private List<MeshRenderer> baseRenderersForHiglight = new List<MeshRenderer>();
@@ -24,7 +27,9 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
     private GameObject uiInformationMark;
     private RectTransform uiInformationMarkRect;
     private Vector3 OnScreenPosition;
-
+    private Action makeBlink;
+    [SerializeField] private AudioSource alarmSound;
+    private bool param1, param2, param3;
 
     private float energy = 0;
     private float productivity = 1;
@@ -40,6 +45,16 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
 
         set
         {
+            if (value <= 0 && energy>0)
+            {
+                playStopEngineSound();
+            }
+            else if(value > 0 && energy == 0 && Productivity>0)
+            {
+                playStartEngineSound();
+            }
+
+
             if (value < 0)
             {
                 energy = 0;
@@ -62,6 +77,15 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
 
         set
         {
+            if (value <= 0 && productivity > 0)
+            {
+                playStopEngineSound();
+            }
+            else if (value > 0 && productivity == 0 && Energy > 0)
+            {
+                playStartEngineSound();
+            }
+
             if (value < 0)
             {
                 productivity = 0;
@@ -104,6 +128,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             if (temperature >= 0.99f)
             {
                 isTooOverheated = true;
+                CancelBlinking();
                 Productivity = 0;                
             }
             else if(!isTooOverheated)
@@ -113,10 +138,12 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             
             if (temperature > 0.67f)
             {
+                overheatVisualEff.gameObject.SetActive(true);
                 ShowUI();
             }
             else
             {
+                overheatVisualEff.gameObject.SetActive(false);
                 if (!isTooOverheated) HideUI();
             }
 
@@ -124,6 +151,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             {
                 isTooOverheated = false;
                 HideUI();
+                CancelBlinking();
             }
                 
 
@@ -142,7 +170,6 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
         termoMaterial.SetColor("_Color", Color.blue * 2f);
 
         
-
         for (int i = 0; i < baseRenderersForHiglight.Count; i++)
         {
             baseMaterialsForHiglight.Add(baseRenderersForHiglight[i].material);
@@ -152,6 +179,10 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
 
     private void OnEnable()
     {
+        startSound = Resources.Load<AudioClip>("audio/sounds/ignition up");
+        stopSound = Resources.Load<AudioClip>("audio/sounds/ignition down");
+        machinerySound.enabled = false;
+
         if (EngineEffects.Length > 0)
         {
             for (int i = 0; i < EngineEffects.Length; i++)
@@ -160,6 +191,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             }
         }
 
+        overheatVisualEff.gameObject.SetActive(false);
         heatIncident.InitUI();
         heatIncident.gameObject.SetActive(false);
 
@@ -229,15 +261,53 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             }
         }
 
-      
+
         if (Temperature>=0.67f && !isOverHeatInProgress)
         {
             heatIncident.gameObject.SetActive(true);
             isOverHeatInProgress = true;
             heatIncident.SetMaxHealth(1, Temperature);
             lastHeatTemperature = 0;
+
+            uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
+            uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
+            makeBlink = makeBlinkOnLowCapacity;
         }
-    
+
+        makeBlink?.Invoke();
+
+    }
+
+    private void makeBlinkOnLowCapacity()
+    {
+        if (Temperature >= 0.9f && !param1)
+        {
+            param1 = true;
+            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.15f;
+            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.1f;
+            alarmSound.Play();
+        }
+        else if (Temperature >= 0.8f && !param2)
+        {
+            param2 = true;
+            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.3f;
+            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.15f;
+            alarmSound.Play();
+        }
+        else if (Temperature >= 0.67f && !param3)
+        {
+            param3 = true;
+            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.5f;
+            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.3f;
+            alarmSound.Play();
+        }
+    }
+
+    private void CancelBlinking()
+    {
+        uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        makeBlink = null;
+        param1 = param2 = param3 = false;
     }
 
     private float AssessTemperatureDelta()
@@ -271,7 +341,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
         {
             for (int i = 0; i < EngineEffects.Length; i++)
             {
-                EngineEffects[0].localScale = Vector3.one * Productivity * Energy;
+                EngineEffects[0].DOScale(Vector3.one * Productivity * Energy, 0.5f);
             }
         }
     }
@@ -335,5 +405,27 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
         {
             baseRenderersForHiglight[i].material = baseMaterialsForHiglight[i];
         }
+    }
+
+    private void playStartEngineSound()
+    {
+        startEngineSound.clip = startSound;
+        startEngineSound.volume = 0.9f;
+        startEngineSound.pitch = 0.7f;
+        startEngineSound.Play();
+        
+        CameraShaker.Instance.ShakeOnce(3, 5, 0.2f, 1);
+
+        machinerySound.enabled = true;
+    }
+
+    private void playStopEngineSound()
+    {
+        startEngineSound.clip = stopSound;
+        startEngineSound.volume = 0.9f;
+        startEngineSound.pitch = 0.5f;
+        startEngineSound.Play();
+        
+        machinerySound.enabled = false;
     }
 }
