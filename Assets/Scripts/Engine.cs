@@ -198,7 +198,8 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
         //icon of overheating
         uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
         uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.fire);
-        uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.red;
+        uiInformationMark.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+        uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.white;
         uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
         GameManagement.MainUIHandler -= UpdateUIPosition;
         uiInformationMarkRect.gameObject.SetActive(false);
@@ -341,7 +342,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
         {
             for (int i = 0; i < EngineEffects.Length; i++)
             {
-                EngineEffects[0].DOScale(Vector3.one * Productivity * Energy, 0.5f);
+                EngineEffects[0].localScale =  Vector3.one * Productivity * Energy;
             }
         }
     }

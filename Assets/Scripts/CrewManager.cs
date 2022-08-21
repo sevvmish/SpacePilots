@@ -11,7 +11,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
-public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
+public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 {
     [SerializeField] private string crewName;
     [SerializeField] private CrewSpecialization crewSpec;
@@ -23,6 +23,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private Transform wrenchExample, hammerExample;
     [SerializeField] private AudioSource audio;
+    [SerializeField] private bool isDestroyable = true;
 
     private AudioClip grabSound, grabOff;
     private Material baseMaterial;
@@ -34,6 +35,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
     private bool isHighlightEffectInProgress;
     private float health, speed;
     private bool isShowingUIBar;
+    private bool isTakenObjectDestroyable;
 
     private Dictionary<GameObject, DamageDealer> damagingObjects = new Dictionary<GameObject, DamageDealer>();
     private HashSet<NegativeEffects> activatedEffects = new HashSet<NegativeEffects>(); 
@@ -60,17 +62,30 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         {
             if (currentTakenObject == null && value != null)
             {
+                
+
                 audio.clip = grabSound;
                 audio.Play();
             }
 
             if (currentTakenObject != null && value == null)
             {
+                isTakenObjectDestroyable = false;
+
                 audio.clip = grabOff;
                 audio.Play();
             }
 
             currentTakenObject = value;
+
+            if (currentTakenObject != null && currentTakenObject.GetComponent<IHealthDestroyable>() != null && currentTakenObject.GetComponent<IHealthDestroyable>().IsDestroyable())
+            {
+                isTakenObjectDestroyable = true;
+            }
+            else
+            {
+                isTakenObjectDestroyable = false;
+            }
         }
     }
 
@@ -106,14 +121,17 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             if (value < 0)
             {
                 speed = 0;
+                navAgent.speed = speed;
             }
             else if (value >= maxSpeed)
             {
-                speed = maxSpeed;                
+                speed = maxSpeed;
+                navAgent.speed = speed;
             }
             else
             {
-                speed = value;                
+                speed = value;
+                navAgent.speed = speed;
             }
         }
     }
@@ -193,23 +211,32 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         GameManagement.MainUIHandler -= UpdateUIPosition;
     }
 
-    public void UpdateUIData()
+    public void UpdateUIHealthData()
     {
         uiHealthBarRect.transform.GetChild(1).GetComponent<Image>().fillAmount = Health / maxHealth;
     }
 
-
+    
     public void DecreaseHealthAmount(float amount)
     {
         Health -= amount;
         //print(Health + " - crew");
-        UpdateUIData();
+        UpdateUIHealthData();
     }
+    
 
 
     // Update is called once per frame
     void Update()
     {
+        if (CurrentTakenObject != null && isTakenObjectDestroyable)
+        {
+            if (!CurrentTakenObject.activeSelf || CurrentTakenObject.GetComponent<IHealthDestroyable>().CurrentHealthAmount() <= 0)
+            {
+                ThrowAwayCurrentTakenObject();
+            }
+        }
+
         //print(crewState);
         currentPos = currentBaseTransform.position;
         currentSpeed = Vector3.Distance(currentPos, previousPos);
@@ -230,13 +257,9 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (CurrentTakenObject.GetComponent<ITakenAndMovable>()!=null)
+            if (CurrentTakenObject!=null && CurrentTakenObject.GetComponent<ITakenAndMovable>()!=null)
             {
-                CurrentTakenObject.GetComponent<Transform>().SetParent(GameObject.Find("SpaceShip").transform);
-                CurrentTakenObject.transform.position = currentBaseTransform.position;
-                CurrentTakenObject.GetComponent<ITakenAndMovable>().MakeThrownAway();
-                DeactivateAnyHandsInstruments();
-                CurrentTakenObject = null;
+                ThrowAwayCurrentTakenObject();
             }
         }
 
@@ -350,6 +373,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
                             
         }
 
+        /*
         //damage receiver
         if (damagingObjects.ContainsKey(other.gameObject))
         {            
@@ -370,10 +394,11 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
                     break;
             }
         }
+        */
 
     }
 
-
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (!damagingObjects.ContainsKey(other.gameObject) && other.gameObject.GetComponent<DamageDealer>() != null)
@@ -390,7 +415,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
             damagingObjects.Remove(other.gameObject);
         }
     }
-
+    */
 
 
 
@@ -540,26 +565,69 @@ public class CrewManager : MonoBehaviour, IHighlightable, IUIBars
         if (!isShowingUIBar) HideUI();
     }
 
-    
-
-    private void SetEffectBurning(float amount) => StartCoroutine(BurningEff(amount));
-
-    private IEnumerator BurningEff(float amount)
+   
+    public bool IsDestroyable()
     {
-        float damageTime = 2f;
-        Effects.GetChild(0).gameObject.SetActive(true);
-
-        for (float i = 0; i < damageTime; i+=0.1f)
-        {
-            DecreaseHealthAmount(amount / damageTime / 10f);
-
-            yield return new WaitForSeconds(0.1f);
-        }
-                
-        if (activatedEffects.Contains(NegativeEffects.burning)) activatedEffects.Remove(NegativeEffects.burning);
-        Effects.GetChild(0).gameObject.SetActive(false);
-
-        yield return new WaitForSeconds(0.2f);
-        if (!activatedEffects.Contains(NegativeEffects.burning)) Effects.GetChild(0).gameObject.SetActive(false);
+        return isDestroyable;
     }
+
+    public void PlayNegativeEffect(NegativeEffects _effect)
+    {
+        switch (_effect)
+        {
+            case NegativeEffects.burning:
+                Effects.GetChild(0).gameObject.SetActive(true);
+                break;
+
+            case NegativeEffects.electricity:
+
+                break;
+
+            case NegativeEffects.slow_down:
+                Speed *= 0.5f;
+                break;
+
+            case NegativeEffects.poisoned:
+                Effects.GetChild(1).gameObject.SetActive(true);
+                break;
+        }
+
+        
+    }
+    public void StopNegativeEffect(NegativeEffects _effect)
+    {
+        switch (_effect)
+        {
+            case NegativeEffects.burning:
+                Effects.GetChild(0).gameObject.SetActive(false);
+                break;
+
+            case NegativeEffects.electricity:
+
+                break;
+
+            case NegativeEffects.slow_down:
+                Speed /= 0.5f;
+                break;
+
+            case NegativeEffects.poisoned:
+                Effects.GetChild(1).gameObject.SetActive(false);
+                break;
+        }
+    }
+
+    public float CurrentHealthAmount()
+    {
+        return Health;
+    }
+
+    private void ThrowAwayCurrentTakenObject()
+    {
+        CurrentTakenObject.GetComponent<Transform>().SetParent(GameObject.Find("SpaceShip").transform);
+        CurrentTakenObject.transform.position = currentBaseTransform.position;
+        CurrentTakenObject.GetComponent<ITakenAndMovable>().MakeThrownAway();
+        DeactivateAnyHandsInstruments();
+        CurrentTakenObject = null;
+    }
+
 }

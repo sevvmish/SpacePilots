@@ -6,7 +6,7 @@ using DG.Tweening;
 
 
 [RequireComponent(typeof(SphereCollider))]
-public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlightable
+public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
 {
     public float maxHealth;
     public bool isIncidentActive;
@@ -130,7 +130,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
         
     }
 
-    public void UpdateUIData()
+    public void UpdateUIHealthData()
     {
         uiProgressBarRect.transform.GetChild(1).GetComponent<Image>().fillAmount = IncidentHealth / maxHealth;
     }
@@ -171,6 +171,9 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
             case IncidentsType.after_wreck:
                 result = Resources.Load<GameObject>("prefabs/incidents/RepairAfterWreck");
                 break;
+            case IncidentsType.poison_patch:
+                result = Resources.Load<GameObject>("prefabs/incidents/PoisonPatch");
+                break;
         }
 
         return result;
@@ -181,7 +184,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
     {
         IncidentHealth -= amount;
         //print(IncidentHealth + " - incident");
-        UpdateUIData();
+        UpdateUIHealthData();
     }
 
 
@@ -226,9 +229,9 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
                 break;
 
             case IncidentsType.simple_wreck:
-                afterEffect = ObjectPooling.repairAfterWreck.GetObject();                
+                afterEffect = ObjectPooling.repairAfterWreck_pool.GetObject();                
                 afterEffect.transform.position = transform.position;
-                afterEffect.GetComponent<IncidentAfterEffect>().InitAfterEffect(ObjectPooling.repairAfterWreck, 3);
+                afterEffect.GetComponent<IncidentAfterEffect>().InitAfterEffect(ObjectPooling.repairAfterWreck_pool, 3);
                 break;
         }
 
@@ -262,5 +265,6 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IUIBars, IHighlighta
         Highlighting.ChangeMaterial(baseMaterial, baseHighLight);
     }
 
-    
+
+
 }

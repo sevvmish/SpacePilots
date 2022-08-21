@@ -6,16 +6,27 @@ using DG.Tweening;
 public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMovable, IHighlightable
 {
     [SerializeField] private SuppliesType currentMovableToProduce;
-    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform;
-    [SerializeField] private int amountOfStockSupply = 10;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform;    
     [SerializeField] private settings GeneralSettings;
 
-    private ObjectPooling currentPoolOfObjects;
+    //highlighting
+    [SerializeField] private Material highlightMaterial;
+    [SerializeField] private List<MeshRenderer> baseRenderersForHiglight = new List<MeshRenderer>();
+    private List<Material> baseMaterialsForHiglight = new List<Material>();
     private bool isHighlightEffectInProgress;
+    //===========
+
+    private void Start()
+    {
+        for (int i = 0; i < baseRenderersForHiglight.Count; i++)
+        {
+            baseMaterialsForHiglight.Add(baseRenderersForHiglight[i].material);
+        }
+    }
 
     private void OnEnable()
     {
-        currentPoolOfObjects = new ObjectPooling(amountOfStockSupply, Supply.GetSupplyPrefab(currentMovableToProduce), transform);
+        
     }
 
     public Vector3 GetPointOfInteraction()
@@ -25,7 +36,7 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
 
     public GameObject GiveAwayTakeble()
     {
-        return currentPoolOfObjects.GetObject();
+        return ObjectPooling.GetSupply(currentMovableToProduce, transform.position, false);
     }
     
     public object GetTypeOfObject()
@@ -41,10 +52,34 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
     public IEnumerator HandleCurrentHighlight()
     {
         isHighlightEffectInProgress = true;
-        currentVisualTransform.DOShakeScale(GeneralSettings.TimeForShakeForFacility, GeneralSettings.StrenghtOfShakeOnHighlightingFacility, 10, 90, true);
+
+        HighLightObject();
+
+        for (int i = 0; i < baseRenderersForHiglight.Count; i++)
+        {
+            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForFacility, GeneralSettings.StrenghtOfShakeOnHighlightingFacility, 10, 90, true);
+        }
 
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForFacility);
         isHighlightEffectInProgress = false;
+
+        UnHighLightObject();
+    }
+
+    private void HighLightObject()
+    {
+        for (int i = 0; i < baseRenderersForHiglight.Count; i++)
+        {
+            baseRenderersForHiglight[i].material = highlightMaterial;
+        }
+    }
+
+    private void UnHighLightObject()
+    {
+        for (int i = 0; i < baseRenderersForHiglight.Count; i++)
+        {
+            baseRenderersForHiglight[i].material = baseMaterialsForHiglight[i];
+        }
     }
 
     public void MakeThrownAway()

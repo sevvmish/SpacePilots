@@ -37,6 +37,37 @@ Transform:
   m_Father: {fileID: 3929412826695607758}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 20, y: 0, z: 20}
+--- !u!1 &3499038147290174922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3694722158753943074}
+  m_Layer: 0
+  m_Name: UI point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3694722158753943074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3499038147290174922}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3929412826695607758}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3929412826695607759
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,6 +99,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2053750387712850870}
+  - {fileID: 3694722158753943074}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -101,8 +133,11 @@ MonoBehaviour:
   currentCollider: {fileID: 8564345562133635540}
   currentVisualTransform: {fileID: 2053750387712850870}
   currentTransform: {fileID: 3929412826695607758}
+  UIPositionPoint: {fileID: 3694722158753943074}
   isCanBeTakenByCrew: 0
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
+  maxHealth: 5
+  isDestroyable: 1
   highlightMaterial: {fileID: 2100000, guid: b1f164095bfc29942bc0b83d8b8cee4e, type: 2}
   baseRenderersForHiglight:
   - {fileID: 2398590682294118920}

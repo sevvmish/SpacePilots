@@ -249,9 +249,12 @@ public class GameManagement : MonoBehaviour
                 ObjectPooling.AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 4));
                 ObjectPooling.AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 3));
                 ObjectPooling.AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 2));
+                ObjectPooling.AddIncident(IncidentsType.poison_patch, new Vector3(2.5f, 0, 0));
 
                 ObjectPooling.AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 2));
                 ObjectPooling.AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 4));
+
+                GameObject o = Instantiate(Resources.Load<GameObject>("prefabs/ship parts/main facility/full fuel barrel producer"), new Vector3(-3.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
                 break;
 
             case 2:

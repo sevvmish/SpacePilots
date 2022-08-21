@@ -31,8 +31,9 @@ public interface IHighlightable
 }
 
 
-public interface IUIBars
-{    
+public interface IHealthDestroyable
+{
+    public void DecreaseHealthAmount(float amount);
 
     public void UpdateUIPosition(Camera camera);
 
@@ -41,6 +42,15 @@ public interface IUIBars
     public void HideUI();
 
     public IEnumerator ShowUIBarWhileActive();
+
+    public void UpdateUIHealthData();
+
+    public bool IsDestroyable();
+
+    public void PlayNegativeEffect(NegativeEffects _effect);
+    public void StopNegativeEffect(NegativeEffects _effect);
+
+    public float CurrentHealthAmount();
 }
 
 
@@ -107,7 +117,8 @@ public enum IncidentsType
     simple_wreck,
     smoke_after_fire,
     after_wreck,
-    none
+    none,
+    poison_patch
 }
 //===================================================================
 
@@ -150,6 +161,9 @@ public enum UIIconTypes
 public enum NegativeEffects
 {
     burning,
-    electricity
+    electricity,
+    direct_hit,
+    slow_down,
+    poisoned
 }
 //===================================================================

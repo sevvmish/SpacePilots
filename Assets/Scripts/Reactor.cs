@@ -61,7 +61,8 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
         //icon of overheating
         uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
         uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.energy_fuel);
-        uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.red;
+        uiInformationMark.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+        uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.white;
         uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
         GameManagement.MainUIHandler -= UpdateUIPosition;
         uiInformationMarkRect.gameObject.SetActive(false);
@@ -247,6 +248,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
             supply.transform.SetParent(this.transform);
             supply.transform.localPosition = Vector3.one;
             supply.SetActive(false);
+            ObjectPooling.ReturnSupply(supply);
             SetStateToLoaded();
             StartCoroutine(playBarrelLoadingEffect());
             return true;
