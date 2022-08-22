@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4142772252475065700}
+  - component: {fileID: 4058461812909435673}
   m_Layer: 0
   m_Name: barrel 2
   m_TagString: Untagged
@@ -32,6 +33,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &4058461812909435673
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750781000904766283}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.45, y: 0.45, z: 0.45}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+  m_TimeToStationary: 0.1
 --- !u!1001 &7378094154214883680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83,6 +100,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6d817772c581dc947b5bb700e78355cb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 494b1e6ccfc2f1c4cab1bb638e4cead5, type: 2}
     - target: {fileID: 919132149155446097, guid: 6d817772c581dc947b5bb700e78355cb, type: 3}
       propertyPath: m_Name
       value: barrel 2
@@ -94,3 +115,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6d817772c581dc947b5bb700e78355cb, type: 3}
   m_PrefabInstance: {fileID: 7378094154214883680}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7684592711446330417 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6d817772c581dc947b5bb700e78355cb, type: 3}
+  m_PrefabInstance: {fileID: 7378094154214883680}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6098589912266130829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7684592711446330417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff

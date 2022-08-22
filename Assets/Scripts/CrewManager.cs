@@ -271,8 +271,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
             
             Transform aim = CurrentTakenObject.GetComponent<Instrument>().GetCurrentIncidentInAction();
             currentBaseTransform.LookAt(new Vector3(aim.position.x, 0, aim.position.z));
-            //print(new Vector3(aim.position.x, 0, aim.position.z));
-                     
+                   
             switch((InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject())
             {
                 case InstrumentsType.fire_extinguisher:
@@ -323,6 +322,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         
         navAgent.isStopped = false;        
         navAgent.SetDestination(destination);
+        
         if (PlaceOfDestination != _objectOfDestination && !_objectOfDestination.CompareTag("Floor")) PlaceOfDestination = _objectOfDestination;
     }
 
@@ -332,38 +332,13 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
         if (PlaceOfCurrentLocation == PlaceOfDestination)
         {
-            print("reached destination");
-
             if (CurrentTakenObject == null)
-            {                
+            {
                 if (other.gameObject.GetComponent<ITakenAndMovable>() != null && other.gameObject.GetComponent<ITakenAndMovable>().IsCanBeTakenByCrew())
                 {
                     ITakenAndMovable objectToTake = other.gameObject.GetComponent<ITakenAndMovable>();
                     print(objectToTake.GetTypeOfObject() + " is taken");
                     TakeAnyObjectToCarry(objectToTake.GiveAwayTakeble());
-                }
-
-                
-            }
-            else if (CurrentTakenObject != null)
-            {
-                //print(((SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetSupplyTypeOfSupply() == SuppliesType.tester).ToString());
-
-                if (other.gameObject.GetComponent<IConsumer>() != null && (SuppliesType)CurrentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfObject() == other.gameObject.GetComponent<IConsumer>().GetFacilityConsumerSupplyType())
-                {
-                    print("interacted with FacilityConsumer");                    
-                    if (other.gameObject.GetComponent<IConsumer>().ConsumeSupply(CurrentTakenObject))
-                    {
-                        CurrentTakenObject = null;
-                    }
-                    
-                }
-
-                if (other.gameObject.GetComponent<Incident>() != null && CurrentTakenObject.GetComponent<Instrument>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == other.gameObject.GetComponent<Incident>().GetInstrumentTypeToDealWithIncident())
-                {
-                    print("WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!");
-
-                    currentBaseTransform.LookAt(new Vector3(other.gameObject.transform.position.x, 0, other.gameObject.transform.position.z));
                 }
             }
 
@@ -373,52 +348,33 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                             
         }
 
-        /*
-        //damage receiver
-        if (damagingObjects.ContainsKey(other.gameObject))
-        {            
-            switch(damagingObjects[other.gameObject].GetNegativeEffect())
+        
+        if (CurrentTakenObject != null)
+        {
+            //print(((SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetSupplyTypeOfSupply() == SuppliesType.tester).ToString());
+
+            if (other.gameObject.GetComponent<IConsumer>() != null && (SuppliesType)CurrentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfObject() == other.gameObject.GetComponent<IConsumer>().GetFacilityConsumerSupplyType())
             {
-                case NegativeEffects.burning:
-                    //print(Vector3.Distance(other.gameObject.transform.position, currentBaseTransform.position));
+                //print("interacted with FacilityConsumer");
+                if (other.gameObject.GetComponent<IConsumer>().ConsumeSupply(CurrentTakenObject))
+                {
+                    CurrentTakenObject = null;
+                }
 
-                    if (!activatedEffects.Contains(NegativeEffects.burning) && Vector3.Distance(other.gameObject.transform.position, currentBaseTransform.position) <=0.6f)
-                    {
-                        activatedEffects.Add(NegativeEffects.burning);
-                        SetEffectBurning(damagingObjects[other.gameObject].GetDamageAmount());
-                    }
-                    break;
+            }
 
-                case NegativeEffects.electricity:
+            if (other.gameObject.GetComponent<Incident>() != null && CurrentTakenObject.GetComponent<Instrument>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == other.gameObject.GetComponent<Incident>().GetInstrumentTypeToDealWithIncident())
+            {
+                //print("WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!");
 
-                    break;
+                currentBaseTransform.LookAt(new Vector3(other.gameObject.transform.position.x, 0, other.gameObject.transform.position.z));
             }
         }
-        */
+
 
     }
 
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!damagingObjects.ContainsKey(other.gameObject) && other.gameObject.GetComponent<DamageDealer>() != null)
-        {
-            damagingObjects.Add(other.gameObject, other.gameObject.GetComponent<DamageDealer>());
-        }
-    }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (damagingObjects.ContainsKey(other.gameObject))
-        {
-            damagingObjects.Remove(other.gameObject);
-        }
-    }
-    */
-
-
-
+ 
 
     public void SetRespawnPoint(Vector3 _point)
     {

@@ -11,7 +11,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
     [SerializeField] private MeshRenderer termoRenderer;
     [SerializeField] private float temperatureDelta;
     [SerializeField] private float fireExtHardness = 0.75f;
-    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, UIPositionPoint, overheatVisualEff;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, UIPositionPoint, overheatVisualEff, rotator;
     [SerializeField] private settings GeneralSettings;    
     [SerializeField] private Incident heatIncident;
     [SerializeField] private AudioSource startEngineSound, machinerySound;
@@ -32,6 +32,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
     private bool param1, param2, param3;
 
     private float energy = 0;
+    private float rotatorAngle = 0;
     private float productivity = 1;
     private float temperature = 0;
     private float lastHeatTemperature = 0;
@@ -239,6 +240,9 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
 
     private void Update()
     {
+        rotator.rotation = Quaternion.Euler(rotatorAngle, 0, -90);
+        rotatorAngle += Time.deltaTime * Productivity * Energy * 100f;
+
         if (!isOverHeatInProgress)
         {
             Temperature += AssessTemperatureDelta();
@@ -383,10 +387,14 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
 
         for (int i = 0; i < baseRenderersForHiglight.Count; i++)
         {
-            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForFacility, GeneralSettings.StrenghtOfShakeOnHighlightingFacility, 10, 90, true);
+            float deltaX = baseRenderersForHiglight[i].transform.localScale.x / 1f;
+            float deltaY = baseRenderersForHiglight[i].transform.localScale.y / 1f;
+            float deltaZ = baseRenderersForHiglight[i].transform.localScale.z / 1f;
+
+            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForSupply, new Vector3(GeneralSettings.StrenghtOfShakeOnHighlightingSupply.x * deltaX, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.y * deltaY, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.z * deltaZ) * 2f, 10, 90, true);
         }
-        
-        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForFacility);
+
+        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForSupply);
         isHighlightEffectInProgress = false;
 
         UnHighLightObject();

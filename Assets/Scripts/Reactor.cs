@@ -9,7 +9,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
 {
     public float Energy;
 
-    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, UIPositionPoint, greenLight, redLight, barrelExample, loadingBarrelEffects;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, UIPositionPoint, greenLight, redLight, barrelExample, loadingBarrelEffects, panelForLoadingEff1, panelForLoadingEff2;
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private SuppliesType currentSupplyToConsumeType;
     [SerializeField] private float standartBarrelCapacity = 1;
@@ -211,10 +211,14 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
 
         for (int i = 0; i < baseRenderersForHiglight.Count; i++)
         {
-            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForFacility, GeneralSettings.StrenghtOfShakeOnHighlightingFacility, 10, 90, true);
+            float deltaX = baseRenderersForHiglight[i].transform.localScale.x / 1f;
+            float deltaY = baseRenderersForHiglight[i].transform.localScale.y / 1f;
+            float deltaZ = baseRenderersForHiglight[i].transform.localScale.z / 1f;
+
+            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForSupply, new Vector3(GeneralSettings.StrenghtOfShakeOnHighlightingSupply.x * deltaX, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.y * deltaY, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.z * deltaZ) * 2f, 10, 90, true);
         }
 
-        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForFacility);
+        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForSupply);
         isHighlightEffectInProgress = false;
 
         UnHighLightObject();
@@ -265,7 +269,14 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
     private IEnumerator playBarrelLoadingEffect()
     {
         loadingBarrelEffects.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1);
+        panelForLoadingEff1.DOLocalMoveY(-0.355f, 0.25f);
+        panelForLoadingEff2.DOLocalMoveY(-0.355f, 0.25f);
+        yield return new WaitForSeconds(0.5f);
+
+        panelForLoadingEff1.DOLocalMoveY(0.355f, 0.25f);
+        panelForLoadingEff2.DOLocalMoveY(0.355f, 0.25f);
+        yield return new WaitForSeconds(0.5f);
+        
         loadingBarrelEffects.gameObject.SetActive(false);
     }
 }

@@ -91,8 +91,7 @@ public class DamageDealer : MonoBehaviour
 
     private IEnumerator PlayAddEffect(DamageData data, NegativeEffects _effect)
     {
-        print("PLAY!!!");
-
+        
         float damageTime = 2f;
 
         data.currentIHDestroyable.PlayNegativeEffect(_effect);

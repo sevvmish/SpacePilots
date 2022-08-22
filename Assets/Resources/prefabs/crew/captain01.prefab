@@ -1097,7 +1097,7 @@ GameObject:
   - component: {fileID: 2462614125281188806}
   - component: {fileID: 45940807656056076}
   - component: {fileID: 5218652708630678952}
-  - component: {fileID: 4346061025371012962}
+  - component: {fileID: 6413882719699544600}
   m_Layer: 0
   m_Name: captain01
   m_TagString: Crew
@@ -1194,6 +1194,7 @@ MonoBehaviour:
   wrenchExample: {fileID: 6560409082178805176}
   hammerExample: {fileID: 1016580249881058049}
   audio: {fileID: 0}
+  isDestroyable: 1
   rigidBody: {fileID: 0}
 --- !u!136 &2462614125281188806
 CapsuleCollider:
@@ -1321,19 +1322,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!135 &4346061025371012962
-SphereCollider:
+--- !u!143 &6413882719699544600
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6419064674588134674}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
+  m_IsTrigger: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 1.29, z: 0.81}
+  m_Height: 1
+  m_Radius: 0.3
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &6544134889777950281
 GameObject:
   m_ObjectHideFlags: 0

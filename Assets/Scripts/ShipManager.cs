@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ShipManager : MonoBehaviour
 {
+    public GameObject[] AllMonitorsAndElectrics;
+
     public Reactor[] ShipReactors;
 
     public Engine[] ShipEngines;
@@ -26,6 +28,25 @@ public class ShipManager : MonoBehaviour
 
         set
         {
+            if (AllMonitorsAndElectrics.Length>0)
+            {
+                if (value <= 0 && energy > 0)
+                {
+                    for (int i = 0; i < AllMonitorsAndElectrics.Length; i++)
+                    {
+                        AllMonitorsAndElectrics[i].SetActive(false);
+                    }
+                }
+                else if (value > 0 && energy <= 0)
+                {
+                    for (int i = 0; i < AllMonitorsAndElectrics.Length; i++)
+                    {
+                        AllMonitorsAndElectrics[i].SetActive(true);
+                    }
+                }
+            }
+            
+
             if (value < 0)
             {
                 energy = 0;
@@ -46,6 +67,7 @@ public class ShipManager : MonoBehaviour
                         ShipEngines[i].Energy = energy;
                     }
                 }
+
             }
         }
     }
@@ -57,7 +79,15 @@ public class ShipManager : MonoBehaviour
         limitAmountOfCrew = pointsOfCrewResp.Length;
         if (DefaultPointOfCrewResp == null) DefaultPointOfCrewResp = pointsOfCrewResp[0];
 
-        Energy = 0;        
+        Energy = 0;
+
+        if (AllMonitorsAndElectrics.Length > 0 && Energy <= 0)
+        {            
+            for (int i = 0; i < AllMonitorsAndElectrics.Length; i++)
+            {
+                AllMonitorsAndElectrics[i].SetActive(false);
+            }            
+        }
     }
 
     private void Update()

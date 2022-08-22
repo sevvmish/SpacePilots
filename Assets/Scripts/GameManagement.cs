@@ -5,7 +5,7 @@ using Unity.AI.Navigation;
 using DG.Tweening;
 using System;
 using EZCameraShake;
-
+using UnityEngine.AI;
 
 [RequireComponent(typeof(AudioManager))]
 public class GameManagement : MonoBehaviour
@@ -15,6 +15,8 @@ public class GameManagement : MonoBehaviour
     [SerializeField] private Transform cameraBody;
     [SerializeField] private AudioManager audio;
     [SerializeField] private Light directionalLight;
+    [SerializeField] private Joystick joystick;
+    
 
     //colors for directional light
     private Color currentDirectionalLightColor;
@@ -23,6 +25,7 @@ public class GameManagement : MonoBehaviour
     private Color type1_directionalLight_Color = new Color(220f/255f, 202f/255f, 233f/255f);
     private Color type1_directionalLight_ColorPowerOff = new Color(138f/255f, 105f/255f, 162f/255f);
     private bool isEnergyOffColors;
+    private CharacterController playerCharController;
 
 
     private Vector3 cameraDefaultBodyShift = Vector3.zero;
@@ -53,8 +56,7 @@ public class GameManagement : MonoBehaviour
     //crew UI delegates
     public delegate void BaseUIHandler(Camera camera);
     public static BaseUIHandler MainUIHandler;
-
-    
+        
     
 
 
@@ -75,14 +77,23 @@ public class GameManagement : MonoBehaviour
         //init highlight and audio listener
         InitHighlightPlayer();
         levelDesign(GeneralSettings.CurrentLevel);
-        
-
-        
+                
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (playerCharController != null)
+        {
+            if (Mathf.Abs(joystick.Horizontal) > 0 || Mathf.Abs(joystick.Vertical) > 0)
+            {
+                playerCharController.gameObject.GetComponent<NavMeshAgent>().ResetPath();
+                playerCharController.transform.LookAt(playerCharController.transform.position + new Vector3(joystick.Horizontal, 0, joystick.Vertical));
+                playerCharController.Move(playerCharController.transform.TransformDirection(Vector3.forward) * Time.deltaTime * 5);
+            }
+        }        
+        
+
         //change light when power off, on
         if (shipManager.Energy<=0 && !isEnergyOffColors)
         {
@@ -124,7 +135,9 @@ public class GameManagement : MonoBehaviour
                 if (hit.collider.GetComponent<CrewManager>() != null && selectedGameObject != hit.collider.gameObject)
                 {
                     selectedGameObject = hit.collider.gameObject;
-                    
+                    playerCharController = selectedGameObject.GetComponent<CharacterController>();
+
+
                     selectedGameObject.GetComponent<IHighlightable>().HighlightCurrentObject();
                     HighlightSelectedCrewMember(hit.collider.gameObject.transform);
                     audio.MakeClick();
@@ -132,7 +145,7 @@ public class GameManagement : MonoBehaviour
                 else
                 {
                     if (selectedGameObject!=null && selectedGameObject.GetComponent<CrewManager>() != null && selectedGameObject != hit.collider.gameObject)
-                    {
+                    {                        
                         IPointOfInteraction _point = hit.collider.gameObject.GetComponent<IPointOfInteraction>();
                         Vector3 pointToMove = _point == null ? hit.point : _point.GetPointOfInteraction();
 
@@ -241,11 +254,13 @@ public class GameManagement : MonoBehaviour
                 //ship and crew
                 AddMainShip("small ship 1");
                 AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
+                
                 AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
 
                 //init objects
                 ObjectPooling.InitPools(50, STORAGE);
 
+                /*
                 ObjectPooling.AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 4));
                 ObjectPooling.AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 3));
                 ObjectPooling.AddIncident(IncidentsType.fire, new Vector3(2.5f, 0, 2));
@@ -253,8 +268,10 @@ public class GameManagement : MonoBehaviour
 
                 ObjectPooling.AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 2));
                 ObjectPooling.AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 4));
+                */
 
-                GameObject o = Instantiate(Resources.Load<GameObject>("prefabs/ship parts/main facility/full fuel barrel producer"), new Vector3(-3.5f, 0, 4), Quaternion.Euler(0, 0, 0), shipManager.mainShipTransform);
+                GameObject o = Instantiate(Resources.Load<GameObject>("prefabs/ship parts/main facility/full fuel barrel producer"), new Vector3(-3.5f, 0, 3.5f), Quaternion.Euler(0, -45, 0), shipManager.mainShipTransform);
+                                
                 break;
 
             case 2:

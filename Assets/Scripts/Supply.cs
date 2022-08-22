@@ -229,73 +229,6 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
         }
     }
 
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (isDestroyable && !damagingObjects.ContainsKey(other.gameObject) && other.gameObject.GetComponent<DamageDealer>() != null)
-        {            
-            damagingObjects.Add(other.gameObject, other.gameObject.GetComponent<DamageDealer>());
-        }
-    }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (damagingObjects.ContainsKey(other.gameObject))
-        {
-            damagingObjects.Remove(other.gameObject);
-        }
-    }
-
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (isDestroyable && !damagingObjects.ContainsKey(other.gameObject) && other.gameObject.GetComponent<DamageDealer>() != null)
-        {
-            damagingObjects.Add(other.gameObject, other.gameObject.GetComponent<DamageDealer>());
-        }
-
-        //damage receiver
-        if (isDestroyable && damagingObjects.ContainsKey(other.gameObject))
-        {
-            switch (damagingObjects[other.gameObject].GetNegativeEffect())
-            {
-                case NegativeEffects.burning:
-                         
-                    if (!activatedEffects.Contains(NegativeEffects.burning) && Vector3.Distance(other.gameObject.transform.position, currentTransform.position) <= 1.5f)
-                    {                       
-                        activatedEffects.Add(NegativeEffects.burning);
-                        SetDamageEffect(damagingObjects[other.gameObject].GetDamageAmount());
-                    }
-                    break;
-
-                case NegativeEffects.electricity:
-
-                    break;
-            }
-        }
-    }
-    */
-
-    private void SetDamageEffect(float amount) => StartCoroutine(PlayDamageEffect(amount));
-
-    private IEnumerator PlayDamageEffect(float amount)
-    {        
-        float damageTime = 2f;
-
-
-        
-        for (float i = 0; i < damageTime; i += 0.1f)
-        {
-            DecreaseHealthAmount(amount / damageTime / 10f);
-            
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        if (activatedEffects.Contains(NegativeEffects.burning)) activatedEffects.Remove(NegativeEffects.burning);
-        
-        yield return new WaitForSeconds(0.2f);        
-    }
 
     public void DecreaseHealthAmount(float amount)
     {
@@ -355,31 +288,12 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
 
     public void PlayNegativeEffect(NegativeEffects _effect)
     {
-        switch (_effect)
-        {
-            case NegativeEffects.burning:
-                //Effects.GetChild(0).gameObject.SetActive(true);
-                break;
-
-            case NegativeEffects.electricity:
-
-                break;
-        }
-
-
+        //
     }
+
     public void StopNegativeEffect(NegativeEffects _effect)
     {
-        switch (_effect)
-        {
-            case NegativeEffects.burning:
-                //Effects.GetChild(0).gameObject.SetActive(false);
-                break;
-
-            case NegativeEffects.electricity:
-
-                break;
-        }
+        //
     }
 
     private IEnumerator makeThisSupplyInactive()

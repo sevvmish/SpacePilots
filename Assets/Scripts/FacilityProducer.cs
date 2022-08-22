@@ -57,10 +57,14 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
 
         for (int i = 0; i < baseRenderersForHiglight.Count; i++)
         {
-            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForFacility, GeneralSettings.StrenghtOfShakeOnHighlightingFacility, 10, 90, true);
+            float deltaX = baseRenderersForHiglight[i].transform.localScale.x / 1f;
+            float deltaY = baseRenderersForHiglight[i].transform.localScale.y / 1f;
+            float deltaZ = baseRenderersForHiglight[i].transform.localScale.z / 1f;
+
+            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForSupply, new Vector3(GeneralSettings.StrenghtOfShakeOnHighlightingSupply.x * deltaX, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.y * deltaY, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.z * deltaZ) * 2f, 10, 90, true);
         }
 
-        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForFacility);
+        yield return new WaitForSeconds(GeneralSettings.TimeForShakeForSupply);
         isHighlightEffectInProgress = false;
 
         UnHighLightObject();
