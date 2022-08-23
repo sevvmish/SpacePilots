@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1044482293114744641}
   - component: {fileID: 1044482293114744643}
   - component: {fileID: 1044482293114744642}
-  - component: {fileID: 7610353962019925172}
   m_Layer: 0
   m_Name: fuel inside
   m_TagString: Untagged
@@ -84,22 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &7610353962019925172
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1044482293114744640}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 1, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &1044482293688065615
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +94,6 @@ GameObject:
   - component: {fileID: 1044482293688065616}
   - component: {fileID: 1044482293688065618}
   - component: {fileID: 1044482293688065617}
-  - component: {fileID: 660603193458878788}
   m_Layer: 0
   m_Name: blocks (1)
   m_TagString: Untagged
@@ -184,22 +166,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &660603193458878788
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1044482293688065615}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 1, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &1044482294116867596
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +177,6 @@ GameObject:
   - component: {fileID: 1044482294116867597}
   - component: {fileID: 1044482294116867599}
   - component: {fileID: 1044482294116867598}
-  - component: {fileID: 5777598727467970231}
   m_Layer: 0
   m_Name: blocks
   m_TagString: Untagged
@@ -284,22 +249,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &5777598727467970231
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1044482294116867596}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 1, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &1044482294191876418
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,8 +345,11 @@ MonoBehaviour:
   currentCollider: {fileID: 5281983887309519109}
   currentVisualTransform: {fileID: 6181643390146738929}
   currentTransform: {fileID: 1044482294463350481}
+  UIPositionPoint: {fileID: 0}
   isCanBeTakenByCrew: 0
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
+  maxHealth: 0
+  isDestroyable: 0
   highlightMaterial: {fileID: 2100000, guid: b1f164095bfc29942bc0b83d8b8cee4e, type: 2}
   baseRenderersForHiglight:
   - {fileID: 1855248564838909506}
@@ -518,22 +470,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6be32f8889c38d94391304e4b15de40c, type: 3}
   m_PrefabInstance: {fileID: 1044482293527501510}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &8837767559988317390
-NavMeshObstacle:
+--- !u!114 &7816270098767982033
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198113085857818519}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 9.992001, y: 9.992001, z: 17.726002}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!4 &717205257852632365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6be32f8889c38d94391304e4b15de40c, type: 3}
@@ -626,22 +578,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f8db950b2bebf2045b2fd2da2dc02dcf, type: 3}
   m_PrefabInstance: {fileID: 1044482294432278746}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &2537170851047688870
-NavMeshObstacle:
+--- !u!114 &4931664162714490634
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198113084615628171}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 3.607, y: 3.5520003, z: 0.367}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.36}
-  m_TimeToStationary: 0.5
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!4 &717205256948109105 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f8db950b2bebf2045b2fd2da2dc02dcf, type: 3}
@@ -729,22 +681,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f8db950b2bebf2045b2fd2da2dc02dcf, type: 3}
   m_PrefabInstance: {fileID: 1044482294767441727}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &5618005687904626158
-NavMeshObstacle:
+--- !u!114 &7029467557248989882
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198113085083445870}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 3.607, y: 3.5520003, z: 0.367}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.36}
-  m_TimeToStationary: 0.5
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_IgnoreFromBuild: 1
+  m_AffectedAgents: ffffffff
 --- !u!4 &717205256612688084 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f8db950b2bebf2045b2fd2da2dc02dcf, type: 3}

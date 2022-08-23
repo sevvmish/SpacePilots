@@ -241,19 +241,22 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         currentPos = currentBaseTransform.position;
         currentSpeed = Vector3.Distance(currentPos, previousPos);
         
-
-        if (currentSpeed <= 0.01f) 
+        if (crewState != CrewMemberStates.sit)
         {
-            makeIdleAnimation();
+            if (currentSpeed <= 0.01f)
+            {
+                makeIdleAnimation();
+            }
+            else if (currentSpeed > 0.01f && currentSpeed <= 0.03f)
+            {
+                makeWalkAnimation();
+            }
+            else if (currentSpeed > 0.03f)
+            {
+                makeRunAnimation();
+            }
         }
-        else if (currentSpeed > 0.01f && currentSpeed <= 0.03f)
-        {
-            makeWalkAnimation();
-        }
-        else if (currentSpeed > 0.03f)
-        {
-            makeRunAnimation();
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -320,15 +323,21 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         }
 
         
-        navAgent.isStopped = false;        
+        navAgent.isStopped = false;
         navAgent.SetDestination(destination);
-        
+        if (crewState == CrewMemberStates.sit)
+        {
+            makeIdleAnimation();
+        }
+
         if (PlaceOfDestination != _objectOfDestination && !_objectOfDestination.CompareTag("Floor")) PlaceOfDestination = _objectOfDestination;
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (PlaceOfCurrentLocation != other.gameObject) PlaceOfCurrentLocation = other.gameObject;
+
+        
 
         if (PlaceOfCurrentLocation == PlaceOfDestination)
         {
@@ -341,6 +350,15 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                     TakeAnyObjectToCarry(objectToTake.GiveAwayTakeble());
                 }
             }
+
+            if (other.gameObject.GetComponent<SpaceControlPanel>() != null && !other.gameObject.GetComponent<SpaceControlPanel>().isChairBusy)
+            {
+                if (CurrentTakenObject != null) ThrowAwayCurrentTakenObject();
+                makeSitAnimation();
+                StartCoroutine(PlaySit(other.gameObject.GetComponent<SpaceControlPanel>().GetSitPoint(), other.gameObject.GetComponent<SpaceControlPanel>().GetLookPoint()));
+                               
+            }
+            
 
             navAgent.isStopped = true;
             PlaceOfCurrentLocation = null;
@@ -421,9 +439,18 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
             }
         }
-        else
-        {
+        else if (_currentTakenObject.GetComponent<Supply>() != null)
+        {            
             CurrentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.72f);
+            CurrentTakenObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+            switch ((SuppliesType)_currentTakenObject.GetComponent<Supply>().GetTypeOfObject() )
+            {
+                case SuppliesType.full_engine_fuel:
+                    CurrentTakenObject.transform.localPosition = new Vector3(0.056f, 0.81f, 0.616f);
+                    CurrentTakenObject.transform.localEulerAngles  = new Vector3(0, -23, 71.5f);
+                    break;
+            }
         }
        
         
@@ -483,6 +510,19 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         if (crewState == CrewMemberStates.walk) return;
         crewState = CrewMemberStates.walk;
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Run")) animator.Play("Walk");
+    }
+
+    private void makeSitAnimation()
+    {
+        if (crewState == CrewMemberStates.sit) return;
+        crewState = CrewMemberStates.sit;
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Sit"))
+        {
+            if (animator.GetLayerWeight(1) > 0) animator.SetLayerWeight(1, 0);
+            if (!animator.GetCurrentAnimatorStateInfo(1).IsName("idle 2")) animator.Play("idle 2");
+            animator.Play("Sit");
+        }
+            
     }
 
     private void makeCarryAnimation()
@@ -584,6 +624,13 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         CurrentTakenObject.GetComponent<ITakenAndMovable>().MakeThrownAway();
         DeactivateAnyHandsInstruments();
         CurrentTakenObject = null;
+    }
+
+    private IEnumerator PlaySit(Vector3 pos, Vector3 look)
+    {
+        yield return new WaitForSeconds(0.2f);
+        currentBaseTransform.LookAt(look);
+        currentBaseTransform.position = pos;        
     }
 
 }

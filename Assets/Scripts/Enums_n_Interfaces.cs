@@ -85,7 +85,8 @@ public enum CrewMemberStates
     repairing,
     fire_extinguish,
     stunned,
-    dead
+    dead,
+    sit
 }
 //==================================================================
 

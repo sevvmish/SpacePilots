@@ -37,6 +37,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
     private bool isReactorLoaded, isShowMediumLevelInColor, isReactorReadyToLoadAgain;
 
 
+
     private void Start()
     {
         for (int i = 0; i < baseRenderersForHiglight.Count; i++)

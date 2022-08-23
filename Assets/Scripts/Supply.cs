@@ -210,7 +210,7 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
 
     public void HighlightCurrentObject()
     {
-        if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
+        if (!isHighlightEffectInProgress && isCanBeTakenByCrew) StartCoroutine(HandleCurrentHighlight());
     }
 
     private void HighLightObject()

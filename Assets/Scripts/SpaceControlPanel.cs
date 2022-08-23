@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMovable, IHighlightable
+public class SpaceControlPanel : MonoBehaviour, IPointOfInteraction, IHighlightable
 {
-    [SerializeField] private SuppliesType currentMovableToProduce;
-    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform;    
     [SerializeField] private settings GeneralSettings;
+    [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, pointToSit, pointToLookAt;
 
     //highlighting
     [SerializeField] private Material highlightMaterial;
@@ -16,7 +15,7 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
     private bool isHighlightEffectInProgress;
     //===========
 
-    [SerializeField] private GameObject giveAwayEffect;
+    public bool isChairBusy, isEnergyON;
 
     private void Start()
     {
@@ -26,26 +25,25 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
         }
     }
 
+    private void OnEnable()
+    {
+        isChairBusy = false;
+
+    }
+
+    public Vector3 GetSitPoint()
+    {        
+        return new Vector3(pointToSit.position.x, 0, pointToSit.position.z);
+    }
+
+    public Vector3 GetLookPoint()
+    {
+        return new Vector3(pointToLookAt.position.x, 0, pointToLookAt.position.z);
+    }
 
     public Vector3 GetPointOfInteraction()
     {
         return Vector3.Lerp(pointOfInterestFROM.position, pointOfInterestTO.position, UnityEngine.Random.Range(0.1f, 1f));
-    }
-
-    public GameObject GiveAwayTakeble()
-    {
-        if (giveAwayEffect != null) giveAwayEffect.SetActive(true);
-        return ObjectPooling.GetSupply(currentMovableToProduce, transform.position, false);
-    }
-    
-    public object GetTypeOfObject()
-    {
-        return currentMovableToProduce;
-    }
-
-    public void HighlightCurrentObject()
-    {
-        if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
     }
 
     public IEnumerator HandleCurrentHighlight()
@@ -69,6 +67,11 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
         UnHighLightObject();
     }
 
+    public void HighlightCurrentObject()
+    {
+        if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
+    }
+
     private void HighLightObject()
     {
         for (int i = 0; i < baseRenderersForHiglight.Count; i++)
@@ -84,21 +87,4 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
             baseRenderersForHiglight[i].material = baseMaterialsForHiglight[i];
         }
     }
-
-    public void MakeThrownAway()
-    {
-        //FORBIDDEN
-    }
-
-    public void RotateWhileThrownAway()
-    {
-        //FORBIDDEN
-    }
-
-    public bool IsCanBeTakenByCrew()
-    {
-        return true;
-    }
 }
-
-
