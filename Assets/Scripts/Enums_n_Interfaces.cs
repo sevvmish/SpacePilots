@@ -97,7 +97,8 @@ public enum SuppliesType
     tester = 0,
     empty_engine_fuel,
     full_engine_fuel,
-    shell_for_cannon    
+    shell_for_cannon,
+    none
 }
 
 public enum SupplyState

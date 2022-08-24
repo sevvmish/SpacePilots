@@ -137,7 +137,6 @@ public class GameManagement : MonoBehaviour
                     selectedGameObject = hit.collider.gameObject;
                     playerCharController = selectedGameObject.GetComponent<CharacterController>();
 
-
                     selectedGameObject.GetComponent<IHighlightable>().HighlightCurrentObject();
                     HighlightSelectedCrewMember(hit.collider.gameObject.transform);
                     audio.MakeClick();
@@ -270,7 +269,7 @@ public class GameManagement : MonoBehaviour
                 ObjectPooling.AddIncident(IncidentsType.simple_wreck, new Vector3(-2f, 0, 4));
                 */
 
-                GameObject o = Instantiate(Resources.Load<GameObject>("prefabs/ship parts/main facility/full fuel barrel producer"), new Vector3(-3.5f, 0, 3.5f), Quaternion.Euler(0, -45, 0), shipManager.mainShipTransform);
+                //GameObject o = Instantiate(Resources.Load<GameObject>("prefabs/ship parts/main facility/full fuel barrel producer"), new Vector3(-3.5f, 0, 3.5f), Quaternion.Euler(0, -45, 0), shipManager.mainShipTransform);
                                 
                 break;
 

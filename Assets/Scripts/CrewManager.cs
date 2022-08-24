@@ -62,7 +62,10 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         {
             if (currentTakenObject == null && value != null)
             {
-                
+                if (value.GetComponent<Supply>() != null && (SuppliesType)value.GetComponent<Supply>().GetTypeOfObject() == SuppliesType.full_engine_fuel)
+                {
+                    Speed *= 0.5f;
+                }
 
                 audio.clip = grabSound;
                 audio.Play();
@@ -71,6 +74,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
             if (currentTakenObject != null && value == null)
             {
                 isTakenObjectDestroyable = false;
+                Speed = maxSpeed;
 
                 audio.clip = grabOff;
                 audio.Play();
@@ -371,9 +375,11 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         {
             //print(((SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetSupplyTypeOfSupply() == SuppliesType.tester).ToString());
 
+
+
             if (other.gameObject.GetComponent<IConsumer>() != null && (SuppliesType)CurrentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfObject() == other.gameObject.GetComponent<IConsumer>().GetFacilityConsumerSupplyType())
             {
-                //print("interacted with FacilityConsumer");
+                
                 if (other.gameObject.GetComponent<IConsumer>().ConsumeSupply(CurrentTakenObject))
                 {
                     CurrentTakenObject = null;

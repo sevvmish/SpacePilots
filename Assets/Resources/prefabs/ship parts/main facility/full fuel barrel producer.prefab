@@ -89,6 +89,10 @@ MonoBehaviour:
   - {fileID: 1061106690186487972}
   - {fileID: 255341074907771599}
   count: 4
+  startDelay: 0
+  delayFirst: 0
+  centerDelay: 0
+  delaySecond: 1.5
 --- !u!1 &1561885430253885285
 GameObject:
   m_ObjectHideFlags: 0
