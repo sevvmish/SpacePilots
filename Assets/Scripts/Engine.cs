@@ -24,9 +24,12 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
 
 
     //UI information mark
-    private GameObject uiInformationMark;
-    private RectTransform uiInformationMarkRect;
-    private Vector3 OnScreenPosition;
+    //private GameObject uiInformationMark;
+    //private RectTransform uiInformationMarkRect;
+    //private Vector3 OnScreenPosition;
+
+    private UIManager alertMark;
+
     private Action makeBlink;
     [SerializeField] private AudioSource alarmSound;
     private bool param1, param2, param3;
@@ -140,18 +143,20 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             if (temperature > 0.67f)
             {
                 overheatVisualEff.gameObject.SetActive(true);
-                ShowUI();
+                //ShowUI();
+                alertMark.ShowUI();
             }
             else
             {
                 overheatVisualEff.gameObject.SetActive(false);
-                if (!isTooOverheated) HideUI();
+                if (!isTooOverheated) alertMark.HideUI();//HideUI();
             }
 
             if (temperature < 0.33f)
             {
                 isTooOverheated = false;
-                HideUI();
+                //HideUI();
+                alertMark.HideUI();
                 CancelBlinking();
             }
                 
@@ -197,16 +202,18 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
         heatIncident.gameObject.SetActive(false);
 
         //icon of overheating
-        uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
-        uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.fire);
-        uiInformationMark.transform.GetChild(0).GetComponent<Image>().color = Color.red;
-        uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.white;
-        uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
-        GameManagement.MainUIHandler -= UpdateUIPosition;
-        uiInformationMarkRect.gameObject.SetActive(false);
+        alertMark = new UIManager(UIPositionPoint, UIPanelTypes.alert_mark, UIIconTypes.fire, Color.red, Color.white);
+
+        //uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
+        //uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.fire);
+        //uiInformationMark.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+        //uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+        //uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
+        //GameManagement.MainUIHandler -= UpdateUIPosition;
+        //uiInformationMarkRect.gameObject.SetActive(false);
     }
 
-
+    /*
     private void UpdateUIPosition(Camera camera)
     {
         OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
@@ -235,7 +242,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
 
         
     }
-
+    */
 
 
     private void Update()
@@ -274,8 +281,11 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             heatIncident.SetMaxHealth(1, Temperature);
             lastHeatTemperature = 0;
 
-            uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
+            alertMark.IsBlinking = true;
+            alertMark.IsLeaveEnabledAfterBlinking = true;
+
             makeBlink = makeBlinkOnLowCapacity;
         }
 
@@ -288,29 +298,37 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
         if (Temperature >= 0.9f && !param1)
         {
             param1 = true;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.15f;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.1f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.15f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.1f;
+            alertMark.HowLongToBlink = 0.15f;
+            alertMark.WhatIntervalToBlink = 0.1f;
             alarmSound.Play();
         }
         else if (Temperature >= 0.8f && !param2)
         {
             param2 = true;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.3f;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.15f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.3f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.15f;
+            alertMark.HowLongToBlink = 0.3f;
+            alertMark.WhatIntervalToBlink = 0.15f;
             alarmSound.Play();
         }
         else if (Temperature >= 0.67f && !param3)
         {
             param3 = true;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.5f;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.3f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.5f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.3f;
+            alertMark.HowLongToBlink = 0.5f;
+            alertMark.WhatIntervalToBlink = 0.3f;
             alarmSound.Play();
         }
     }
 
     private void CancelBlinking()
     {
-        uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        //uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        alertMark.IsBlinking = false;
+
         makeBlink = null;
         param1 = param2 = param3 = false;
     }

@@ -5,6 +5,111 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    //UI information mark
+    private GameObject uiMark;
+    private RectTransform uiMarkRect;
+    private Vector3 OnScreenPosition;
+
+    private Transform UIPositionPoint;
+
+    private MakeActiveInTimer blinker;
+    //==================
+
+    public UIManager(Transform _UIPositionPoint, UIPanelTypes whatTypeOfPanel, UIIconTypes whatTypeOfSprite, Color backColor, Color iconColor)
+    {
+        UIPositionPoint = _UIPositionPoint;
+
+        uiMark = Instantiate(GetUIPrefab(whatTypeOfPanel), GameObject.Find("MainCanvas").transform);
+        uiMark.transform.GetChild(1).GetComponent<Image>().sprite = GetUIIconSprite(whatTypeOfSprite);
+        uiMark.transform.GetChild(0).GetComponent<Image>().color = backColor;
+        uiMark.transform.GetChild(1).GetComponent<Image>().color = iconColor;
+        uiMarkRect = uiMark.GetComponent<RectTransform>();        
+        uiMarkRect.gameObject.SetActive(false);
+
+        blinker = uiMark.GetComponent<MakeActiveInTimer>();
+        blinker.enabled = false;
+    }
+
+    public bool IsBlinking
+    {
+        get
+        {
+            return blinker.enabled;
+        }
+
+        set
+        {
+            blinker.enabled = value;
+        }
+    }
+
+
+    public bool IsLeaveEnabledAfterBlinking
+    {
+        get
+        {
+            return blinker.isLeaveEnabled;
+        }
+
+        set
+        {
+            blinker.isLeaveEnabled = value;
+        }
+    }
+
+    public float HowLongToBlink
+    {
+        get
+        {
+            return blinker.howLong;
+        }
+
+        set
+        {
+            blinker.howLong = value;
+        }
+    }
+
+    public float WhatIntervalToBlink
+    {
+        get
+        {
+            return blinker.whatInterval;
+        }
+
+        set
+        {
+            blinker.whatInterval = value;
+        }
+    }
+
+
+
+    private void UpdateUIPosition(Camera camera)
+    {
+        OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
+        uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
+    }
+
+    public void ShowUI()
+    {
+        if (!uiMarkRect.gameObject.activeSelf)
+        {
+            GameManagement.MainUIHandler += UpdateUIPosition;
+            uiMarkRect.gameObject.SetActive(true);
+        }
+    }
+
+    public void HideUI()
+    {
+        if (uiMarkRect.gameObject.activeSelf)
+        {            
+            uiMarkRect.gameObject.SetActive(false);
+        }
+
+        GameManagement.MainUIHandler -= UpdateUIPosition;
+    }
+
 
     public static Sprite GetUIIconSprite(UIIconTypes _panel)
     {
@@ -39,6 +144,18 @@ public class UIManager : MonoBehaviour
             case UIIconTypes.energy:
                 result = Resources.Load<Sprite>("prefabs/sprites/energy sign");
                 break;
+
+            case UIIconTypes.radiation:
+                result = Resources.Load<Sprite>("prefabs/sprites/radiation sign");
+                break;
+
+            case UIIconTypes.ok:
+                result = Resources.Load<Sprite>("prefabs/sprites/ok");
+                break;
+
+            case UIIconTypes.no:
+                result = Resources.Load<Sprite>("prefabs/sprites/no");
+                break;
         }
 
         return result;
@@ -60,6 +177,10 @@ public class UIManager : MonoBehaviour
 
             case UIPanelTypes.health_bar:
                 result = Resources.Load<GameObject>("prefabs/UI/health bar");
+                break;
+
+            case UIPanelTypes.alert_mark:
+                result = Resources.Load<GameObject>("prefabs/UI/alert mark");
                 break;
         }
 

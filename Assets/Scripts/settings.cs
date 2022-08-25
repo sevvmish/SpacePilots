@@ -39,7 +39,7 @@ public class settings : ScriptableObject
     //supply settings
     public Vector3 StrenghtOfShakeOnHighlightingSupply = new Vector3(1f, 0.6f, 1f);
     public float TimeForShakeForSupply = 0.3f;
-
+      
     //BLOOM
     public float BaseBloomIntensityColor = 1.5f;
 

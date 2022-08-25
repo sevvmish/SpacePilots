@@ -140,7 +140,8 @@ public enum UIPanelTypes
 {
     progress_bar,
     information_mark,
-    health_bar
+    health_bar,
+    alert_mark
 }
 
 public enum UIIconTypes
@@ -153,7 +154,9 @@ public enum UIIconTypes
     frost,
     energy,
     repair,
-    radiation
+    radiation,
+    ok,
+    no
 }
 
 //===================================================================

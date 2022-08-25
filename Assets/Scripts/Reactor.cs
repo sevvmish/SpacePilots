@@ -23,10 +23,12 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
     //===========
 
     //UI information mark
-    private GameObject uiInformationMark;
-    private RectTransform uiInformationMarkRect;
-    private Vector3 OnScreenPosition;
-    
+    //private GameObject uiInformationMark;
+    //private RectTransform uiInformationMarkRect;
+    //private Vector3 OnScreenPosition;
+
+    private UIManager informationMark;
+
     private Action makeBlink;
     private Material barrelExampleMaterial;
     [SerializeField] private AudioSource alarmSound;
@@ -36,6 +38,8 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
     private float currentBarrelCapacity;
     private bool isReactorLoaded, isShowMediumLevelInColor, isReactorReadyToLoadAgain;
 
+    [SerializeField] private bool isStartFromLoaded;
+    [SerializeField] private float loadedAmount;
 
 
     private void Start()
@@ -45,32 +49,49 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
             baseMaterialsForHiglight.Add(baseRenderersForHiglight[i].material);
         }
 
+        
+    }
+
+    private void OnEnable()
+    {
         barrelExampleMaterial = Instantiate(barrelExample.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material);
         barrelExample.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = barrelExampleMaterial;
-                
+
         greenLight.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.green);
         greenLight.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.green * GeneralSettings.BaseBloomIntensityColor);
 
         redLight.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Color.red);
         redLight.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", Color.red * GeneralSettings.BaseBloomIntensityColor);
-    }
 
-    private void OnEnable()
-    {
         loadingBarrelEffects.gameObject.SetActive(false);
 
         //icon of overheating
-        uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
-        uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.energy_fuel);
-        uiInformationMark.transform.GetChild(0).GetComponent<Image>().color = Color.red;
-        uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.white;
-        uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
-        GameManagement.MainUIHandler -= UpdateUIPosition;
-        uiInformationMarkRect.gameObject.SetActive(false);
+        //uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
+        //uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.energy_fuel);
+        //uiInformationMark.transform.GetChild(0).GetComponent<Image>().color = Color.black;
+        //uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+        //uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
+        //GameManagement.MainUIHandler -= UpdateUIPosition;
+        //uiInformationMarkRect.gameObject.SetActive(false);
 
-        SetStateToEmpty();
+        informationMark = new UIManager(UIPositionPoint, UIPanelTypes.information_mark, UIIconTypes.energy_fuel, Color.black, Color.white);
+
+        if (!isStartFromLoaded)
+        {
+            SetStateToEmpty();
+        }
+        else
+        {
+            SetStateToEmpty();
+            SetStateToLoaded();
+            currentBarrelCapacity = loadedAmount;
+        }
+
+        
+            
     }
 
+    /*
     private void UpdateUIPosition(Camera camera)
     {
         OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
@@ -96,12 +117,13 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
             uiInformationMarkRect.gameObject.SetActive(false);
         }
     }
-
+    */
 
 
     private void SetStateToEmpty()
     {
-        uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        //uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        informationMark.IsBlinking = false;
         makeBlink = null;
         param1 = param2 = param3 = false;
 
@@ -112,13 +134,15 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
         greenLight.gameObject.SetActive(false);
         redLight.gameObject.SetActive(true);
         barrelExample.gameObject.SetActive(false);
-        ShowUI();
+        //ShowUI();
+        informationMark.ShowUI();
     }
 
 
     private void SetStateToLoaded()
     {
-        uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        //uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        informationMark.IsBlinking = false;
         makeBlink = null;
         param1 = param2 = param3 = false;
         isShowMediumLevelInColor = false;
@@ -134,7 +158,8 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
         greenLight.gameObject.SetActive(true);
         redLight.gameObject.SetActive(false);
         barrelExample.gameObject.SetActive(true);
-        HideUI();
+        //HideUI();
+        informationMark.HideUI();
     }
 
 
@@ -151,10 +176,13 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
                 isReactorReadyToLoadAgain = true;
                 barrelExampleMaterial.SetColor("_BaseColor", Color.red);
                 barrelExampleMaterial.SetColor("_EmissionColor", Color.red * GeneralSettings.BaseBloomIntensityColor);
-                uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
-                uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
+                //uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
+                //uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
+                informationMark.IsBlinking = true;
+                informationMark.IsLeaveEnabledAfterBlinking = true;
                 makeBlink = makeBlinkOnLowCapacity;
-                ShowUI();
+                //ShowUI();
+                informationMark.ShowUI();
             }
 
             if (!isShowMediumLevelInColor && currentBarrelCapacity < (standartBarrelCapacity * 0.5f))
@@ -178,22 +206,28 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
         if (currentBarrelCapacity < (standartBarrelCapacity * 0.07f) && !param1)
         {
             param1 = true;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.15f;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.1f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.15f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.1f;
+            informationMark.HowLongToBlink = 0.15f;
+            informationMark.WhatIntervalToBlink = 0.1f;
             alarmSound.Play();
         }
         else if (currentBarrelCapacity < (standartBarrelCapacity * 0.14f) && !param2)
         {
             param2 = true;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.3f;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.15f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.3f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.15f;
+            informationMark.HowLongToBlink = 0.3f;
+            informationMark.WhatIntervalToBlink = 0.15f;
             alarmSound.Play();
         }
         else if(currentBarrelCapacity < (standartBarrelCapacity * 0.21f) && !param3)
         {
             param3 = true;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.5f;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.3f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.5f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.3f;
+            informationMark.HowLongToBlink = 0.5f;
+            informationMark.WhatIntervalToBlink = 0.3f;
             alarmSound.Play();
         }        
     }

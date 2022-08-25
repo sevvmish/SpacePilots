@@ -797,7 +797,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 36044fa6f124dbe47b0c448bb14695cb, type: 2}
+  - {fileID: 2100000, guid: 60e3e7fb6bf8f1f4fbd4a07d0e9e5cea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -998,6 +998,8 @@ MonoBehaviour:
   - {fileID: 3727159503712731583}
   - {fileID: 9145297367458409918}
   alarmSound: {fileID: 8954653197150449224}
+  isStartFromLoaded: 0
+  loadedAmount: 0
 --- !u!65 &2190706669123766132
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1452,7 +1454,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 60e3e7fb6bf8f1f4fbd4a07d0e9e5cea, type: 2}
+  - {fileID: 2100000, guid: 36044fa6f124dbe47b0c448bb14695cb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2425,7 +2427,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 60e3e7fb6bf8f1f4fbd4a07d0e9e5cea, type: 2}
+  - {fileID: 2100000, guid: 36044fa6f124dbe47b0c448bb14695cb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

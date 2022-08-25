@@ -303,11 +303,22 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         else if (CurrentTakenObject == null)
         {
             makeCarryOffAnimation();
-        }       
+        }
+
+        //print("nav: " + navAgent.destination);
+                    
+    }
+
+    public void GetCorrectionForPosition(Vector3 pos)
+    {
+        //navAgent.destination += pos;
+        //currentBaseTransform.position += pos;
+        //navAgent.Warp(navAgent.nextPosition + pos);
     }
 
     public void MoveCrewMemberTo(Vector3 destination, GameObject _objectOfDestination) 
     {
+       
         if (crewState == CrewMemberStates.stunned)
         {
             //show negative info
@@ -455,6 +466,10 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                 case SuppliesType.full_engine_fuel:
                     CurrentTakenObject.transform.localPosition = new Vector3(0.056f, 0.81f, 0.616f);
                     CurrentTakenObject.transform.localEulerAngles  = new Vector3(0, -23, 71.5f);
+                    break;
+
+                case SuppliesType.empty_engine_fuel:
+                    CurrentTakenObject.transform.localPosition = new Vector3(0, 0.72f, 0.6f);
                     break;
             }
         }

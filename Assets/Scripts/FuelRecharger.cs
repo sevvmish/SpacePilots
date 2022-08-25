@@ -11,8 +11,8 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
     [SerializeField] private SuppliesType currentSupplyToProduceType;
     [SerializeField] private Transform pointOfInterestFROM, pointOfInterestTO, currentVisualTransform, UIPositionPoint;
     [SerializeField] private settings GeneralSettings;
-    [SerializeField] private float secondsForCharge = 10;
-    [SerializeField] private float secondsForOverCharge = 8;
+    [SerializeField] private float secondsForCharge = 13;
+    [SerializeField] private float secondsForOverCharge = 18;
 
     //highlighting
     [SerializeField] private Material highlightMaterial;
@@ -30,14 +30,16 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
     [SerializeField] private GameObject startRechargeEffect, stopRechargeEffect, giveAwayEffect, overChargeEffect, explosion;
 
     //UI information mark
-    private GameObject uiInformationMark;
-    private RectTransform uiInformationMarkRect;
-    private Vector3 OnScreenPosition;
+    //private GameObject uiInformationMark;
+    //private RectTransform uiInformationMarkRect;
+    //private Vector3 OnScreenPosition;
+
+    private UIManager alertMark, readyMark;
 
     private Action makeBlink;
     private Material barrelExampleMaterial;
-    [SerializeField] private AudioSource alarmSound;
-    private bool param1, param2, param3;
+    [SerializeField] private AudioSource alarmSound, readySound, fillInSound;
+    private bool param1, param2, param3, param4;
     //==================
 
     private float cur_sec;
@@ -46,6 +48,7 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
 
     private void Start()
     {
+    
         for (int i = 0; i < baseRenderersForHiglight.Count; i++)
         {
             baseMaterialsForHiglight.Add(baseRenderersForHiglight[i].material);
@@ -55,25 +58,29 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
     private void OnEnable()
     {
         //icon of overheating
-        uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
-        uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.energy_fuel);
-        uiInformationMark.transform.GetChild(0).GetComponent<Image>().color = Color.red;
-        uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.white;
-        uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
-        GameManagement.MainUIHandler -= UpdateUIPosition;
-        uiInformationMarkRect.gameObject.SetActive(false);
+
+        alertMark = new UIManager(UIPositionPoint, UIPanelTypes.alert_mark, UIIconTypes.radiation, Color.red, Color.white);
+        readyMark = new UIManager(UIPositionPoint, UIPanelTypes.information_mark, UIIconTypes.ok, Color.black, Color.white);
+
+        //uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
+        //uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.energy_fuel);
+        //uiInformationMark.transform.GetChild(0).GetComponent<Image>().color = Color.black;
+        //uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+        //uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
+        //GameManagement.MainUIHandler -= UpdateUIPosition;
+        //uiInformationMarkRect.gameObject.SetActive(false);
 
         explosion.SetActive(false);
         EmptyRecharger();
     }
 
+
+    /*
     private void UpdateUIPosition(Camera camera)
     {
         OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
         uiInformationMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
     }
-
-
 
     private void ShowUI()
     {
@@ -94,12 +101,11 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
 
         GameManagement.MainUIHandler -= UpdateUIPosition;
     }
+    */
 
 
     private void Update()
     {
-        
-
         if (isBarrelOverCharging && overchargingLevel < secondsForOverCharge)
         {
             overchargingLevel += Time.deltaTime;
@@ -107,10 +113,15 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
             if (!isShowingMark)
             {
                 isShowingMark = true;
-                uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
-                uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
+                //uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
+                //uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
+                alertMark.IsBlinking = true;
+                alertMark.IsLeaveEnabledAfterBlinking = true;
                 makeBlink = makeBlinkOnLowCapacity;
-                ShowUI();
+                //ShowUI();
+                //alertMark.ShowUI();
+                readyMark.ShowUI();
+                readySound.Play();
                 StartCoroutine(PlayOverChargingProcess());
             }
         }
@@ -120,21 +131,15 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
             isBarrelRecharging = false;
             isBarrelOverCharging = false;
 
-            StartCoroutine(PlayExplosion());
-            
+            StartCoroutine(PlayExplosion());            
         }
 
 
         if (start_sec)
         {
-            if (cur_sec>6)
-            {
-                print("6 sec");
-            }
-            else
-            {
+            
                 cur_sec += Time.deltaTime;
-            }
+            print(cur_sec);
         }
 
         makeBlink?.Invoke();
@@ -143,26 +148,39 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
 
     private void makeBlinkOnLowCapacity()
     {
-        if (overchargingLevel > (secondsForOverCharge*0.7f) && !param1)
+        if (overchargingLevel > (secondsForOverCharge*0.85f) && !param1)
         {
             param1 = true;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.15f;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.1f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.15f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.1f;
+            alertMark.HowLongToBlink = 0.15f;
+            alertMark.WhatIntervalToBlink = 0.1f;
             alarmSound.Play();
         }
-        else if (overchargingLevel > (secondsForOverCharge * 0.35f) && !param2)
+        else if (overchargingLevel > (secondsForOverCharge * 0.7f) && !param2)
         {
             param2 = true;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.3f;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.15f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.3f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.15f;
+            alertMark.HowLongToBlink = 0.3f;
+            alertMark.WhatIntervalToBlink = 0.15f;
             alarmSound.Play();
         }
-        else if (overchargingLevel > 0 && !param3)
+        else if (overchargingLevel > (secondsForOverCharge * 0.55f) && !param3)
         {
+            alertMark.ShowUI();
+            
             param3 = true;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.5f;
-            uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.3f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().howLong = 0.5f;
+            //uiInformationMark.GetComponent<MakeActiveInTimer>().whatInterval = 0.3f;
+            alertMark.HowLongToBlink = 0.5f;
+            alertMark.WhatIntervalToBlink = 0.3f;
             alarmSound.Play();
+        }
+        else if (overchargingLevel > (secondsForOverCharge * 0.3f) && !param4)
+        {            
+            readyMark.HideUI();
+            param4 = true;           
         }
     }
 
@@ -171,14 +189,18 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
     {
         overChargeEffect.SetActive(false);
         fuelBarrel.localScale = Vector3.one;
+        fuelBarrel.localEulerAngles = Vector3.zero;
         fuelBarrel.localPosition = new Vector3(-0.5f, 1, 0);
 
         stopRechargeEffect.SetActive(true);
 
-        uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        //uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
+        alertMark.IsBlinking = false;
         makeBlink = null;
-        param1 = param2 = param3 = false;
-        HideUI();
+        param1 = param2 = param3 = param4 = false;
+        //HideUI();
+        alertMark.HideUI();
+        readyMark.HideUI();
 
         rechargingLevel = 0;
         overchargingLevel = 0;
@@ -294,20 +316,22 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
     {
         yield return new WaitForSeconds(0.5f);
 
+        fillInSound.Play();
         isBarrelRecharging = true;
         isBarrelOverCharging = false;
 
-        fuelLevel.DOScaleY (0.8f, secondsForCharge);
-        fuelLevel.DOLocalMoveY(0, secondsForCharge);
+        fuelLevel.DOScaleY (0.8f, secondsForCharge*1.5f);
+        fuelLevel.DOLocalMoveY(0, secondsForCharge*1.5f);
 
         float delta = 20;
-
+        
         for (int i = 0; i < delta; i++)
         {
             rechargingLevel += 1f / delta;
             yield return new WaitForSeconds(secondsForCharge / delta);
         }
 
+        fillInSound.Stop();
         rechargingLevel = 1f;
         fuelLevel.localScale = Vector3.one;
         fuelLevel.localPosition = Vector3.zero;
