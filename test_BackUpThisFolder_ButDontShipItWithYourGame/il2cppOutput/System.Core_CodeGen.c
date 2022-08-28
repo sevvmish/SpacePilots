@@ -353,83 +353,73 @@ extern void ReaderWriterLockSlim_TryEnterWriteLock_mE43F653D65A448225134E0CE1A28
 extern void ReaderWriterLockSlim_TryEnterWriteLock_mBFFB3599E5D8C30B2D22A876CC58F647AEA2EDAE (void);
 // 0x00000102 System.Boolean System.Threading.ReaderWriterLockSlim::TryEnterWriteLockCore(System.Threading.ReaderWriterLockSlim/TimeoutTracker)
 extern void ReaderWriterLockSlim_TryEnterWriteLockCore_m18B708E74264AC43BAD623C8ACC92370DA32888B (void);
-// 0x00000103 System.Void System.Threading.ReaderWriterLockSlim::EnterUpgradeableReadLock()
-extern void ReaderWriterLockSlim_EnterUpgradeableReadLock_m2BC6F2E7FDE834363821DAE26B1AAD7DAFE4ECEC (void);
-// 0x00000104 System.Boolean System.Threading.ReaderWriterLockSlim::TryEnterUpgradeableReadLock(System.Int32)
-extern void ReaderWriterLockSlim_TryEnterUpgradeableReadLock_m8D1AC20D086B7CD5019836984BCE18635DEB34DF (void);
-// 0x00000105 System.Boolean System.Threading.ReaderWriterLockSlim::TryEnterUpgradeableReadLock(System.Threading.ReaderWriterLockSlim/TimeoutTracker)
-extern void ReaderWriterLockSlim_TryEnterUpgradeableReadLock_m67F6B1EC0CCE06AB1F444221036CE7AE614518CC (void);
-// 0x00000106 System.Boolean System.Threading.ReaderWriterLockSlim::TryEnterUpgradeableReadLockCore(System.Threading.ReaderWriterLockSlim/TimeoutTracker)
-extern void ReaderWriterLockSlim_TryEnterUpgradeableReadLockCore_mA84580B68864B07DD3D6A2A4F48FCFE72EEA6F6F (void);
-// 0x00000107 System.Void System.Threading.ReaderWriterLockSlim::ExitReadLock()
+// 0x00000103 System.Void System.Threading.ReaderWriterLockSlim::ExitReadLock()
 extern void ReaderWriterLockSlim_ExitReadLock_m49891BB1D1FA606B9EBD354D575D7F1ECBD53E87 (void);
-// 0x00000108 System.Void System.Threading.ReaderWriterLockSlim::ExitWriteLock()
+// 0x00000104 System.Void System.Threading.ReaderWriterLockSlim::ExitWriteLock()
 extern void ReaderWriterLockSlim_ExitWriteLock_m84F7F58C2B3552C5B32744FB06004CACDFCE57E6 (void);
-// 0x00000109 System.Void System.Threading.ReaderWriterLockSlim::ExitUpgradeableReadLock()
-extern void ReaderWriterLockSlim_ExitUpgradeableReadLock_m70E125A9542852AC8E908571F9EB86670E2CFEEA (void);
-// 0x0000010A System.Void System.Threading.ReaderWriterLockSlim::LazyCreateEvent(System.Threading.EventWaitHandle&,System.Boolean)
+// 0x00000105 System.Void System.Threading.ReaderWriterLockSlim::LazyCreateEvent(System.Threading.EventWaitHandle&,System.Boolean)
 extern void ReaderWriterLockSlim_LazyCreateEvent_m4D2DFCB1AD5A749408939AA0D12B7C3959A36923 (void);
-// 0x0000010B System.Boolean System.Threading.ReaderWriterLockSlim::WaitOnEvent(System.Threading.EventWaitHandle,System.UInt32&,System.Threading.ReaderWriterLockSlim/TimeoutTracker,System.Boolean)
+// 0x00000106 System.Boolean System.Threading.ReaderWriterLockSlim::WaitOnEvent(System.Threading.EventWaitHandle,System.UInt32&,System.Threading.ReaderWriterLockSlim/TimeoutTracker,System.Boolean)
 extern void ReaderWriterLockSlim_WaitOnEvent_mFF3B7C48254F2742AED6916DD059ACB2240A78B3 (void);
-// 0x0000010C System.Void System.Threading.ReaderWriterLockSlim::ExitAndWakeUpAppropriateWaiters()
+// 0x00000107 System.Void System.Threading.ReaderWriterLockSlim::ExitAndWakeUpAppropriateWaiters()
 extern void ReaderWriterLockSlim_ExitAndWakeUpAppropriateWaiters_m43EB7B2724EC44E2F0B4E3CA6A51752345978E90 (void);
-// 0x0000010D System.Void System.Threading.ReaderWriterLockSlim::ExitAndWakeUpAppropriateWaitersPreferringWriters()
+// 0x00000108 System.Void System.Threading.ReaderWriterLockSlim::ExitAndWakeUpAppropriateWaitersPreferringWriters()
 extern void ReaderWriterLockSlim_ExitAndWakeUpAppropriateWaitersPreferringWriters_m2EE29EE42CEA6142CA8C741BC74CFBE4483E5CA8 (void);
-// 0x0000010E System.Void System.Threading.ReaderWriterLockSlim::ExitAndWakeUpAppropriateReadWaiters()
+// 0x00000109 System.Void System.Threading.ReaderWriterLockSlim::ExitAndWakeUpAppropriateReadWaiters()
 extern void ReaderWriterLockSlim_ExitAndWakeUpAppropriateReadWaiters_m19BFCEE3D042633B1F106BBD76E28DA69271606D (void);
-// 0x0000010F System.Boolean System.Threading.ReaderWriterLockSlim::IsWriterAcquired()
+// 0x0000010A System.Boolean System.Threading.ReaderWriterLockSlim::IsWriterAcquired()
 extern void ReaderWriterLockSlim_IsWriterAcquired_m6D1FB82F2349C4B48345C9EBEFFCC3FA69EF5A76 (void);
-// 0x00000110 System.Void System.Threading.ReaderWriterLockSlim::SetWriterAcquired()
+// 0x0000010B System.Void System.Threading.ReaderWriterLockSlim::SetWriterAcquired()
 extern void ReaderWriterLockSlim_SetWriterAcquired_mE496DF38D30454011343EE638FAC1EF2B5E8319C (void);
-// 0x00000111 System.Void System.Threading.ReaderWriterLockSlim::ClearWriterAcquired()
+// 0x0000010C System.Void System.Threading.ReaderWriterLockSlim::ClearWriterAcquired()
 extern void ReaderWriterLockSlim_ClearWriterAcquired_mBCDFD72656A5D8EFCEE5A0AD39233D37E44461DC (void);
-// 0x00000112 System.Void System.Threading.ReaderWriterLockSlim::SetWritersWaiting()
+// 0x0000010D System.Void System.Threading.ReaderWriterLockSlim::SetWritersWaiting()
 extern void ReaderWriterLockSlim_SetWritersWaiting_mEBE801FBDAFD33AF1B8E3CE71F0AD0C9CDA69902 (void);
-// 0x00000113 System.Void System.Threading.ReaderWriterLockSlim::ClearWritersWaiting()
+// 0x0000010E System.Void System.Threading.ReaderWriterLockSlim::ClearWritersWaiting()
 extern void ReaderWriterLockSlim_ClearWritersWaiting_m7587122D0BAD6384DE3B38DB6BF7D38B364A4935 (void);
-// 0x00000114 System.Void System.Threading.ReaderWriterLockSlim::SetUpgraderWaiting()
+// 0x0000010F System.Void System.Threading.ReaderWriterLockSlim::SetUpgraderWaiting()
 extern void ReaderWriterLockSlim_SetUpgraderWaiting_m5C7C47EBCA531D201CA72CB27D0548F71375BCAC (void);
-// 0x00000115 System.Void System.Threading.ReaderWriterLockSlim::ClearUpgraderWaiting()
+// 0x00000110 System.Void System.Threading.ReaderWriterLockSlim::ClearUpgraderWaiting()
 extern void ReaderWriterLockSlim_ClearUpgraderWaiting_m214E8B0780542079CB3D9D5C28C58C47A72E91E4 (void);
-// 0x00000116 System.UInt32 System.Threading.ReaderWriterLockSlim::GetNumReaders()
+// 0x00000111 System.UInt32 System.Threading.ReaderWriterLockSlim::GetNumReaders()
 extern void ReaderWriterLockSlim_GetNumReaders_m300EBD28D2300167E37C0F67AD04AF7BE87C1DB1 (void);
-// 0x00000117 System.Void System.Threading.ReaderWriterLockSlim::EnterMyLock()
+// 0x00000112 System.Void System.Threading.ReaderWriterLockSlim::EnterMyLock()
 extern void ReaderWriterLockSlim_EnterMyLock_mDB590C9A0A55830B1C347DAB0A3F4972E9F0DE59 (void);
-// 0x00000118 System.Void System.Threading.ReaderWriterLockSlim::EnterMyLockSpin()
+// 0x00000113 System.Void System.Threading.ReaderWriterLockSlim::EnterMyLockSpin()
 extern void ReaderWriterLockSlim_EnterMyLockSpin_mC785B7BB91A152B37FF1115AFA5D752AC6DBE9F6 (void);
-// 0x00000119 System.Void System.Threading.ReaderWriterLockSlim::ExitMyLock()
+// 0x00000114 System.Void System.Threading.ReaderWriterLockSlim::ExitMyLock()
 extern void ReaderWriterLockSlim_ExitMyLock_mA7506AF402F9AA6241ABA227DABFF68BB9D5FF7B (void);
-// 0x0000011A System.Void System.Threading.ReaderWriterLockSlim::SpinWait(System.Int32)
+// 0x00000115 System.Void System.Threading.ReaderWriterLockSlim::SpinWait(System.Int32)
 extern void ReaderWriterLockSlim_SpinWait_mBA104450C2A78E706E0B7B0788B76B310A2A1CB2 (void);
-// 0x0000011B System.Void System.Threading.ReaderWriterLockSlim::Dispose()
+// 0x00000116 System.Void System.Threading.ReaderWriterLockSlim::Dispose()
 extern void ReaderWriterLockSlim_Dispose_mCC076068D0C8A9EF92177147A713C71006A9CD05 (void);
-// 0x0000011C System.Void System.Threading.ReaderWriterLockSlim::Dispose(System.Boolean)
+// 0x00000117 System.Void System.Threading.ReaderWriterLockSlim::Dispose(System.Boolean)
 extern void ReaderWriterLockSlim_Dispose_mA894FFFD0829F6CEDD8318482F57D2A5FCFD5661 (void);
-// 0x0000011D System.Boolean System.Threading.ReaderWriterLockSlim::get_IsReadLockHeld()
+// 0x00000118 System.Boolean System.Threading.ReaderWriterLockSlim::get_IsReadLockHeld()
 extern void ReaderWriterLockSlim_get_IsReadLockHeld_mFF28229B26471192A3B8B195EE1C85509B5EA029 (void);
-// 0x0000011E System.Boolean System.Threading.ReaderWriterLockSlim::get_IsUpgradeableReadLockHeld()
+// 0x00000119 System.Boolean System.Threading.ReaderWriterLockSlim::get_IsUpgradeableReadLockHeld()
 extern void ReaderWriterLockSlim_get_IsUpgradeableReadLockHeld_mBDFD4377C488FD48B7E211ADE5F5CDEEFD78E1CF (void);
-// 0x0000011F System.Boolean System.Threading.ReaderWriterLockSlim::get_IsWriteLockHeld()
+// 0x0000011A System.Boolean System.Threading.ReaderWriterLockSlim::get_IsWriteLockHeld()
 extern void ReaderWriterLockSlim_get_IsWriteLockHeld_m2F8585FFD00B88CA788152EA5E0BF460B28782A7 (void);
-// 0x00000120 System.Int32 System.Threading.ReaderWriterLockSlim::get_RecursiveReadCount()
+// 0x0000011B System.Int32 System.Threading.ReaderWriterLockSlim::get_RecursiveReadCount()
 extern void ReaderWriterLockSlim_get_RecursiveReadCount_mA7709352D9817A46AFE62AD5CF94631E15FB1067 (void);
-// 0x00000121 System.Int32 System.Threading.ReaderWriterLockSlim::get_RecursiveUpgradeCount()
+// 0x0000011C System.Int32 System.Threading.ReaderWriterLockSlim::get_RecursiveUpgradeCount()
 extern void ReaderWriterLockSlim_get_RecursiveUpgradeCount_mFF4BF2756AE36B12E7822FAE7BAB8B7CDEF4D41D (void);
-// 0x00000122 System.Int32 System.Threading.ReaderWriterLockSlim::get_RecursiveWriteCount()
+// 0x0000011D System.Int32 System.Threading.ReaderWriterLockSlim::get_RecursiveWriteCount()
 extern void ReaderWriterLockSlim_get_RecursiveWriteCount_m51147A8E3CA34D7D6EDC8986BB8518AE7CE16145 (void);
-// 0x00000123 System.Int32 System.Threading.ReaderWriterLockSlim::get_WaitingReadCount()
+// 0x0000011E System.Int32 System.Threading.ReaderWriterLockSlim::get_WaitingReadCount()
 extern void ReaderWriterLockSlim_get_WaitingReadCount_mD79E93CABC9BFBA4AB306193DDF8CE90F1818C92 (void);
-// 0x00000124 System.Int32 System.Threading.ReaderWriterLockSlim::get_WaitingUpgradeCount()
+// 0x0000011F System.Int32 System.Threading.ReaderWriterLockSlim::get_WaitingUpgradeCount()
 extern void ReaderWriterLockSlim_get_WaitingUpgradeCount_m13892A21F7EF1D7ED202D186B2E7B2B6C400F388 (void);
-// 0x00000125 System.Int32 System.Threading.ReaderWriterLockSlim::get_WaitingWriteCount()
+// 0x00000120 System.Int32 System.Threading.ReaderWriterLockSlim::get_WaitingWriteCount()
 extern void ReaderWriterLockSlim_get_WaitingWriteCount_m8FE677BDB0E776125691C0A4C1A74B5B8637D246 (void);
-// 0x00000126 System.Void System.Threading.ReaderWriterLockSlim/TimeoutTracker::.ctor(System.Int32)
+// 0x00000121 System.Void System.Threading.ReaderWriterLockSlim/TimeoutTracker::.ctor(System.Int32)
 extern void TimeoutTracker__ctor_mBFE73B99C5BBB93D251DF9731B9C5D824F30CDCE (void);
-// 0x00000127 System.Int32 System.Threading.ReaderWriterLockSlim/TimeoutTracker::get_RemainingMilliseconds()
+// 0x00000122 System.Int32 System.Threading.ReaderWriterLockSlim/TimeoutTracker::get_RemainingMilliseconds()
 extern void TimeoutTracker_get_RemainingMilliseconds_mDAA8A0E545F8E28D3688095CA346B0A04337BC23 (void);
-// 0x00000128 System.Boolean System.Threading.ReaderWriterLockSlim/TimeoutTracker::get_IsExpired()
+// 0x00000123 System.Boolean System.Threading.ReaderWriterLockSlim/TimeoutTracker::get_IsExpired()
 extern void TimeoutTracker_get_IsExpired_m5E08DCC01117EF66ADEBA5472B27833577289813 (void);
-static Il2CppMethodPointer s_methodPointers[296] = 
+static Il2CppMethodPointer s_methodPointers[291] = 
 {
 	Sys_GetDomainSocketSizes_m96001A79F8325872EAD049E909CA9C2A28CD1F6D,
 	SR_GetString_m237CD17C5AC69337B2D257D2EDFA83DDF1E2E1D0,
@@ -689,13 +679,8 @@ static Il2CppMethodPointer s_methodPointers[296] =
 	ReaderWriterLockSlim_TryEnterWriteLock_mE43F653D65A448225134E0CE1A289C4E112C62A2,
 	ReaderWriterLockSlim_TryEnterWriteLock_mBFFB3599E5D8C30B2D22A876CC58F647AEA2EDAE,
 	ReaderWriterLockSlim_TryEnterWriteLockCore_m18B708E74264AC43BAD623C8ACC92370DA32888B,
-	ReaderWriterLockSlim_EnterUpgradeableReadLock_m2BC6F2E7FDE834363821DAE26B1AAD7DAFE4ECEC,
-	ReaderWriterLockSlim_TryEnterUpgradeableReadLock_m8D1AC20D086B7CD5019836984BCE18635DEB34DF,
-	ReaderWriterLockSlim_TryEnterUpgradeableReadLock_m67F6B1EC0CCE06AB1F444221036CE7AE614518CC,
-	ReaderWriterLockSlim_TryEnterUpgradeableReadLockCore_mA84580B68864B07DD3D6A2A4F48FCFE72EEA6F6F,
 	ReaderWriterLockSlim_ExitReadLock_m49891BB1D1FA606B9EBD354D575D7F1ECBD53E87,
 	ReaderWriterLockSlim_ExitWriteLock_m84F7F58C2B3552C5B32744FB06004CACDFCE57E6,
-	ReaderWriterLockSlim_ExitUpgradeableReadLock_m70E125A9542852AC8E908571F9EB86670E2CFEEA,
 	ReaderWriterLockSlim_LazyCreateEvent_m4D2DFCB1AD5A749408939AA0D12B7C3959A36923,
 	ReaderWriterLockSlim_WaitOnEvent_mFF3B7C48254F2742AED6916DD059ACB2240A78B3,
 	ReaderWriterLockSlim_ExitAndWakeUpAppropriateWaiters_m43EB7B2724EC44E2F0B4E3CA6A51752345978E90,
@@ -733,78 +718,78 @@ extern void TimeoutTracker_get_RemainingMilliseconds_mDAA8A0E545F8E28D3688095CA3
 extern void TimeoutTracker_get_IsExpired_m5E08DCC01117EF66ADEBA5472B27833577289813_AdjustorThunk (void);
 static Il2CppTokenAdjustorThunkPair s_adjustorThunks[3] = 
 {
-	{ 0x06000126, TimeoutTracker__ctor_mBFE73B99C5BBB93D251DF9731B9C5D824F30CDCE_AdjustorThunk },
-	{ 0x06000127, TimeoutTracker_get_RemainingMilliseconds_mDAA8A0E545F8E28D3688095CA346B0A04337BC23_AdjustorThunk },
-	{ 0x06000128, TimeoutTracker_get_IsExpired_m5E08DCC01117EF66ADEBA5472B27833577289813_AdjustorThunk },
+	{ 0x06000121, TimeoutTracker__ctor_mBFE73B99C5BBB93D251DF9731B9C5D824F30CDCE_AdjustorThunk },
+	{ 0x06000122, TimeoutTracker_get_RemainingMilliseconds_mDAA8A0E545F8E28D3688095CA346B0A04337BC23_AdjustorThunk },
+	{ 0x06000123, TimeoutTracker_get_IsExpired_m5E08DCC01117EF66ADEBA5472B27833577289813_AdjustorThunk },
 };
-static const int32_t s_InvokerIndices[296] = 
+static const int32_t s_InvokerIndices[291] = 
 {
-	8697,
-	10798,
-	8495,
-	6586,
-	6432,
-	6463,
-	5321,
-	6463,
-	5321,
-	6432,
-	5291,
-	6432,
-	5291,
-	6432,
-	5291,
-	6463,
-	2427,
-	6463,
-	2427,
-	5224,
-	6586,
-	6586,
-	6586,
-	6586,
-	6586,
-	2427,
-	2427,
-	6463,
-	5321,
-	6463,
-	5321,
-	6432,
-	5291,
-	6432,
-	6432,
-	5291,
-	6432,
-	5291,
-	6463,
-	6463,
-	5224,
-	1092,
-	3069,
-	4957,
-	1692,
-	1692,
-	11898,
-	10798,
-	11898,
-	6463,
-	5321,
-	5321,
-	6463,
-	4789,
-	6432,
-	6463,
-	10568,
-	10568,
-	11898,
-	6586,
-	6370,
-	10798,
-	10798,
-	11860,
-	11860,
-	11860,
+	8551,
+	10637,
+	8350,
+	6453,
+	6300,
+	6330,
+	5218,
+	6330,
+	5218,
+	6300,
+	5189,
+	6300,
+	5189,
+	6300,
+	5189,
+	6330,
+	2404,
+	6330,
+	2404,
+	5121,
+	6453,
+	6453,
+	6453,
+	6453,
+	6453,
+	2404,
+	2404,
+	6330,
+	5218,
+	6330,
+	5218,
+	6300,
+	5189,
+	6300,
+	6300,
+	5189,
+	6300,
+	5189,
+	6330,
+	6330,
+	5121,
+	1077,
+	3028,
+	4866,
+	1674,
+	1674,
+	11736,
+	10637,
+	11736,
+	6330,
+	5218,
+	5218,
+	6330,
+	4699,
+	6300,
+	6330,
+	10409,
+	10409,
+	11736,
+	6453,
+	6237,
+	10637,
+	10637,
+	11698,
+	11698,
+	11698,
 	0,
 	0,
 	0,
@@ -837,8 +822,8 @@ static const int32_t s_InvokerIndices[296] =
 	0,
 	0,
 	0,
-	10695,
-	10695,
+	10535,
+	10535,
 	0,
 	0,
 	0,
@@ -982,59 +967,54 @@ static const int32_t s_InvokerIndices[296] =
 	0,
 	0,
 	0,
-	6586,
-	6586,
-	6586,
-	5291,
-	10568,
-	3883,
-	4775,
-	6586,
-	3850,
-	4129,
-	4129,
-	6586,
-	3850,
-	4129,
-	4129,
-	6586,
-	3850,
-	4129,
-	4129,
-	6586,
-	6586,
-	6586,
-	2536,
-	670,
-	6586,
-	6586,
-	6586,
-	6370,
-	6586,
-	6586,
-	6586,
-	6586,
-	6586,
-	6586,
-	6570,
-	6586,
-	6586,
-	6586,
-	11062,
-	6586,
-	5224,
-	6370,
-	6370,
-	6370,
-	6432,
-	6432,
-	6432,
-	6432,
-	6432,
-	6432,
-	5291,
-	6432,
-	6370,
+	6453,
+	6453,
+	6453,
+	5189,
+	10409,
+	3811,
+	4686,
+	6453,
+	3780,
+	4055,
+	4055,
+	6453,
+	3780,
+	4055,
+	4055,
+	6453,
+	6453,
+	2512,
+	661,
+	6453,
+	6453,
+	6453,
+	6237,
+	6453,
+	6453,
+	6453,
+	6453,
+	6453,
+	6453,
+	6437,
+	6453,
+	6453,
+	6453,
+	10901,
+	6453,
+	5121,
+	6237,
+	6237,
+	6237,
+	6300,
+	6300,
+	6300,
+	6300,
+	6300,
+	6300,
+	5189,
+	6300,
+	6237,
 };
 static const Il2CppTokenRangePair s_rgctxIndices[61] = 
 {
@@ -1885,7 +1865,7 @@ IL2CPP_EXTERN_C const Il2CppCodeGenModule g_System_Core_CodeGenModule;
 const Il2CppCodeGenModule g_System_Core_CodeGenModule = 
 {
 	"System.Core.dll",
-	296,
+	291,
 	s_methodPointers,
 	3,
 	s_adjustorThunks,

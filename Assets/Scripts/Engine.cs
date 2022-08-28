@@ -22,12 +22,6 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
     private List<Material> baseMaterialsForHiglight = new List<Material>();
     private bool isHighlightEffectInProgress;
 
-
-    //UI information mark
-    //private GameObject uiInformationMark;
-    //private RectTransform uiInformationMarkRect;
-    //private Vector3 OnScreenPosition;
-
     private UIManager alertMark;
 
     private Action makeBlink;
@@ -122,14 +116,16 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
                 temperature = 1;
             }
             else
-            {   
-                temperature = value;
-                
-                SetTermoEffect();
-                termoMaterial.SetFloat("koeff", temperature);
+            {
+                if (temperature != value)
+                {
+                    temperature = value;
+                    SetTermoEffect();
+                    termoMaterial.SetFloat("koeff", temperature);
+                }
             }
 
-            if (temperature >= 0.99f)
+            if (temperature >= 0.99f && !isTooOverheated)
             {
                 isTooOverheated = true;
                 CancelBlinking();
@@ -142,13 +138,13 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             
             if (temperature > 0.67f)
             {
-                overheatVisualEff.gameObject.SetActive(true);
+                if (!overheatVisualEff.gameObject.activeSelf) overheatVisualEff.gameObject.SetActive(true);
                 //ShowUI();
                 alertMark.ShowUI();
             }
             else
             {
-                overheatVisualEff.gameObject.SetActive(false);
+                if (overheatVisualEff.gameObject.activeSelf) overheatVisualEff.gameObject.SetActive(false);
                 if (!isTooOverheated) alertMark.HideUI();//HideUI();
             }
 

@@ -43,6 +43,8 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
         return currentMovableToProduce;
     }
 
+    
+
     public void HighlightCurrentObject()
     {
         if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());

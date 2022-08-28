@@ -26,30 +26,29 @@ public class DamageDealer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<IHealthDestroyable>() != null && other.gameObject.GetComponent<IHealthDestroyable>().IsDestroyable() && !objectsToDamage.ContainsKey(other.gameObject))
+        if (!objectsToDamage.ContainsKey(other.gameObject) && other.TryGetComponent(out IHealthDestroyable victim) && victim.IsDestroyable())
         {
             objectsToDamage.Add(other.gameObject, new DamageData(other.gameObject));
         }
     }
 
 
+    
     private void OnTriggerExit(Collider other)
     {
         if (objectsToDamage.ContainsKey(other.gameObject))
         {
-            objectsToDamage.Remove(other.gameObject);
+            objectsToDamage.Remove(other.gameObject);                           
         }
     }
+
+    
 
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.GetComponent<IHealthDestroyable>() != null)
-        {
-            //print(other.gameObject.name + " !!!!");
-        }
-
-        if (other.gameObject.GetComponent<IHealthDestroyable>() != null && other.gameObject.GetComponent<IHealthDestroyable>().IsDestroyable() && !objectsToDamage.ContainsKey(other.gameObject))
+        
+        if (!objectsToDamage.ContainsKey(other.gameObject) && other.TryGetComponent(out IHealthDestroyable victim) && victim.IsDestroyable())
         {
             objectsToDamage.Add(other.gameObject, new DamageData(other.gameObject));
         }
@@ -94,7 +93,7 @@ public class DamageDealer : MonoBehaviour
         
         float damageTime = 2f;
 
-        data.currentIHDestroyable.PlayNegativeEffect(_effect);
+        data.currentIHDestroyable.SetNegativeEffect(_effect, 2);
         data.AddNegativeEffect(_effect);
 
         for (float i = 0; i < damageTime; i += 0.1f)
@@ -103,24 +102,22 @@ public class DamageDealer : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
         }
-
                 
         data.RemoveNegativeEffect(_effect);
-        yield return new WaitForSeconds(0.2f);
-        if (!data.CurrentEffects.Contains(_effect)) data.currentIHDestroyable.StopNegativeEffect(_effect);
-
     }
+
 
 }
 
 
-public class DamageData
+public struct DamageData
 {
-    public HashSet<NegativeEffects> CurrentEffects = new HashSet<NegativeEffects>();
+    public HashSet<NegativeEffects> CurrentEffects;
     public IHealthDestroyable currentIHDestroyable;
 
     public DamageData(GameObject _object)
     {
+        CurrentEffects = new HashSet<NegativeEffects>();
         currentIHDestroyable = _object.GetComponent<IHealthDestroyable>();
     }
 
@@ -149,6 +146,8 @@ public class DamageData
             return false;
         }
     }
+
+    
 
 
 }

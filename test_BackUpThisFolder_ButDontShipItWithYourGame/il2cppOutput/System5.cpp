@@ -1098,7 +1098,6 @@ IL2CPP_EXTERN_C const RuntimeMethod* HeaderInfoTable_ParseSingleValue_m217B3A467
 IL2CPP_EXTERN_C const RuntimeMethod* IPAddressParser_Parse_m924FDF6137E57D2C205C767578A902FAC6AF9F6C_RuntimeMethod_var;
 IL2CPP_EXTERN_C const RuntimeMethod* IPEndPoint_Create_m3F397111A683D18A38FC7275D55BB94B0FC7350D_RuntimeMethod_var;
 IL2CPP_EXTERN_C const RuntimeMethod* IPEndPoint__ctor_m902C98F9E3F36B20B3C2E030AA91B62E2BC7A85A_RuntimeMethod_var;
-IL2CPP_EXTERN_C const RuntimeMethod* IPEndPoint_set_Port_m863E796C26AFF6CEACC4A8381E1B9CA2B78F41C4_RuntimeMethod_var;
 IL2CPP_EXTERN_C const RuntimeMethod* LazyAsyncResult_ProtectedInvokeCallback_mAB31EFC1A9671BA58BB38F59F381EAFE9C564410_RuntimeMethod_var;
 IL2CPP_EXTERN_C const RuntimeMethod* LazyAsyncResult_WorkerThreadComplete_m50589CB1937E4BA7FF703482ECC24706F0E1A1BF_RuntimeMethod_var;
 IL2CPP_EXTERN_C const RuntimeMethod* LazyInitializer_EnsureInitialized_TisX509CertificateCollection_t2900D71D188EDCA7DEB5077D36103EE5DA6805CE_m8C2BA161D5BB95A3574BCC8A822D91DAE99D831D_RuntimeMethod_var;
@@ -6793,48 +6792,12 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR IPAddress_t2F4486449B0D73FF2D3B36A9FE5E9C3F63
 		return L_0;
 	}
 }
-// System.Void System.Net.IPEndPoint::set_Address(System.Net.IPAddress)
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void IPEndPoint_set_Address_m48F0D8096D02B90890E453ECF1616B78BB97CF63 (IPEndPoint_t2F09CBA7A808B67724B4E2954EEDC46D910F4ECB* __this, IPAddress_t2F4486449B0D73FF2D3B36A9FE5E9C3F63116484* ___value0, const RuntimeMethod* method) 
-{
-	{
-		IPAddress_t2F4486449B0D73FF2D3B36A9FE5E9C3F63116484* L_0 = ___value0;
-		__this->____address_0 = L_0;
-		Il2CppCodeGenWriteBarrier((void**)(&__this->____address_0), (void*)L_0);
-		return;
-	}
-}
 // System.Int32 System.Net.IPEndPoint::get_Port()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t IPEndPoint_get_Port_mFBE1AF1C9CC7E68A46BF46AD3869CC9DC01CF429 (IPEndPoint_t2F09CBA7A808B67724B4E2954EEDC46D910F4ECB* __this, const RuntimeMethod* method) 
 {
 	{
 		int32_t L_0 = __this->____port_1;
 		return L_0;
-	}
-}
-// System.Void System.Net.IPEndPoint::set_Port(System.Int32)
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void IPEndPoint_set_Port_m863E796C26AFF6CEACC4A8381E1B9CA2B78F41C4 (IPEndPoint_t2F09CBA7A808B67724B4E2954EEDC46D910F4ECB* __this, int32_t ___value0, const RuntimeMethod* method) 
-{
-	{
-		int32_t L_0 = ___value0;
-		bool L_1;
-		L_1 = TcpValidationHelpers_ValidatePortNumber_m87E6293214842C630C35F9863ADE5AD844235480(L_0, NULL);
-		if (L_1)
-		{
-			goto IL_0013;
-		}
-	}
-	{
-		ArgumentOutOfRangeException_tEA2822DAF62B10EEED00E0E3A341D4BAF78CF85F* L_2 = (ArgumentOutOfRangeException_tEA2822DAF62B10EEED00E0E3A341D4BAF78CF85F*)il2cpp_codegen_object_new(((RuntimeClass*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&ArgumentOutOfRangeException_tEA2822DAF62B10EEED00E0E3A341D4BAF78CF85F_il2cpp_TypeInfo_var)));
-		NullCheck(L_2);
-		ArgumentOutOfRangeException__ctor_mBC1D5DEEA1BA41DE77228CB27D6BAFEB6DCCBF4A(L_2, ((String_t*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&_stringLiteral46F273EF641E07D271D91E0DC24A4392582671F8)), NULL);
-		IL2CPP_RAISE_MANAGED_EXCEPTION(L_2, ((RuntimeMethod*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&IPEndPoint_set_Port_m863E796C26AFF6CEACC4A8381E1B9CA2B78F41C4_RuntimeMethod_var)));
-	}
-
-IL_0013:
-	{
-		int32_t L_3 = ___value0;
-		__this->____port_1 = L_3;
-		return;
 	}
 }
 // System.String System.Net.IPEndPoint::ToString()

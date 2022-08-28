@@ -2671,23 +2671,6 @@ struct TimerComparer_tA489751F7F61781F51DFF2033BCA60B91C1B2C50
 	};
 };
 
-// System.Threading.Volatile/VolatileBoolean
-struct VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041 
-{
-	// System.Boolean modreq(System.Runtime.CompilerServices.IsVolatile) System.Threading.Volatile/VolatileBoolean::Value
-	bool ___Value_0;
-};
-// Native definition for P/Invoke marshalling of System.Threading.Volatile/VolatileBoolean
-struct VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshaled_pinvoke
-{
-	int32_t ___Value_0;
-};
-// Native definition for COM marshalling of System.Threading.Volatile/VolatileBoolean
-struct VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshaled_com
-{
-	int32_t ___Value_0;
-};
-
 // System.Threading.Volatile/VolatileInt32
 struct VolatileInt32_tF87437D9108A3B42A6D3DA0147CD8B00C0538693 
 {
@@ -6210,30 +6193,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void TimerCallback_Invoke_m088838D96004296DD8
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// System.Boolean System.Threading.Volatile::Read(System.Boolean&)
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Volatile_Read_m83C92B6D77EF985429F86E9F68B34B0B0CDB2A9C (bool* ___location0, const RuntimeMethod* method) 
-{
-	{
-		bool* L_0 = ___location0;
-		VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041* L_1;
-		L_1 = il2cpp_unsafe_as_ref<VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041>(L_0);
-		bool L_2 = L_1->___Value_0;
-		il2cpp_codegen_memory_barrier();
-		return L_2;
-	}
-}
-// System.Int32 System.Threading.Volatile::Read(System.Int32&)
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Volatile_Read_mA1B491C68D02CFCA9FCC06E305F5FF2AF0CF6BCA (int32_t* ___location0, const RuntimeMethod* method) 
-{
-	{
-		int32_t* L_0 = ___location0;
-		VolatileInt32_tF87437D9108A3B42A6D3DA0147CD8B00C0538693* L_1;
-		L_1 = il2cpp_unsafe_as_ref<VolatileInt32_tF87437D9108A3B42A6D3DA0147CD8B00C0538693>(L_0);
-		int32_t L_2 = L_1->___Value_0;
-		il2cpp_codegen_memory_barrier();
-		return L_2;
-	}
-}
 // System.Void System.Threading.Volatile::Write(System.Int32&,System.Int32)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Volatile_Write_m26F860CA27696105FBCE74FF30B7522BA8E926D9 (int32_t* ___location0, int32_t ___value1, const RuntimeMethod* method) 
 {
@@ -6246,46 +6205,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Volatile_Write_m26F860CA27696105FBCE74FF
 		L_1->___Value_0 = L_2;
 		return;
 	}
-}
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Winvalid-offsetof"
-#pragma clang diagnostic ignored "-Wunused-variable"
-#endif
-// Conversion methods for marshalling of: System.Threading.Volatile/VolatileBoolean
-IL2CPP_EXTERN_C void VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshal_pinvoke(const VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041& unmarshaled, VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshaled_pinvoke& marshaled)
-{
-	marshaled.___Value_0 = static_cast<int32_t>(unmarshaled.___Value_0);
-}
-IL2CPP_EXTERN_C void VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshal_pinvoke_back(const VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshaled_pinvoke& marshaled, VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041& unmarshaled)
-{
-	bool unmarshaledValue_temp_0;
-	memset((&unmarshaledValue_temp_0), 0, sizeof(unmarshaledValue_temp_0));
-	unmarshaledValue_temp_0 = static_cast<bool>(marshaled.___Value_0);
-	unmarshaled.___Value_0 = unmarshaledValue_temp_0;
-}
-// Conversion method for clean up from marshalling of: System.Threading.Volatile/VolatileBoolean
-IL2CPP_EXTERN_C void VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshal_pinvoke_cleanup(VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshaled_pinvoke& marshaled)
-{
-}
-// Conversion methods for marshalling of: System.Threading.Volatile/VolatileBoolean
-IL2CPP_EXTERN_C void VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshal_com(const VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041& unmarshaled, VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshaled_com& marshaled)
-{
-	marshaled.___Value_0 = static_cast<int32_t>(unmarshaled.___Value_0);
-}
-IL2CPP_EXTERN_C void VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshal_com_back(const VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshaled_com& marshaled, VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041& unmarshaled)
-{
-	bool unmarshaledValue_temp_0;
-	memset((&unmarshaledValue_temp_0), 0, sizeof(unmarshaledValue_temp_0));
-	unmarshaledValue_temp_0 = static_cast<bool>(marshaled.___Value_0);
-	unmarshaled.___Value_0 = unmarshaledValue_temp_0;
-}
-// Conversion method for clean up from marshalling of: System.Threading.Volatile/VolatileBoolean
-IL2CPP_EXTERN_C void VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshal_com_cleanup(VolatileBoolean_t9E1B0E7929E736D122D1C494D49E80C90874D041_marshaled_com& marshaled)
-{
 }
 #ifdef __clang__
 #pragma clang diagnostic pop

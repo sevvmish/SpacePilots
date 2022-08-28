@@ -8552,7 +8552,7 @@ IL_0005:
 		PropertyInfo_t* L_1 = ___property0;
 		NullCheck(L_1);
 		MethodInfo_t* L_2;
-		L_2 = VirtualFuncInvoker0< MethodInfo_t* >::Invoke(23 /* System.Reflection.MethodInfo System.Reflection.PropertyInfo::get_SetMethod() */, L_1);
+		L_2 = VirtualFuncInvoker0< MethodInfo_t* >::Invoke(22 /* System.Reflection.MethodInfo System.Reflection.PropertyInfo::get_SetMethod() */, L_1);
 		V_0 = L_2;
 		bool L_3 = ___nonPublic1;
 		if (L_3)
@@ -9820,7 +9820,7 @@ IL_001a:
 		Attribute_tFDA8EFEFB0711976D22474794576DAF28F7440AA* L_17 = __this->___attribute_0;
 		NullCheck(L_16);
 		RuntimeObject* L_18;
-		L_18 = VirtualFuncInvoker2< RuntimeObject*, RuntimeObject*, ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* >::Invoke(26 /* System.Object System.Reflection.PropertyInfo::GetValue(System.Object,System.Object[]) */, L_16, L_17, (ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918*)NULL);
+		L_18 = VirtualFuncInvoker2< RuntimeObject*, RuntimeObject*, ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* >::Invoke(24 /* System.Object System.Reflection.PropertyInfo::GetValue(System.Object,System.Object[]) */, L_16, L_17, (ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918*)NULL);
 		*((RuntimeObject**)L_15) = (RuntimeObject*)L_18;
 		Il2CppCodeGenWriteBarrier((void**)(RuntimeObject**)L_15, (void*)(RuntimeObject*)L_18);
 		V_4 = (bool)1;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class UIManager : MonoBehaviour
     private Transform UIPositionPoint;
 
     private MakeActiveInTimer blinker;
+
+    float scaleKoeff;
     //==================
 
     public UIManager(Transform _UIPositionPoint, UIPanelTypes whatTypeOfPanel, UIIconTypes whatTypeOfSprite, Color backColor, Color iconColor)
@@ -91,6 +94,12 @@ public class UIManager : MonoBehaviour
         uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
     }
 
+
+    public bool isShown()
+    {
+        return uiMarkRect.gameObject.activeSelf;
+    }
+
     public void ShowUI()
     {
         if (!uiMarkRect.gameObject.activeSelf)
@@ -108,6 +117,19 @@ public class UIManager : MonoBehaviour
         }
 
         GameManagement.MainUIHandler -= UpdateUIPosition;
+    }
+
+    public void ChangeScale(float koeff)
+    {
+        scaleKoeff = koeff;
+        uiMarkRect.localScale = Vector3.one * scaleKoeff;
+    }
+
+
+    public void MakeShake(float _time)
+    {
+        uiMarkRect.DOShakeScale(_time, Vector3.one * scaleKoeff);
+        //uiMarkRect.DOPunchScale(Vector3.one * scaleKoeff, _time);
     }
 
 
@@ -155,6 +177,10 @@ public class UIManager : MonoBehaviour
 
             case UIIconTypes.no:
                 result = Resources.Load<Sprite>("prefabs/sprites/no");
+                break;
+
+            case UIIconTypes.whaaat:
+                result = Resources.Load<Sprite>("prefabs/sprites/whaaat");
                 break;
         }
 

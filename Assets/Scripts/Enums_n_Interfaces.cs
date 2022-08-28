@@ -17,6 +17,7 @@ public interface IPointOfInteraction
 public interface ITakenAndMovable
 {
     public System.Object GetTypeOfObject();
+    
     public GameObject GiveAwayTakeble();    
     public void MakeThrownAway();
     public bool IsCanBeTakenByCrew();
@@ -47,8 +48,8 @@ public interface IHealthDestroyable
 
     public bool IsDestroyable();
 
-    public void PlayNegativeEffect(NegativeEffects _effect);
-    public void StopNegativeEffect(NegativeEffects _effect);
+    public IEnumerator PlayNegativeEffect(GameObject _effect, float _time);
+    public void SetNegativeEffect(NegativeEffects _effect, float _time);
 
     public float CurrentHealthAmount();
 }
@@ -156,7 +157,8 @@ public enum UIIconTypes
     repair,
     radiation,
     ok,
-    no
+    no,
+    whaaat
 }
 
 //===================================================================

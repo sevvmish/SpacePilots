@@ -51,6 +51,9 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
     private GameObject uiHealthBar;
     private RectTransform uiHealthBarRect;
 
+    private UIManager whaaatMark;
+
+
     public GameObject CurrentTakenObject
     {
         get
@@ -163,8 +166,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
         damagingObjects.Clear();
         activatedEffects.Clear();
-
-        
+                
 
         navAgent = GetComponent<NavMeshAgent>();
         Speed = maxSpeed;
@@ -177,8 +179,10 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                 
         if (uiHealthBarRect != null) HideUI();
         makeIdleAnimation();
-        //navAgent.isStopped = true;
         DeactivateAnyHandsInstruments();
+
+        whaaatMark = new UIManager(UIPositionPoint, UIPanelTypes.information_mark, UIIconTypes.whaaat, new Color(0,0,0,0), Color.white);
+        whaaatMark.ChangeScale(1.2f);        
     }
 
     public void InitUI()
@@ -270,6 +274,13 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
             }
         }
 
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {         
+            whaaatMark.MakeShake(0.7f);
+        }
+
+
         previousPos = currentPos;
         
         //=================
@@ -351,18 +362,61 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
     private void OnTriggerStay(Collider other)
     {
         if (PlaceOfCurrentLocation != other.gameObject) PlaceOfCurrentLocation = other.gameObject;
-
-        
+               
 
         if (PlaceOfCurrentLocation == PlaceOfDestination)
         {
-            if (CurrentTakenObject == null)
+            if (other.TryGetComponent(out ITakenAndMovable canBeTaken) && canBeTaken.IsCanBeTakenByCrew())
             {
-                if (other.gameObject.GetComponent<ITakenAndMovable>() != null && other.gameObject.GetComponent<ITakenAndMovable>().IsCanBeTakenByCrew())
+                
+
+                if (currentTakenObject != null && currentTakenObject.TryGetComponent(out ITakenAndMovable allreadyTaken) 
+                    && (canBeTaken.GetTypeOfObject().GetType() != allreadyTaken.GetTypeOfObject().GetType() ||
+                     ((canBeTaken.GetTypeOfObject().GetType() == typeof(SuppliesType) && (SuppliesType)canBeTaken.GetTypeOfObject() != (SuppliesType)allreadyTaken.GetTypeOfObject()) || (canBeTaken.GetTypeOfObject().GetType() == typeof(InstrumentsType) && (InstrumentsType)canBeTaken.GetTypeOfObject() != (InstrumentsType)allreadyTaken.GetTypeOfObject())))
+                                        
+                    )
                 {
-                    ITakenAndMovable objectToTake = other.gameObject.GetComponent<ITakenAndMovable>();
-                    print(objectToTake.GetTypeOfObject() + " is taken");
-                    TakeAnyObjectToCarry(objectToTake.GiveAwayTakeble());
+                    ThrowAwayCurrentTakenObject();
+                    TakeAnyObjectToCarry(canBeTaken.GiveAwayTakeble());
+                }
+                else if(currentTakenObject == null)
+                {
+                    TakeAnyObjectToCarry(canBeTaken.GiveAwayTakeble());
+                }
+                else
+                {
+                    StartCoroutine(PlayMarkOfWrongInteraction());
+                }
+
+            } 
+            
+
+            if (CurrentTakenObject != null)
+            {
+               
+                if (CurrentTakenObject.TryGetComponent(out Instrument instr) && other.TryGetComponent(out Incident incident))
+                {
+                    if (instr.GetCurrentTypeOfInstrument() == incident.GetInstrumentTypeToDealWithIncident())
+                    {
+                        currentBaseTransform.LookAt(new Vector3(other.gameObject.transform.position.x, 0, other.gameObject.transform.position.z));
+                    }
+                    else
+                    {
+                        StartCoroutine(PlayMarkOfWrongInteraction());
+                    }
+                }
+                
+
+
+                if (other.gameObject.GetComponent<FacilityProducer>() != null 
+                    || (other.gameObject.GetComponent<Reactor>() != null && (currentTakenObject.GetComponent<Supply>() == null || (SuppliesType)currentTakenObject.GetComponent<Supply>().GetTypeOfObject() != SuppliesType.full_engine_fuel)) 
+                    || other.gameObject.GetComponent<Instrument>() != null)
+                {
+                    //StartCoroutine(PlayMarkOfWrongInteraction());
+                } 
+                else if (other.gameObject.GetComponent<IConsumer>() != null && (SuppliesType)CurrentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfObject() != other.gameObject.GetComponent<IConsumer>().GetFacilityConsumerSupplyType())
+                {
+                    //StartCoroutine(PlayMarkOfWrongInteraction());
                 }
             }
 
@@ -383,29 +437,23 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
         
         if (CurrentTakenObject != null)
-        {
-            //print(((SuppliesType)currentTakenObject.GetComponent<ITakenAndMovable>().GetSupplyTypeOfSupply() == SuppliesType.tester).ToString());
-
-
-
-            if (other.gameObject.GetComponent<IConsumer>() != null && (SuppliesType)CurrentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfObject() == other.gameObject.GetComponent<IConsumer>().GetFacilityConsumerSupplyType())
+        {            
+            if (other.TryGetComponent(out IConsumer consumer) /*other.gameObject.GetComponent<IConsumer>() != null*/ && (SuppliesType)CurrentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfObject() == consumer.GetFacilityConsumerSupplyType())
             {
                 
                 if (other.gameObject.GetComponent<IConsumer>().ConsumeSupply(CurrentTakenObject))
                 {
                     CurrentTakenObject = null;
-                }
-
+                }                
             }
-
-            if (other.gameObject.GetComponent<Incident>() != null && CurrentTakenObject.GetComponent<Instrument>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == other.gameObject.GetComponent<Incident>().GetInstrumentTypeToDealWithIncident())
-            {
-                //print("WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!");
-
+            
+            if (other.TryGetComponent(out Instrument instr) && other.TryGetComponent(out Incident incident) &&  instr.GetCurrentTypeOfInstrument() == incident.GetInstrumentTypeToDealWithIncident())
+            {                
                 currentBaseTransform.LookAt(new Vector3(other.gameObject.transform.position.x, 0, other.gameObject.transform.position.z));
             }
+            
         }
-
+        
 
     }
 
@@ -486,8 +534,9 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
     {
         isHighlightEffectInProgress = true;
         Highlighting.ChangeMaterial(highlightMaterial, baseHighLight);
-        currentModelTransform.DOShakeScale(GeneralSettings.TimeForShakeForCrew, GeneralSettings.StrenghtOfShakeOnHighlightingCrew, 10, 90, true);
-        
+        //currentModelTransform.DOShakeScale(GeneralSettings.TimeForShakeForCrew, GeneralSettings.StrenghtOfShakeOnHighlightingCrew, 10, 90, true);
+        currentModelTransform.DOPunchScale(GeneralSettings.StrenghtOfShakeOnHighlightingCrew, GeneralSettings.TimeForShakeForCrew);
+
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForCrew);
         isHighlightEffectInProgress = false;
         Highlighting.ChangeMaterial(baseMaterial, baseHighLight);
@@ -588,12 +637,12 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         return isDestroyable;
     }
 
-    public void PlayNegativeEffect(NegativeEffects _effect)
-    {
+    public void SetNegativeEffect(NegativeEffects _effect, float _time)
+    {   
         switch (_effect)
         {
             case NegativeEffects.burning:
-                Effects.GetChild(0).gameObject.SetActive(true);
+                StartCoroutine(PlayNegativeEffect(Effects.GetChild(0).gameObject, _time));                
                 break;
 
             case NegativeEffects.electricity:
@@ -605,34 +654,26 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                 break;
 
             case NegativeEffects.poisoned:
-                Effects.GetChild(1).gameObject.SetActive(true);
+                StartCoroutine(PlayNegativeEffect(Effects.GetChild(1).gameObject, _time));
                 break;
         }
-
-        
     }
-    public void StopNegativeEffect(NegativeEffects _effect)
+
+
+    public IEnumerator PlayNegativeEffect(GameObject _effect, float _time)
     {
-        switch (_effect)
+        _effect.SetActive(true);
+
+        for (int i = 0; i < 10; i++)
         {
-            case NegativeEffects.burning:
-                Effects.GetChild(0).gameObject.SetActive(false);
-                break;
-
-            case NegativeEffects.electricity:
-
-                break;
-
-            case NegativeEffects.slow_down:
-                Speed /= 0.5f;
-                break;
-
-            case NegativeEffects.poisoned:
-                Effects.GetChild(1).gameObject.SetActive(false);
-                break;
+            if (!_effect.activeSelf) _effect.SetActive(true);
+            yield return new WaitForSeconds(_time / 10f);
         }
+
+        _effect.SetActive(false);
     }
 
+    
     public float CurrentHealthAmount()
     {
         return Health;
@@ -652,6 +693,15 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         yield return new WaitForSeconds(0.2f);
         currentBaseTransform.LookAt(look);
         currentBaseTransform.position = pos;        
+    }
+
+    private IEnumerator PlayMarkOfWrongInteraction()
+    {
+        if (whaaatMark.isShown()) yield break;
+        whaaatMark.ShowUI();
+        whaaatMark.MakeShake(0.7f);
+        yield return new WaitForSeconds(1f);
+        whaaatMark.HideUI();
     }
 
 }

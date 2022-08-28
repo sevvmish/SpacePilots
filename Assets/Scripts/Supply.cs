@@ -199,7 +199,7 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
             float deltaY = baseRenderersForHiglight[i].transform.localScale.y / 1f;
             float deltaZ = baseRenderersForHiglight[i].transform.localScale.z / 1f;
 
-            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForSupply, new Vector3(GeneralSettings.StrenghtOfShakeOnHighlightingSupply.x * deltaX, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.y * deltaY, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.z * deltaZ) * 2f, 10, 90, true);
+            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForSupply, new Vector3(GeneralSettings.StrenghtOfShakeOnHighlightingSupply.x * deltaX, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.y * deltaY, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.z * deltaZ), 10, 90, true);
         }
 
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForSupply);
@@ -286,14 +286,15 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
         return isDestroyable;
     }
 
-    public void PlayNegativeEffect(NegativeEffects _effect)
+    public void SetNegativeEffect(NegativeEffects _effect, float _time)
     {
         //
     }
 
-    public void StopNegativeEffect(NegativeEffects _effect)
+
+    public IEnumerator PlayNegativeEffect(GameObject _effect, float _time)
     {
-        //
+        yield return new WaitForSeconds(0);
     }
 
     private IEnumerator makeThisSupplyInactive()

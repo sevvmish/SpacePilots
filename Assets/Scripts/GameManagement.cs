@@ -66,7 +66,7 @@ public class GameManagement : MonoBehaviour
         //screen set==============================================            
         Screen.SetResolution(GeneralSettings.ScreenWidth, GeneralSettings.ScreenHeight, true);
         Camera.main.aspect = GeneralSettings.AspectRatio;
-        //Application.targetFrameRate = GeneralSettings.targetFrameRate;
+        Application.targetFrameRate = GeneralSettings.targetFrameRate;
 
 #if (UNITY_EDITOR)
         Camera.main.aspect = 16f/9f;

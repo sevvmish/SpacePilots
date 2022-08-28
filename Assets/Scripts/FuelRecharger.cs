@@ -188,9 +188,7 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
     private void EmptyRecharger()
     {
         overChargeEffect.SetActive(false);
-        fuelBarrel.localScale = Vector3.one;
-        fuelBarrel.localEulerAngles = Vector3.zero;
-        fuelBarrel.localPosition = new Vector3(-0.5f, 1, 0);
+        
 
         stopRechargeEffect.SetActive(true);
 
@@ -215,6 +213,10 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
     private void StartRechargingProcess()
     {
         startRechargeEffect.SetActive(true);
+
+        fuelBarrel.localScale = Vector3.one;
+        fuelBarrel.localRotation = Quaternion.Euler(Vector3.zero);
+        fuelBarrel.localPosition = new Vector3(-0.5f, 1, 0);
 
         isRechargerEmpty = false;
         isBarrelRecharging = true;
@@ -272,7 +274,8 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
             float deltaY = baseRenderersForHiglight[i].transform.localScale.y / 1f;
             float deltaZ = baseRenderersForHiglight[i].transform.localScale.z / 1f;
 
-            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForSupply, new Vector3(GeneralSettings.StrenghtOfShakeOnHighlightingSupply.x * deltaX, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.y * deltaY, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.z * deltaZ) * 2f, 10, 90, true);
+            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForSupply, new Vector3(GeneralSettings.StrenghtOfShakeOnHighlightingSupply.x * deltaX, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.y * deltaY, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.z * deltaZ), 10, 90, true);
+            
         }
 
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForSupply);
@@ -384,7 +387,7 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
 
     public bool ConsumeSupply(GameObject supply)
     {
-        if (isRechargerEmpty)
+        if (isRechargerEmpty && supply.TryGetComponent(out Supply _supply) && (SuppliesType)_supply.GetTypeOfObject() == SuppliesType.empty_engine_fuel)
         {
             supply.transform.SetParent(this.transform);
             supply.transform.localPosition = Vector3.one;

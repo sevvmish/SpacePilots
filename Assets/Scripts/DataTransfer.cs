@@ -9,8 +9,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using NetCoreServer;
 using System.Threading;
-using LiteNetLib;
-using LiteNetLib.Utils;
+
 
 public class DataTransfer: MonoBehaviour
 {

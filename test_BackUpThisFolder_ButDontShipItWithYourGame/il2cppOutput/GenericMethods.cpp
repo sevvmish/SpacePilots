@@ -61,20 +61,8 @@ struct Action_1_t8AE9CB3E5DC764211C9FEAC59DE7B65AD1444780;
 struct Action_1_t3DC3411926243F1DB9C330F8E105B904E38C1A0B;
 // System.Action`1<System.Object>
 struct Action_1_t6F9EB113EB3F16226AEF811A2744F4111C116C87;
-// System.Action`2<LiteNetLib.Utils.NetDataWriter,System.Object>
-struct Action_2_t6C66598BB9F8A526E3E27BDC2080627552CB9F86;
-// System.Action`2<System.Object,System.Collections.Generic.List`1<System.Object>>
-struct Action_2_t53037B37DAA483B5A522D5E0C6D03993BF11EBC4;
-// System.Action`2<System.Object,System.Object[]>
-struct Action_2_t213D7F6F4753CE54709D08AC5FD33DE1CED64A53;
-// System.Action`2<System.Object,System.Object>
-struct Action_2_t156C43F079E7E68155FCDCD12DC77DD11AEF7E3C;
 // UnityEngine.UIElements.UIR.BasicNode`1<UnityEngine.UIElements.UIR.TextureEntry>
 struct BasicNode_1_t7B4D545DCD6949B2E1C85D63DF038E44602F7DDB;
-// LiteNetLib.Utils.NetSerializer/CustomTypeClass`1<System.Object>
-struct CustomTypeClass_1_t665AB38738544914D6A5021859154C0EEAB9EE69;
-// LiteNetLib.Utils.NetSerializer/CustomTypeStatic`1<System.Object>
-struct CustomTypeStatic_1_t935DE5CD4B9EFBADAF160C45A78726AD92C1075F;
 // System.Collections.Generic.Dictionary`2<System.Int32,System.Threading.Tasks.Task>
 struct Dictionary_2_t403063CE4960B4F46C688912237C6A27E550FF55;
 // System.Collections.Generic.Dictionary`2<System.String,UnityEngine.UIElements.StyleSheets.StylePropertyValue>
@@ -83,12 +71,8 @@ struct Dictionary_2_t645C7B1DAE2D839B52A5E387C165CE13D5465B00;
 struct Dictionary_2_t4055F6540F36F21F9FEDAFB92D8E0089B38EBBC8;
 // System.EventHandler`1<System.Threading.Tasks.UnobservedTaskExceptionEventArgs>
 struct EventHandler_1_tE698654C3F437D97ABCCA3FD0AD8F86E776DC77A;
-// LiteNetLib.Utils.NetSerializer/FastCall`1<System.Object>
-struct FastCall_1_t562F4FE026A4A93D3D122E6139ADFF0039EB2A03;
 // System.Func`1<System.Boolean>
 struct Func_1_t2BE7F58348C9CC544A8973B3A9E55541DE43C457;
-// System.Func`1<System.Object>
-struct Func_1_tD5C081AE11746B200C711DD48DBEB00E3A9276D4;
 // System.Func`1<System.Threading.Tasks.Task/ContingentProperties>
 struct Func_1_tD59A12717D79BFB403BF973694B1BE5B85474BD1;
 // System.Func`2<System.Threading.Tasks.Task`1<System.Int32>,System.Nullable`1<System.Int32>>
@@ -107,12 +91,6 @@ struct Func_2_tB94FD0871A189804122B115BF7F49B3F0B035706;
 struct Func_2_t63A057E8762189D8C22BF71360D00C1047680DFA;
 // System.Func`2<System.Int32,System.Int32>
 struct Func_2_t2FDA873D8482C79555CFB05233D610E8F1C7C354;
-// System.Func`2<LiteNetLib.Utils.NetDataReader,System.Object>
-struct Func_2_tFA6C6DFAD26DB482A953739D35B9BE86E9857FFF;
-// System.Func`2<System.Object,System.Collections.Generic.List`1<System.Object>>
-struct Func_2_tEBF9A1790F663F25E6974C85D1D176EF2680E29E;
-// System.Func`2<System.Object,System.Object[]>
-struct Func_2_t853B66E3BF997011E2300A18F4E7D5FFC7C465DC;
 // System.Func`2<System.Object,System.Boolean>
 struct Func_2_tE1F0D41563EE092E5E5540B061449FDE88F1DC00;
 // System.Func`2<System.Object,System.Object>
@@ -423,10 +401,6 @@ struct MonoSslAuthenticationOptions_t50E83A9A2B726808720B74CBD44D3ABC2593B611;
 struct MonoTlsStream_t1CE91597F244093A040334DE449975971E4BD206;
 // System.MonoTypeInfo
 struct MonoTypeInfo_t90D5999A69AC524474FDEAC50F55B6CE868AB501;
-// LiteNetLib.Utils.NetDataReader
-struct NetDataReader_t28CDAC4E19A9CDCCE3F782A3E29084D50A2F58FF;
-// LiteNetLib.Utils.NetDataWriter
-struct NetDataWriter_t5AE108AEC4825ED3FB45AA93565703368228EB37;
 // System.Net.Sockets.NetworkStream
 struct NetworkStream_tF39C3684B6D572BF47F518AD1DB1F4B12CEE4AE0;
 // UnityEngine.Experimental.Rendering.ProbeReferenceVolumeProfile
@@ -704,13 +678,6 @@ struct U3CU3Ec__DisplayClass41_0_2_t98C4B33FA43000ADB44B00D9A66BDAA1064AFDB0  : 
 	Action_1_t8AE9CB3E5DC764211C9FEAC59DE7B65AD1444780* ___endAction_1;
 	// System.Threading.Tasks.Task`1<TResult> System.Threading.Tasks.TaskFactory`1/<>c__DisplayClass41_0`2::promise
 	Task_1_tE41CFF640EB7C045550D9D0D92BE67533B084C17* ___promise_2;
-};
-
-// LiteNetLib.Utils.NetSerializer/FastCall`1<System.Object>
-struct FastCall_1_t562F4FE026A4A93D3D122E6139ADFF0039EB2A03  : public RuntimeObject
-{
-	// LiteNetLib.Utils.NetSerializer/CallType LiteNetLib.Utils.NetSerializer/FastCall`1::Type
-	int32_t ___Type_0;
 };
 
 // UnityEngine.UIElements.UQuery/IsOfType`1<System.Object>
@@ -1054,11 +1021,6 @@ struct MoveNextRunner_t57DA5A6E2423AE86889DAA6D20097BBE3C75101E_StaticFields
 	ContextCallback_tE8AFBDBFCC040FDA8DA8C1EEFE9BD66B16BDA007* ___s_invokeMoveNext_2;
 };
 
-// LiteNetLib.Utils.NetSerializer/CustomType
-struct CustomType_t5DD67989E7FD0AC65476233C7C30A0BE5282624B  : public RuntimeObject
-{
-};
-
 // System.Runtime.CompilerServices.ConfiguredTaskAwaitable`1/ConfiguredTaskAwaiter<System.Nullable`1<System.Int32>>
 struct ConfiguredTaskAwaiter_t55C4D50A016D191AA666134EE36747E9B51C76B5 
 {
@@ -1212,22 +1174,6 @@ struct ConfiguredTaskAwaiter_tA4D58A8C85956FAD6ADECC38D4BA4FAC370DE136
 	bool ___m_continueOnCapturedContext_1;
 };
 
-// LiteNetLib.Utils.NetSerializer/CustomTypeClass`1<System.Object>
-struct CustomTypeClass_1_t665AB38738544914D6A5021859154C0EEAB9EE69  : public CustomType_t5DD67989E7FD0AC65476233C7C30A0BE5282624B
-{
-	// System.Func`1<TProperty> LiteNetLib.Utils.NetSerializer/CustomTypeClass`1::_constructor
-	Func_1_tD5C081AE11746B200C711DD48DBEB00E3A9276D4* ____constructor_0;
-};
-
-// LiteNetLib.Utils.NetSerializer/CustomTypeStatic`1<System.Object>
-struct CustomTypeStatic_1_t935DE5CD4B9EFBADAF160C45A78726AD92C1075F  : public CustomType_t5DD67989E7FD0AC65476233C7C30A0BE5282624B
-{
-	// System.Action`2<LiteNetLib.Utils.NetDataWriter,TProperty> LiteNetLib.Utils.NetSerializer/CustomTypeStatic`1::_writer
-	Action_2_t6C66598BB9F8A526E3E27BDC2080627552CB9F86* ____writer_0;
-	// System.Func`2<LiteNetLib.Utils.NetDataReader,TProperty> LiteNetLib.Utils.NetSerializer/CustomTypeStatic`1::_reader
-	Func_2_tFA6C6DFAD26DB482A953739D35B9BE86E9857FFF* ____reader_1;
-};
-
 // UnityEngine.Rendering.CoreUnsafeUtils/DefaultKeyGetter`1<UnityEngine.Hash128>
 struct DefaultKeyGetter_1_tBFAC52555BBFEA1112D9C2E76596CD28686FAD3A 
 {
@@ -1264,23 +1210,6 @@ struct Enumerator_t9473BAB568A27E2339D48C1F91319E0F6D244D7A
 	int32_t ____version_2;
 	// T System.Collections.Generic.List`1/Enumerator::_current
 	RuntimeObject* ____current_3;
-};
-
-// LiteNetLib.Utils.NetSerializer/FastCallSpecific`2<System.Object,System.Object>
-struct FastCallSpecific_2_t02A462E99BD228FF8239EE6DF1BDF37435A76BB8  : public FastCall_1_t562F4FE026A4A93D3D122E6139ADFF0039EB2A03
-{
-	// System.Func`2<TClass,TProperty> LiteNetLib.Utils.NetSerializer/FastCallSpecific`2::Getter
-	Func_2_tACBF5A1656250800CE861707354491F0611F6624* ___Getter_1;
-	// System.Action`2<TClass,TProperty> LiteNetLib.Utils.NetSerializer/FastCallSpecific`2::Setter
-	Action_2_t156C43F079E7E68155FCDCD12DC77DD11AEF7E3C* ___Setter_2;
-	// System.Func`2<TClass,TProperty[]> LiteNetLib.Utils.NetSerializer/FastCallSpecific`2::GetterArr
-	Func_2_t853B66E3BF997011E2300A18F4E7D5FFC7C465DC* ___GetterArr_3;
-	// System.Action`2<TClass,TProperty[]> LiteNetLib.Utils.NetSerializer/FastCallSpecific`2::SetterArr
-	Action_2_t213D7F6F4753CE54709D08AC5FD33DE1CED64A53* ___SetterArr_4;
-	// System.Func`2<TClass,System.Collections.Generic.List`1<TProperty>> LiteNetLib.Utils.NetSerializer/FastCallSpecific`2::GetterList
-	Func_2_tEBF9A1790F663F25E6974C85D1D176EF2680E29E* ___GetterList_5;
-	// System.Action`2<TClass,System.Collections.Generic.List`1<TProperty>> LiteNetLib.Utils.NetSerializer/FastCallSpecific`2::SetterList
-	Action_2_t53037B37DAA483B5A522D5E0C6D03993BF11EBC4* ___SetterList_6;
 };
 
 // System.Memory`1<System.Byte>
@@ -2527,22 +2456,6 @@ struct Enumerator_tAB0652E7D04AE115BF3DB2733BD0236F6D2700AF
 	int32_t ____version_2;
 	// T System.Collections.Generic.List`1/Enumerator::_current
 	SerializablePVProfile_tD3D31A9B22592CE78C6B023E2A4DD629680BD069 ____current_3;
-};
-
-// LiteNetLib.Utils.NetSerializer/FastCallClass`2<System.Object,System.Object>
-struct FastCallClass_2_tF5C9A7F540560282E348F0BE9112065F0C26A4BE  : public FastCallSpecific_2_t02A462E99BD228FF8239EE6DF1BDF37435A76BB8
-{
-	// System.Func`1<TProperty> LiteNetLib.Utils.NetSerializer/FastCallClass`2::_constructor
-	Func_1_tD5C081AE11746B200C711DD48DBEB00E3A9276D4* ____constructor_7;
-};
-
-// LiteNetLib.Utils.NetSerializer/FastCallStatic`2<System.Object,System.Object>
-struct FastCallStatic_2_tF70E031CEECC4650EFD0A10991519DA1A0BD5CEB  : public FastCallSpecific_2_t02A462E99BD228FF8239EE6DF1BDF37435A76BB8
-{
-	// System.Action`2<LiteNetLib.Utils.NetDataWriter,TProperty> LiteNetLib.Utils.NetSerializer/FastCallStatic`2::_writer
-	Action_2_t6C66598BB9F8A526E3E27BDC2080627552CB9F86* ____writer_7;
-	// System.Func`2<LiteNetLib.Utils.NetDataReader,TProperty> LiteNetLib.Utils.NetSerializer/FastCallStatic`2::_reader
-	Func_2_tFA6C6DFAD26DB482A953739D35B9BE86E9857FFF* ____reader_8;
 };
 
 // System.Threading.Tasks.TaskFactory`1/FromAsyncTrimPromise`1<System.Int32,System.Object>
@@ -4438,16 +4351,6 @@ struct Action_1_t8AE9CB3E5DC764211C9FEAC59DE7B65AD1444780  : public MulticastDel
 {
 };
 
-// System.Action`2<LiteNetLib.Utils.NetDataWriter,System.Object>
-struct Action_2_t6C66598BB9F8A526E3E27BDC2080627552CB9F86  : public MulticastDelegate_t
-{
-};
-
-// System.Func`1<System.Object>
-struct Func_1_tD5C081AE11746B200C711DD48DBEB00E3A9276D4  : public MulticastDelegate_t
-{
-};
-
 // System.Func`2<System.Threading.Tasks.Task`1<System.Int32>,System.Nullable`1<System.Int32>>
 struct Func_2_t53C16EDB9A3E0F3470F3AFDC2589E59CC5AF63D5  : public MulticastDelegate_t
 {
@@ -4485,11 +4388,6 @@ struct Func_2_t63A057E8762189D8C22BF71360D00C1047680DFA  : public MulticastDeleg
 
 // System.Func`2<System.Int32,System.Int32>
 struct Func_2_t2FDA873D8482C79555CFB05233D610E8F1C7C354  : public MulticastDelegate_t
-{
-};
-
-// System.Func`2<LiteNetLib.Utils.NetDataReader,System.Object>
-struct Func_2_tFA6C6DFAD26DB482A953739D35B9BE86E9857FFF  : public MulticastDelegate_t
 {
 };
 
@@ -16005,31 +15903,6 @@ IL2CPP_EXTERN_C  void AsyncValueTaskMethodBuilder_1_Start_TisRuntimeObject_m55DA
 	int32_t _offset = 1;
 	_thisAdjusted = reinterpret_cast<AsyncValueTaskMethodBuilder_1_tC52370C9D79190662723A5015241A6CA0D150DC2*>(__this + _offset);
 	AsyncValueTaskMethodBuilder_1_Start_TisRuntimeObject_m55DA5DA01C3062E2C184C227ADFB7B06F755DA52_inline(_thisAdjusted, ___stateMachine0, method);
-}
-// LiteNetLib.Utils.NetSerializer/FastCall`1<T> LiteNetLib.Utils.NetSerializer/CustomTypeClass`1<System.Object>::Get<System.Object>()
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR FastCall_1_t562F4FE026A4A93D3D122E6139ADFF0039EB2A03* CustomTypeClass_1_Get_TisRuntimeObject_m5073D7CD30EB3F3FF621BFA2974197FF4CA4C5FA_gshared (CustomTypeClass_1_t665AB38738544914D6A5021859154C0EEAB9EE69* __this, const RuntimeMethod* method) 
-{
-	{
-		// public override FastCall<T> Get<T>() { return new FastCallClass<T, TProperty>(_constructor); }
-		Func_1_tD5C081AE11746B200C711DD48DBEB00E3A9276D4* L_0 = (Func_1_tD5C081AE11746B200C711DD48DBEB00E3A9276D4*)__this->____constructor_0;
-		FastCallClass_2_tF5C9A7F540560282E348F0BE9112065F0C26A4BE* L_1 = (FastCallClass_2_tF5C9A7F540560282E348F0BE9112065F0C26A4BE*)il2cpp_codegen_object_new(il2cpp_rgctx_data(method->rgctx_data, 0));
-		NullCheck(L_1);
-		((  void (*) (FastCallClass_2_tF5C9A7F540560282E348F0BE9112065F0C26A4BE*, Func_1_tD5C081AE11746B200C711DD48DBEB00E3A9276D4*, const RuntimeMethod*))il2cpp_codegen_get_method_pointer(il2cpp_rgctx_method(method->rgctx_data, 1)))(L_1, L_0, il2cpp_rgctx_method(method->rgctx_data, 1));
-		return (FastCall_1_t562F4FE026A4A93D3D122E6139ADFF0039EB2A03*)L_1;
-	}
-}
-// LiteNetLib.Utils.NetSerializer/FastCall`1<T> LiteNetLib.Utils.NetSerializer/CustomTypeStatic`1<System.Object>::Get<System.Object>()
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR FastCall_1_t562F4FE026A4A93D3D122E6139ADFF0039EB2A03* CustomTypeStatic_1_Get_TisRuntimeObject_mD15401958D04929B7E67FBE52ABDBAA282C31914_gshared (CustomTypeStatic_1_t935DE5CD4B9EFBADAF160C45A78726AD92C1075F* __this, const RuntimeMethod* method) 
-{
-	{
-		// public override FastCall<T> Get<T>() { return new FastCallStatic<T, TProperty>(_writer, _reader); }
-		Action_2_t6C66598BB9F8A526E3E27BDC2080627552CB9F86* L_0 = (Action_2_t6C66598BB9F8A526E3E27BDC2080627552CB9F86*)__this->____writer_0;
-		Func_2_tFA6C6DFAD26DB482A953739D35B9BE86E9857FFF* L_1 = (Func_2_tFA6C6DFAD26DB482A953739D35B9BE86E9857FFF*)__this->____reader_1;
-		FastCallStatic_2_tF70E031CEECC4650EFD0A10991519DA1A0BD5CEB* L_2 = (FastCallStatic_2_tF70E031CEECC4650EFD0A10991519DA1A0BD5CEB*)il2cpp_codegen_object_new(il2cpp_rgctx_data(method->rgctx_data, 0));
-		NullCheck(L_2);
-		((  void (*) (FastCallStatic_2_tF70E031CEECC4650EFD0A10991519DA1A0BD5CEB*, Action_2_t6C66598BB9F8A526E3E27BDC2080627552CB9F86*, Func_2_tFA6C6DFAD26DB482A953739D35B9BE86E9857FFF*, const RuntimeMethod*))il2cpp_codegen_get_method_pointer(il2cpp_rgctx_method(method->rgctx_data, 1)))(L_2, L_0, L_1, il2cpp_rgctx_method(method->rgctx_data, 1));
-		return (FastCall_1_t562F4FE026A4A93D3D122E6139ADFF0039EB2A03*)L_2;
-	}
 }
 // Unity.Collections.NativeArray`1<U> Unity.Collections.NativeArray`1<System.Single>::InternalReinterpret<System.UInt32>(System.Int32)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR NativeArray_1_t453E3DEA4CC9F1056F24E417C3308C35174BC184 NativeArray_1_InternalReinterpret_TisUInt32_t1833D51FFA667B18A5AA4B8D34DE284F8495D29B_mB20BAD004B4F7C2485955069DFEB6F1D848C0005_gshared (NativeArray_1_t3848EE4B6647317212A754634DE6DBC90B99FBEF* __this, int32_t ___length0, const RuntimeMethod* method) 

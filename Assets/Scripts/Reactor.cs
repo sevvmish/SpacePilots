@@ -250,7 +250,8 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
             float deltaY = baseRenderersForHiglight[i].transform.localScale.y / 1f;
             float deltaZ = baseRenderersForHiglight[i].transform.localScale.z / 1f;
 
-            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForSupply, new Vector3(GeneralSettings.StrenghtOfShakeOnHighlightingSupply.x * deltaX, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.y * deltaY, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.z * deltaZ) * 2f, 10, 90, true);
+            baseRenderersForHiglight[i].transform.DOShakeScale(GeneralSettings.TimeForShakeForSupply, new Vector3(GeneralSettings.StrenghtOfShakeOnHighlightingSupply.x * deltaX, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.y * deltaY, GeneralSettings.StrenghtOfShakeOnHighlightingSupply.z * deltaZ), 10, 90, true);
+            
         }
 
         yield return new WaitForSeconds(GeneralSettings.TimeForShakeForSupply);
@@ -282,7 +283,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
 
     public bool ConsumeSupply(GameObject supply)
     {
-        if (isReactorReadyToLoadAgain)
+        if (isReactorReadyToLoadAgain && supply.TryGetComponent(out Supply _supply) && (SuppliesType)_supply.GetTypeOfObject() == SuppliesType.full_engine_fuel)
         {
             supply.transform.SetParent(this.transform);
             supply.transform.localPosition = Vector3.one;

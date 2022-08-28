@@ -150,6 +150,11 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         return isCanBeTakenByCrew;
     }
 
+    public InstrumentsType GetCurrentTypeOfInstrument()
+    {
+        return currentInstrumentType;
+    }
+
 
     public GameObject GiveAwayTakeble()
     {
@@ -189,10 +194,8 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     {
         //currentIncidentInAction = null;
 
-        if (other.gameObject.GetComponent<Incident>() != null && other.gameObject.GetComponent<Incident>().IncidentHealth > 0)
-        {            
-            Incident currentIncident = other.gameObject.GetComponent<Incident>();
-
+        if (other.TryGetComponent(out Incident currentIncident) && currentIncident.IncidentHealth > 0)
+        {   
             if (!checkCurrentDealingWithIncident.ContainsKey(currentIncident))
             {
                 checkCurrentDealingWithIncident.Add(currentIncident, 0);
@@ -215,20 +218,15 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Incident>() != null && other.gameObject.GetComponent<Incident>().IncidentHealth > 0)
-        {
-            Incident currentIncident = other.gameObject.GetComponent<Incident>();
-
-            if (!checkCurrentDealingWithIncident.ContainsKey(currentIncident))
-            {
-                checkCurrentDealingWithIncident.Add(currentIncident, 0);
-            }
+        if (other.TryGetComponent(out Incident currentIncident) && !checkCurrentDealingWithIncident.ContainsKey(currentIncident) && currentIncident.IncidentHealth > 0)
+        {            
+            checkCurrentDealingWithIncident.Add(currentIncident, 0);            
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.GetComponent<Incident>() != null && other.gameObject.GetComponent<Incident>().IncidentHealth > 0)
+        if (other.TryGetComponent(out Incident currentIncident) && currentIncident.IncidentHealth > 0)
         {
             HideEffectOfWorkingInstrument();
 
@@ -236,8 +234,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
             {
                 currentIncidentInAction = null;
             }
-
-            Incident currentIncident = other.gameObject.GetComponent<Incident>();
+                        
             if (checkCurrentDealingWithIncident.ContainsKey(currentIncident))
             {
                 checkCurrentDealingWithIncident.Remove(currentIncident);
