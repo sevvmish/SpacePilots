@@ -41,7 +41,8 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
         uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(currentIconType);
         uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
-        GameManagement.MainUIHandler += ShowUIInformationMark;
+        //GameManagement.MainUIHandler += ShowUIInformationMark;
+        
         uiInformationMarkRect.gameObject.SetActive(false);
         HideEffectOfWorkingInstrument();
         if (isItSingleAttheBegining) MakeThrownAway();
@@ -112,15 +113,14 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     private void Update()
     {
         RotateWhileThrownAway();
-
         
-
         if (checkCurrentDealingWithIncident.Count > 0)
         {
             foreach (var item in checkCurrentDealingWithIncident.Keys)
             {                
                 if (item.IncidentHealth <= 0)
                 {
+                    HideEffectOfWorkingInstrument();
                     checkCurrentDealingWithIncident.Remove(item);
                     break;
                 }
@@ -165,6 +165,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
             isCanBeTakenByCrew = false;
             currentVisualTransform.localEulerAngles = modelStandartRotation;
             uiInformationMarkRect.gameObject.SetActive(false);
+            GameManagement.MainUIHandler -= ShowUIInformationMark;
             return gameObject;
         }
         else
@@ -185,6 +186,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
         //currentCollider.enabled = true;
         uiInformationMarkRect.gameObject.SetActive(true);
+        GameManagement.MainUIHandler += ShowUIInformationMark;
         GetComponent<Transform>().localPosition = new Vector3(GetComponent<Transform>().localPosition.x, YCoordWhenThrownAway, GetComponent<Transform>().localPosition.z);
     }
 
@@ -214,6 +216,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
             }              
             
         }
+        //else if ()
     }
 
     private void OnTriggerEnter(Collider other)
@@ -226,7 +229,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out Incident currentIncident) && currentIncident.IncidentHealth > 0)
+        if (other.TryGetComponent(out Incident currentIncident)/* && currentIncident.IncidentHealth > 0*/)
         {
             HideEffectOfWorkingInstrument();
 
