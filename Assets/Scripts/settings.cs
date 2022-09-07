@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "settings", menuName = "Settings")]
 public class settings : ScriptableObject
 {
+    public static SystemLanguage CurrentLanguage;
+   
     public const int SERVER_TCP_PORT = 2300;
     public const int SERVER_UDP_PORT = 2301;
     public const string SERVER_IP = "192.168.0.108";
@@ -22,6 +25,7 @@ public class settings : ScriptableObject
 
     //current game setting
     public int CurrentLevel = 1;
+    public int CurrentStars;
 
 
     //crew settings
@@ -49,4 +53,26 @@ public class settings : ScriptableObject
     public float AudioSourceVolume_crew = 0.5f;
     public float AudioSourceVolume_UI = 0.7f;
 
+    
+    public levels[] GameLevelsData;
+
+}
+
+[System.Serializable]
+public class levels
+{
+    public int LevelNumber;
+    public string LevelName;
+    public int StarsRequiredToEnter;
+    public int CurrentStarsProgress;
+    public bool IsVisited;
+}
+
+[Serializable]
+public enum TypeOfLevel
+{
+    time_limit,
+    fighting,
+    survival,
+    tutorial
 }

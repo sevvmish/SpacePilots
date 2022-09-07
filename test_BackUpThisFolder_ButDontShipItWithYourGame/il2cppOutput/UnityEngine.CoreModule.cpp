@@ -10227,6 +10227,16 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Application_get_isBatchMode_mBE1AD2AA536
 	bool icallRetVal = _il2cpp_icall_func();
 	return icallRetVal;
 }
+// System.String UnityEngine.Application::get_persistentDataPath()
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* Application_get_persistentDataPath_m787EBC9B0862E7617DCD6CABD2147E61717EAC17 (const RuntimeMethod* method) 
+{
+	typedef String_t* (*Application_get_persistentDataPath_m787EBC9B0862E7617DCD6CABD2147E61717EAC17_ftn) ();
+	static Application_get_persistentDataPath_m787EBC9B0862E7617DCD6CABD2147E61717EAC17_ftn _il2cpp_icall_func;
+	if (!_il2cpp_icall_func)
+	_il2cpp_icall_func = (Application_get_persistentDataPath_m787EBC9B0862E7617DCD6CABD2147E61717EAC17_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Application::get_persistentDataPath()");
+	String_t* icallRetVal = _il2cpp_icall_func();
+	return icallRetVal;
+}
 // System.Void UnityEngine.Application::set_targetFrameRate(System.Int32)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Application_set_targetFrameRate_m794A13DC5116C506B042663606691257CF3A7325 (int32_t ___value0, const RuntimeMethod* method) 
 {
@@ -10317,6 +10327,16 @@ IL_0032:
 		bool L_6 = V_2;
 		return L_6;
 	}
+}
+// UnityEngine.SystemLanguage UnityEngine.Application::get_systemLanguage()
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Application_get_systemLanguage_mF0C8FBE854F7B58315A61087619DD10CB53A9AFF (const RuntimeMethod* method) 
+{
+	typedef int32_t (*Application_get_systemLanguage_mF0C8FBE854F7B58315A61087619DD10CB53A9AFF_ftn) ();
+	static Application_get_systemLanguage_mF0C8FBE854F7B58315A61087619DD10CB53A9AFF_ftn _il2cpp_icall_func;
+	if (!_il2cpp_icall_func)
+	_il2cpp_icall_func = (Application_get_systemLanguage_mF0C8FBE854F7B58315A61087619DD10CB53A9AFF_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Application::get_systemLanguage()");
+	int32_t icallRetVal = _il2cpp_icall_func();
+	return icallRetVal;
 }
 // System.Void UnityEngine.Application::CallLowMemory()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Application_CallLowMemory_mEDE4C1A091B81B3A96F2BC498EE8467D38A54D0E (const RuntimeMethod* method) 

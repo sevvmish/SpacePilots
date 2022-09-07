@@ -301,6 +301,8 @@ struct Vector2U5BU5D_tFEBBC94BCC6C9C88277BA04047D2B3FDB6ED7FDA;
 struct Vector3U5BU5D_tFF1859CCE176131B909E2044F76443064254679C;
 // TMPro.WordWrapState[]
 struct WordWrapStateU5BU5D_t473D59C9DBCC949CE72EF1EB471CBA152A6CEAC9;
+// levels[]
+struct levelsU5BU5D_t3AF0832BEF3B5D6E5270A2A9A5BF79927E955D55;
 // TMPro.TMP_Text/UnicodeChar[]
 struct UnicodeCharU5BU5D_t67F27D09F8EB28D2C42DFF16FE60054F157012F5;
 // System.Action
@@ -3522,51 +3524,57 @@ struct WordWrapState_t80F67D8CAA9B1A0A3D5266521E23A9F3100EDD0A_marshaled_com
 struct settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486  : public ScriptableObject_tB3BFDB921A1B1795B38A5417D3B97A89A140436A
 {
 	// System.Int32 settings::ScreenHeight
-	int32_t ___ScreenHeight_10;
+	int32_t ___ScreenHeight_11;
 	// System.Int32 settings::ScreenWidth
-	int32_t ___ScreenWidth_11;
+	int32_t ___ScreenWidth_12;
 	// System.Single settings::AspectRatio
-	float ___AspectRatio_12;
+	float ___AspectRatio_13;
 	// System.Int32 settings::targetFrameRate
-	int32_t ___targetFrameRate_13;
+	int32_t ___targetFrameRate_14;
 	// System.Int32 settings::CurrentLevel
-	int32_t ___CurrentLevel_14;
+	int32_t ___CurrentLevel_15;
+	// System.Int32 settings::CurrentStars
+	int32_t ___CurrentStars_16;
 	// UnityEngine.Vector3 settings::StrenghtOfShakeOnHighlightingCrew
-	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___StrenghtOfShakeOnHighlightingCrew_15;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___StrenghtOfShakeOnHighlightingCrew_17;
 	// System.Single settings::TimeForShakeForCrew
-	float ___TimeForShakeForCrew_16;
+	float ___TimeForShakeForCrew_18;
 	// UnityEngine.Vector3 settings::StrenghtOfShakeOnHighlightingFacility
-	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___StrenghtOfShakeOnHighlightingFacility_17;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___StrenghtOfShakeOnHighlightingFacility_19;
 	// System.Single settings::TimeForShakeForFacility
-	float ___TimeForShakeForFacility_18;
+	float ___TimeForShakeForFacility_20;
 	// UnityEngine.Vector3 settings::StrenghtOfShakeOnHighlightingInstruments
-	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___StrenghtOfShakeOnHighlightingInstruments_19;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___StrenghtOfShakeOnHighlightingInstruments_21;
 	// System.Single settings::TimeForShakeForInstruments
-	float ___TimeForShakeForInstruments_20;
+	float ___TimeForShakeForInstruments_22;
 	// UnityEngine.Vector3 settings::StrenghtOfShakeOnHighlightingSupply
-	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___StrenghtOfShakeOnHighlightingSupply_21;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___StrenghtOfShakeOnHighlightingSupply_23;
 	// System.Single settings::TimeForShakeForSupply
-	float ___TimeForShakeForSupply_22;
+	float ___TimeForShakeForSupply_24;
 	// System.Single settings::BaseBloomIntensityColor
-	float ___BaseBloomIntensityColor_23;
+	float ___BaseBloomIntensityColor_25;
 	// System.Single settings::AudioSourceVolume_incidents
-	float ___AudioSourceVolume_incidents_24;
+	float ___AudioSourceVolume_incidents_26;
 	// System.Single settings::AudioSourceVolume_instruments
-	float ___AudioSourceVolume_instruments_25;
+	float ___AudioSourceVolume_instruments_27;
 	// System.Single settings::AudioSourceVolume_crew
-	float ___AudioSourceVolume_crew_26;
+	float ___AudioSourceVolume_crew_28;
 	// System.Single settings::AudioSourceVolume_UI
-	float ___AudioSourceVolume_UI_27;
+	float ___AudioSourceVolume_UI_29;
+	// levels[] settings::GameLevelsData
+	levelsU5BU5D_t3AF0832BEF3B5D6E5270A2A9A5BF79927E955D55* ___GameLevelsData_30;
 };
 
 struct settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486_StaticFields
 {
+	// UnityEngine.SystemLanguage settings::CurrentLanguage
+	int32_t ___CurrentLanguage_4;
 	// Encryption settings::PlayerEncryption
-	Encryption_t9C6FAF3A830CAD26A70580D54767A3B5DD3D8729* ___PlayerEncryption_7;
+	Encryption_t9C6FAF3A830CAD26A70580D54767A3B5DD3D8729* ___PlayerEncryption_8;
 	// System.Byte[] settings::SecretKey
-	ByteU5BU5D_tA6237BF417AE52AD70CFB4EF24A7A82613DF9031* ___SecretKey_8;
+	ByteU5BU5D_tA6237BF417AE52AD70CFB4EF24A7A82613DF9031* ___SecretKey_9;
 	// System.String settings::PacketID
-	String_t* ___PacketID_9;
+	String_t* ___PacketID_10;
 };
 
 // GameManagement/BaseUIHandler
@@ -4598,12 +4606,14 @@ struct UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3  : public MonoBehavio
 	RectTransform_t6C5DA5E41A89E0F488B001E45E58963480E543A5* ___uiMarkRect_5;
 	// UnityEngine.Vector3 UIManager::OnScreenPosition
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___OnScreenPosition_6;
+	// UIPanelTypes UIManager::currentUIPanelType
+	int32_t ___currentUIPanelType_7;
 	// UnityEngine.Transform UIManager::UIPositionPoint
-	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___UIPositionPoint_7;
+	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___UIPositionPoint_8;
 	// MakeActiveInTimer UIManager::blinker
-	MakeActiveInTimer_tC78DF2BAADF34FA35B6B8275E5E6BDB9A2DEEEFF* ___blinker_8;
+	MakeActiveInTimer_tC78DF2BAADF34FA35B6B8275E5E6BDB9A2DEEEFF* ___blinker_9;
 	// System.Single UIManager::scaleKoeff
-	float ___scaleKoeff_9;
+	float ___scaleKoeff_10;
 };
 
 // DynamicJoystick
@@ -12660,26 +12670,26 @@ IL_0035:
 		NullCheck(L_32);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_33 = L_32->___GeneralSettings_12;
 		NullCheck(L_33);
-		float L_34 = L_33->___TimeForShakeForSupply_22;
+		float L_34 = L_33->___TimeForShakeForSupply_24;
 		Engine_t59D31EC59AD8AAF189236F53F6E5B083856B0F00* L_35 = V_1;
 		NullCheck(L_35);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_36 = L_35->___GeneralSettings_12;
 		NullCheck(L_36);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_37 = (&L_36->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_37 = (&L_36->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_38 = L_37->___x_2;
 		float L_39 = V_3;
 		Engine_t59D31EC59AD8AAF189236F53F6E5B083856B0F00* L_40 = V_1;
 		NullCheck(L_40);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_41 = L_40->___GeneralSettings_12;
 		NullCheck(L_41);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_42 = (&L_41->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_42 = (&L_41->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_43 = L_42->___y_3;
 		float L_44 = V_4;
 		Engine_t59D31EC59AD8AAF189236F53F6E5B083856B0F00* L_45 = V_1;
 		NullCheck(L_45);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_46 = L_45->___GeneralSettings_12;
 		NullCheck(L_46);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_47 = (&L_46->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_47 = (&L_46->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_48 = L_47->___z_4;
 		float L_49 = V_5;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_50;
@@ -12715,7 +12725,7 @@ IL_0112:
 		NullCheck(L_58);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_59 = L_58->___GeneralSettings_12;
 		NullCheck(L_59);
-		float L_60 = L_59->___TimeForShakeForSupply_22;
+		float L_60 = L_59->___TimeForShakeForSupply_24;
 		WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* L_61 = (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3*)il2cpp_codegen_object_new(WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
 		NullCheck(L_61);
 		WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC(L_61, L_60, NULL);
@@ -13328,26 +13338,26 @@ IL_0035:
 		NullCheck(L_32);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_33 = L_32->___GeneralSettings_8;
 		NullCheck(L_33);
-		float L_34 = L_33->___TimeForShakeForSupply_22;
+		float L_34 = L_33->___TimeForShakeForSupply_24;
 		FacilityProducer_tB220F26FCC3B0A93E6187625EDD6F92815734914* L_35 = V_1;
 		NullCheck(L_35);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_36 = L_35->___GeneralSettings_8;
 		NullCheck(L_36);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_37 = (&L_36->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_37 = (&L_36->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_38 = L_37->___x_2;
 		float L_39 = V_3;
 		FacilityProducer_tB220F26FCC3B0A93E6187625EDD6F92815734914* L_40 = V_1;
 		NullCheck(L_40);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_41 = L_40->___GeneralSettings_8;
 		NullCheck(L_41);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_42 = (&L_41->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_42 = (&L_41->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_43 = L_42->___y_3;
 		float L_44 = V_4;
 		FacilityProducer_tB220F26FCC3B0A93E6187625EDD6F92815734914* L_45 = V_1;
 		NullCheck(L_45);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_46 = L_45->___GeneralSettings_8;
 		NullCheck(L_46);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_47 = (&L_46->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_47 = (&L_46->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_48 = L_47->___z_4;
 		float L_49 = V_5;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_50;
@@ -13383,7 +13393,7 @@ IL_0112:
 		NullCheck(L_58);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_59 = L_58->___GeneralSettings_8;
 		NullCheck(L_59);
-		float L_60 = L_59->___TimeForShakeForSupply_22;
+		float L_60 = L_59->___TimeForShakeForSupply_24;
 		WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* L_61 = (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3*)il2cpp_codegen_object_new(WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
 		NullCheck(L_61);
 		WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC(L_61, L_60, NULL);
@@ -14542,26 +14552,26 @@ IL_0035:
 		NullCheck(L_32);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_33 = L_32->___GeneralSettings_10;
 		NullCheck(L_33);
-		float L_34 = L_33->___TimeForShakeForSupply_22;
+		float L_34 = L_33->___TimeForShakeForSupply_24;
 		FuelRecharger_tE7342952C04AE665BCBF37EE6494AA801CA7F9EE* L_35 = V_1;
 		NullCheck(L_35);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_36 = L_35->___GeneralSettings_10;
 		NullCheck(L_36);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_37 = (&L_36->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_37 = (&L_36->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_38 = L_37->___x_2;
 		float L_39 = V_3;
 		FuelRecharger_tE7342952C04AE665BCBF37EE6494AA801CA7F9EE* L_40 = V_1;
 		NullCheck(L_40);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_41 = L_40->___GeneralSettings_10;
 		NullCheck(L_41);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_42 = (&L_41->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_42 = (&L_41->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_43 = L_42->___y_3;
 		float L_44 = V_4;
 		FuelRecharger_tE7342952C04AE665BCBF37EE6494AA801CA7F9EE* L_45 = V_1;
 		NullCheck(L_45);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_46 = L_45->___GeneralSettings_10;
 		NullCheck(L_46);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_47 = (&L_46->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_47 = (&L_46->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_48 = L_47->___z_4;
 		float L_49 = V_5;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_50;
@@ -14595,7 +14605,7 @@ IL_0108:
 		NullCheck(L_57);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_58 = L_57->___GeneralSettings_10;
 		NullCheck(L_58);
-		float L_59 = L_58->___TimeForShakeForSupply_22;
+		float L_59 = L_58->___TimeForShakeForSupply_24;
 		WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* L_60 = (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3*)il2cpp_codegen_object_new(WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
 		NullCheck(L_60);
 		WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC(L_60, L_59, NULL);
@@ -15517,12 +15527,12 @@ IL_0017:
 		NullCheck(L_7);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_8 = L_7->___GeneralSettings_9;
 		NullCheck(L_8);
-		float L_9 = L_8->___TimeForShakeForFacility_18;
+		float L_9 = L_8->___TimeForShakeForFacility_20;
 		InstrumentProducer_t83B9B88C126FDFE99922B242A9FE31281D623CAD* L_10 = V_1;
 		NullCheck(L_10);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_11 = L_10->___GeneralSettings_9;
 		NullCheck(L_11);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = L_11->___StrenghtOfShakeOnHighlightingFacility_17;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_12 = L_11->___StrenghtOfShakeOnHighlightingFacility_19;
 		Tweener_tD38633F1A42EDF47A73CE3BF1894D946E830E140* L_13;
 		L_13 = ShortcutExtensions_DOShakeScale_m455288408E71E6D81BC89D27C4897D3E8AEC7236(L_6, L_9, L_12, ((int32_t)10), (90.0f), (bool)1, NULL);
 		// yield return new WaitForSeconds(GeneralSettings.TimeForShakeForFacility);
@@ -15530,7 +15540,7 @@ IL_0017:
 		NullCheck(L_14);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_15 = L_14->___GeneralSettings_9;
 		NullCheck(L_15);
-		float L_16 = L_15->___TimeForShakeForFacility_18;
+		float L_16 = L_15->___TimeForShakeForFacility_20;
 		WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* L_17 = (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3*)il2cpp_codegen_object_new(WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
 		NullCheck(L_17);
 		WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC(L_17, L_16, NULL);
@@ -15712,7 +15722,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Reactor_OnEnable_mA522BDB5AFF514BA637497
 		L_18 = Color_get_green_m336EB73DD4A5B11B7F405CF4BC7F37A466FB4FF7_inline(NULL);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_19 = __this->___GeneralSettings_14;
 		NullCheck(L_19);
-		float L_20 = L_19->___BaseBloomIntensityColor_23;
+		float L_20 = L_19->___BaseBloomIntensityColor_25;
 		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_21;
 		L_21 = Color_op_Multiply_m290BA7F5157DE3322801AAC7FA1700219EE6E664_inline(L_18, L_20, NULL);
 		NullCheck(L_17);
@@ -15741,7 +15751,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Reactor_OnEnable_mA522BDB5AFF514BA637497
 		L_29 = Color_get_red_m27D04C1E5FE794AD933B7B9364F3D34B9EA25109_inline(NULL);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_30 = __this->___GeneralSettings_14;
 		NullCheck(L_30);
-		float L_31 = L_30->___BaseBloomIntensityColor_23;
+		float L_31 = L_30->___BaseBloomIntensityColor_25;
 		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_32;
 		L_32 = Color_op_Multiply_m290BA7F5157DE3322801AAC7FA1700219EE6E664_inline(L_29, L_31, NULL);
 		NullCheck(L_28);
@@ -15901,7 +15911,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Reactor_SetStateToLoaded_mE0F624718B2BC5
 		L_11 = Color_get_green_m336EB73DD4A5B11B7F405CF4BC7F37A466FB4FF7_inline(NULL);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_12 = __this->___GeneralSettings_14;
 		NullCheck(L_12);
-		float L_13 = L_12->___BaseBloomIntensityColor_23;
+		float L_13 = L_12->___BaseBloomIntensityColor_25;
 		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_14;
 		L_14 = Color_op_Multiply_m290BA7F5157DE3322801AAC7FA1700219EE6E664_inline(L_11, L_13, NULL);
 		NullCheck(L_10);
@@ -16026,7 +16036,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Reactor_Update_m1634F58714BF4A5E59E20E3E
 		L_18 = Color_get_red_m27D04C1E5FE794AD933B7B9364F3D34B9EA25109_inline(NULL);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_19 = __this->___GeneralSettings_14;
 		NullCheck(L_19);
-		float L_20 = L_19->___BaseBloomIntensityColor_23;
+		float L_20 = L_19->___BaseBloomIntensityColor_25;
 		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_21;
 		L_21 = Color_op_Multiply_m290BA7F5157DE3322801AAC7FA1700219EE6E664_inline(L_18, L_20, NULL);
 		NullCheck(L_17);
@@ -16083,7 +16093,7 @@ IL_010c:
 		L_32 = Color_get_yellow_m1EF7276EF58050DFBA8921E2383F0249C08D346F_inline(NULL);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_33 = __this->___GeneralSettings_14;
 		NullCheck(L_33);
-		float L_34 = L_33->___BaseBloomIntensityColor_23;
+		float L_34 = L_33->___BaseBloomIntensityColor_25;
 		Color_tD001788D726C3A7F1379BEED0260B9591F440C1F L_35;
 		L_35 = Color_op_Multiply_m290BA7F5157DE3322801AAC7FA1700219EE6E664_inline(L_32, L_34, NULL);
 		NullCheck(L_31);
@@ -16709,26 +16719,26 @@ IL_0035:
 		NullCheck(L_32);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_33 = L_32->___GeneralSettings_14;
 		NullCheck(L_33);
-		float L_34 = L_33->___TimeForShakeForSupply_22;
+		float L_34 = L_33->___TimeForShakeForSupply_24;
 		Reactor_t43559150F1C006E035DD1588E59726AFC1FCB6A7* L_35 = V_1;
 		NullCheck(L_35);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_36 = L_35->___GeneralSettings_14;
 		NullCheck(L_36);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_37 = (&L_36->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_37 = (&L_36->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_38 = L_37->___x_2;
 		float L_39 = V_3;
 		Reactor_t43559150F1C006E035DD1588E59726AFC1FCB6A7* L_40 = V_1;
 		NullCheck(L_40);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_41 = L_40->___GeneralSettings_14;
 		NullCheck(L_41);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_42 = (&L_41->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_42 = (&L_41->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_43 = L_42->___y_3;
 		float L_44 = V_4;
 		Reactor_t43559150F1C006E035DD1588E59726AFC1FCB6A7* L_45 = V_1;
 		NullCheck(L_45);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_46 = L_45->___GeneralSettings_14;
 		NullCheck(L_46);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_47 = (&L_46->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_47 = (&L_46->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_48 = L_47->___z_4;
 		float L_49 = V_5;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_50;
@@ -16762,7 +16772,7 @@ IL_0108:
 		NullCheck(L_57);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_58 = L_57->___GeneralSettings_14;
 		NullCheck(L_58);
-		float L_59 = L_58->___TimeForShakeForSupply_22;
+		float L_59 = L_58->___TimeForShakeForSupply_24;
 		WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* L_60 = (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3*)il2cpp_codegen_object_new(WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
 		NullCheck(L_60);
 		WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC(L_60, L_59, NULL);
@@ -17437,26 +17447,26 @@ IL_0035:
 		NullCheck(L_32);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_33 = L_32->___GeneralSettings_4;
 		NullCheck(L_33);
-		float L_34 = L_33->___TimeForShakeForSupply_22;
+		float L_34 = L_33->___TimeForShakeForSupply_24;
 		SpaceControlPanel_t264CA3AEF1443AD3D0BA82688EF94BADA5615C9E* L_35 = V_1;
 		NullCheck(L_35);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_36 = L_35->___GeneralSettings_4;
 		NullCheck(L_36);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_37 = (&L_36->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_37 = (&L_36->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_38 = L_37->___x_2;
 		float L_39 = V_3;
 		SpaceControlPanel_t264CA3AEF1443AD3D0BA82688EF94BADA5615C9E* L_40 = V_1;
 		NullCheck(L_40);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_41 = L_40->___GeneralSettings_4;
 		NullCheck(L_41);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_42 = (&L_41->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_42 = (&L_41->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_43 = L_42->___y_3;
 		float L_44 = V_4;
 		SpaceControlPanel_t264CA3AEF1443AD3D0BA82688EF94BADA5615C9E* L_45 = V_1;
 		NullCheck(L_45);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_46 = L_45->___GeneralSettings_4;
 		NullCheck(L_46);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_47 = (&L_46->___StrenghtOfShakeOnHighlightingSupply_21);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* L_47 = (&L_46->___StrenghtOfShakeOnHighlightingSupply_23);
 		float L_48 = L_47->___z_4;
 		float L_49 = V_5;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_50;
@@ -17492,7 +17502,7 @@ IL_0112:
 		NullCheck(L_58);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_59 = L_58->___GeneralSettings_4;
 		NullCheck(L_59);
-		float L_60 = L_59->___TimeForShakeForSupply_22;
+		float L_60 = L_59->___TimeForShakeForSupply_24;
 		WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* L_61 = (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3*)il2cpp_codegen_object_new(WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
 		NullCheck(L_61);
 		WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC(L_61, L_60, NULL);
@@ -17680,7 +17690,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Incident_OnEnable_m36E0E65A88BCB722B8D11
 		AudioSource_t871AC2272F896738252F04EE949AEF5B241D3299* L_3 = __this->___audiosource_15;
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_4 = __this->___GeneralSettings_13;
 		NullCheck(L_4);
-		float L_5 = L_4->___AudioSourceVolume_incidents_24;
+		float L_5 = L_4->___AudioSourceVolume_incidents_26;
 		NullCheck(L_3);
 		AudioSource_set_volume_mD902BBDBBDE0E3C148609BF3C05096148E90F2C0(L_3, L_5, NULL);
 	}
@@ -18789,12 +18799,12 @@ IL_0017:
 		NullCheck(L_11);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_12 = L_11->___GeneralSettings_13;
 		NullCheck(L_12);
-		float L_13 = L_12->___TimeForShakeForInstruments_20;
+		float L_13 = L_12->___TimeForShakeForInstruments_22;
 		Incident_tB1056FA2C514444FABE0B8FD2064A2D1A7108A00* L_14 = V_1;
 		NullCheck(L_14);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_15 = L_14->___GeneralSettings_13;
 		NullCheck(L_15);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16 = L_15->___StrenghtOfShakeOnHighlightingInstruments_19;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16 = L_15->___StrenghtOfShakeOnHighlightingInstruments_21;
 		Tweener_tD38633F1A42EDF47A73CE3BF1894D946E830E140* L_17;
 		L_17 = ShortcutExtensions_DOShakeScale_m455288408E71E6D81BC89D27C4897D3E8AEC7236(L_10, L_13, L_16, ((int32_t)10), (90.0f), (bool)1, NULL);
 		// yield return new WaitForSeconds(GeneralSettings.TimeForShakeForInstruments);
@@ -18802,7 +18812,7 @@ IL_0017:
 		NullCheck(L_18);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_19 = L_18->___GeneralSettings_13;
 		NullCheck(L_19);
-		float L_20 = L_19->___TimeForShakeForInstruments_20;
+		float L_20 = L_19->___TimeForShakeForInstruments_22;
 		WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* L_21 = (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3*)il2cpp_codegen_object_new(WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
 		NullCheck(L_21);
 		WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC(L_21, L_20, NULL);
@@ -20219,12 +20229,12 @@ IL_0017:
 		NullCheck(L_11);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_12 = L_11->___GeneralSettings_14;
 		NullCheck(L_12);
-		float L_13 = L_12->___TimeForShakeForInstruments_20;
+		float L_13 = L_12->___TimeForShakeForInstruments_22;
 		Instrument_tBD61134B8BEB6820BC4C6821AF809180BA994EF7* L_14 = V_1;
 		NullCheck(L_14);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_15 = L_14->___GeneralSettings_14;
 		NullCheck(L_15);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16 = L_15->___StrenghtOfShakeOnHighlightingInstruments_19;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16 = L_15->___StrenghtOfShakeOnHighlightingInstruments_21;
 		Tweener_tD38633F1A42EDF47A73CE3BF1894D946E830E140* L_17;
 		L_17 = ShortcutExtensions_DOShakeScale_m455288408E71E6D81BC89D27C4897D3E8AEC7236(L_10, L_13, L_16, ((int32_t)10), (90.0f), (bool)1, NULL);
 		// yield return new WaitForSeconds(GeneralSettings.TimeForShakeForInstruments);
@@ -20232,7 +20242,7 @@ IL_0017:
 		NullCheck(L_18);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_19 = L_18->___GeneralSettings_14;
 		NullCheck(L_19);
-		float L_20 = L_19->___TimeForShakeForInstruments_20;
+		float L_20 = L_19->___TimeForShakeForInstruments_22;
 		WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* L_21 = (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3*)il2cpp_codegen_object_new(WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
 		NullCheck(L_21);
 		WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC(L_21, L_20, NULL);
@@ -20317,7 +20327,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AudioManager_Start_m3C0FEAF19F58B6D28A9E
 		AudioSource_t871AC2272F896738252F04EE949AEF5B241D3299* L_1 = __this->___audiosourse_4;
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_2 = __this->___GeneralSettings_5;
 		NullCheck(L_2);
-		float L_3 = L_2->___AudioSourceVolume_UI_27;
+		float L_3 = L_2->___AudioSourceVolume_UI_29;
 		NullCheck(L_1);
 		AudioSource_set_volume_mD902BBDBBDE0E3C148609BF3C05096148E90F2C0(L_1, L_3, NULL);
 		// audiosourse.loop = false;
@@ -20846,7 +20856,7 @@ IL_001a:
 		AudioSource_t871AC2272F896738252F04EE949AEF5B241D3299* L_3 = __this->___audio_20;
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_4 = __this->___GeneralSettings_16;
 		NullCheck(L_4);
-		float L_5 = L_4->___AudioSourceVolume_crew_26;
+		float L_5 = L_4->___AudioSourceVolume_crew_28;
 		NullCheck(L_3);
 		AudioSource_set_volume_mD902BBDBBDE0E3C148609BF3C05096148E90F2C0(L_3, L_5, NULL);
 		// if (baseMaterial == null) baseMaterial = Highlighting.GetBaseMaterial(baseHighLight);
@@ -23687,12 +23697,12 @@ IL_0017:
 		NullCheck(L_11);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_12 = L_11->___GeneralSettings_16;
 		NullCheck(L_12);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13 = L_12->___StrenghtOfShakeOnHighlightingCrew_15;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13 = L_12->___StrenghtOfShakeOnHighlightingCrew_17;
 		CrewManager_t3BACB04B70CD03E1E0401519914C51D8412E2662* L_14 = V_1;
 		NullCheck(L_14);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_15 = L_14->___GeneralSettings_16;
 		NullCheck(L_15);
-		float L_16 = L_15->___TimeForShakeForCrew_16;
+		float L_16 = L_15->___TimeForShakeForCrew_18;
 		Tweener_tD38633F1A42EDF47A73CE3BF1894D946E830E140* L_17;
 		L_17 = ShortcutExtensions_DOPunchScale_m11086B1F15446E2DBD1BBED2FE1855DC12C05867(L_10, L_13, L_16, ((int32_t)10), (1.0f), NULL);
 		// yield return new WaitForSeconds(GeneralSettings.TimeForShakeForCrew);
@@ -23700,7 +23710,7 @@ IL_0017:
 		NullCheck(L_18);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_19 = L_18->___GeneralSettings_16;
 		NullCheck(L_19);
-		float L_20 = L_19->___TimeForShakeForCrew_16;
+		float L_20 = L_19->___TimeForShakeForCrew_18;
 		WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3* L_21 = (WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3*)il2cpp_codegen_object_new(WaitForSeconds_tF179DF251655B8DF044952E70A60DF4B358A3DD3_il2cpp_TypeInfo_var);
 		NullCheck(L_21);
 		WaitForSeconds__ctor_m579F95BADEDBAB4B3A7E302C6EE3995926EF2EFC(L_21, L_20, NULL);
@@ -24340,23 +24350,23 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GameManagement_Start_mA6380A0923C2ED19AD
 		// Screen.SetResolution(GeneralSettings.ScreenWidth, GeneralSettings.ScreenHeight, true);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_0 = __this->___GeneralSettings_4;
 		NullCheck(L_0);
-		int32_t L_1 = L_0->___ScreenWidth_11;
+		int32_t L_1 = L_0->___ScreenWidth_12;
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_2 = __this->___GeneralSettings_4;
 		NullCheck(L_2);
-		int32_t L_3 = L_2->___ScreenHeight_10;
+		int32_t L_3 = L_2->___ScreenHeight_11;
 		Screen_SetResolution_m10750EEAE9DB2D7513D0A7882CB7A4A18CD35249(L_1, L_3, (bool)1, NULL);
 		// Camera.main.aspect = GeneralSettings.AspectRatio;
 		Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* L_4;
 		L_4 = Camera_get_main_mF222B707D3BF8CC9C7544609EFC71CFB62E81D43(NULL);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_5 = __this->___GeneralSettings_4;
 		NullCheck(L_5);
-		float L_6 = L_5->___AspectRatio_12;
+		float L_6 = L_5->___AspectRatio_13;
 		NullCheck(L_4);
 		Camera_set_aspect_m537F21B48FDD5C060DFF9D87F34F4FB2B0F9BEB6(L_4, L_6, NULL);
 		// Application.targetFrameRate = GeneralSettings.targetFrameRate;
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_7 = __this->___GeneralSettings_4;
 		NullCheck(L_7);
-		int32_t L_8 = L_7->___targetFrameRate_13;
+		int32_t L_8 = L_7->___targetFrameRate_14;
 		Application_set_targetFrameRate_m794A13DC5116C506B042663606691257CF3A7325(L_8, NULL);
 		// STORAGE = GameObject.Find("pool objects").transform;
 		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_9;
@@ -24371,7 +24381,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GameManagement_Start_mA6380A0923C2ED19AD
 		// levelDesign(GeneralSettings.CurrentLevel);
 		settings_tC9833CB3340ADAC639AC479A59FA12485CBF9486* L_11 = __this->___GeneralSettings_4;
 		NullCheck(L_11);
-		int32_t L_12 = L_11->___CurrentLevel_14;
+		int32_t L_12 = L_11->___CurrentLevel_15;
 		GameManagement_levelDesign_m72A80C163E5D2767773E693028DECD64C5EAA0D9(__this, L_12, NULL);
 		// }
 		return;

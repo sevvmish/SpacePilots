@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class UIManager : MonoBehaviour
     private GameObject uiMark;
     private RectTransform uiMarkRect;
     private Vector3 OnScreenPosition;
-
+    private UIPanelTypes currentUIPanelType;
     private Transform UIPositionPoint;
 
     private MakeActiveInTimer blinker;
@@ -18,9 +19,12 @@ public class UIManager : MonoBehaviour
     float scaleKoeff;
     //==================
 
+
+
     public UIManager(Transform _UIPositionPoint, UIPanelTypes whatTypeOfPanel, UIIconTypes whatTypeOfSprite, Color backColor, Color iconColor)
     {
         UIPositionPoint = _UIPositionPoint;
+        currentUIPanelType = whatTypeOfPanel;
 
         uiMark = Instantiate(GetUIPrefab(whatTypeOfPanel), GameObject.Find("MainCanvas").transform);
         uiMark.transform.GetChild(1).GetComponent<Image>().sprite = GetUIIconSprite(whatTypeOfSprite);
@@ -31,6 +35,16 @@ public class UIManager : MonoBehaviour
 
         blinker = uiMark.GetComponent<MakeActiveInTimer>();
         blinker.enabled = false;
+    }
+
+    public UIManager(Transform _UIPositionPoint, UIPanelTypes whatTypeOfPanel)
+    {
+        UIPositionPoint = _UIPositionPoint;
+        currentUIPanelType = whatTypeOfPanel;
+
+        uiMark = Instantiate(GetUIPrefab(whatTypeOfPanel), GameObject.Find("MainCanvas").transform);        
+        uiMarkRect = uiMark.GetComponent<RectTransform>();
+        uiMarkRect.gameObject.SetActive(false);                
     }
 
     public bool IsBlinking
@@ -104,6 +118,31 @@ public class UIManager : MonoBehaviour
     private void UpdateUIPosition(Camera camera)
     {
         OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
+        
+        switch(currentUIPanelType)
+        {
+            case UIPanelTypes.alert_mark:
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
+                break;
+
+            case UIPanelTypes.health_bar :
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
+                break;
+
+            case UIPanelTypes.information_mark :
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
+                break;
+
+            case UIPanelTypes.level_data_stars:
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y);
+                break;
+
+            case UIPanelTypes.progress_bar:
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
+                break;
+
+        }
+        
         uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
     }
 
@@ -118,6 +157,7 @@ public class UIManager : MonoBehaviour
         if (!uiMarkRect.gameObject.activeSelf)
         {
             GameManagement.MainUIHandler += UpdateUIPosition;
+            MenuManagement.MainUIHandler += UpdateUIPosition;
             uiMarkRect.gameObject.SetActive(true);
         }
     }
@@ -130,6 +170,7 @@ public class UIManager : MonoBehaviour
         }
 
         GameManagement.MainUIHandler -= UpdateUIPosition;
+        MenuManagement.MainUIHandler -= UpdateUIPosition;
     }
 
     public void ChangeScale(float koeff)
@@ -143,6 +184,41 @@ public class UIManager : MonoBehaviour
     {
         uiMarkRect.DOShakeScale(_time, Vector3.one * scaleKoeff);
         //uiMarkRect.DOPunchScale(Vector3.one * scaleKoeff, _time);
+    }
+
+    public void SetLevelNumber(int number)
+    {
+        uiMark.transform.GetChild(9).GetComponent<TextMeshProUGUI>().text = number.ToString();
+    }
+
+    public void SetStarsForLevelData(int howManyStars)
+    {
+        switch(howManyStars)
+        {
+            case 0:
+                uiMark.transform.GetChild(5).gameObject.SetActive(false);
+                uiMark.transform.GetChild(6).gameObject.SetActive(false);
+                uiMark.transform.GetChild(7).gameObject.SetActive(false);
+                break;
+
+            case 1:
+                uiMark.transform.GetChild(5).gameObject.SetActive(true);
+                uiMark.transform.GetChild(6).gameObject.SetActive(false);
+                uiMark.transform.GetChild(7).gameObject.SetActive(false);
+                break;
+
+            case 2:
+                uiMark.transform.GetChild(5).gameObject.SetActive(true);
+                uiMark.transform.GetChild(6).gameObject.SetActive(true);
+                uiMark.transform.GetChild(7).gameObject.SetActive(false);
+                break;
+
+            case 3:
+                uiMark.transform.GetChild(5).gameObject.SetActive(true);
+                uiMark.transform.GetChild(6).gameObject.SetActive(true);
+                uiMark.transform.GetChild(7).gameObject.SetActive(true);
+                break;
+        }
     }
 
 
@@ -220,6 +296,10 @@ public class UIManager : MonoBehaviour
 
             case UIPanelTypes.alert_mark:
                 result = Resources.Load<GameObject>("prefabs/UI/alert mark");
+                break;
+
+            case UIPanelTypes.level_data_stars:
+                result = Resources.Load<GameObject>("prefabs/UI/level data stars");
                 break;
         }
 

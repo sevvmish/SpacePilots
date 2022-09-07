@@ -37,10 +37,10 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _fresnel_koeff: -3
-    - _koeff: 0.7
+    - _koeff: 0.6
     - _multi: 0.3
     m_Colors:
-    - _Color: {r: 2.996078, g: 2.384314, b: 0, a: 0}
+    - _Color: {r: 1.4980392, g: 1.2, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5651926414725573761
 MonoBehaviour:

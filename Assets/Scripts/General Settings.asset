@@ -16,13 +16,1019 @@ MonoBehaviour:
   ScreenWidth: 1280
   AspectRatio: 2
   targetFrameRate: 60
+  CurrentLevel: 1
+  CurrentStars: 0
   StrenghtOfShakeOnHighlightingCrew: {x: 0.6, y: 0.15, z: 0.6}
   TimeForShakeForCrew: 0.5
   StrenghtOfShakeOnHighlightingFacility: {x: 0.6, y: 0.3, z: 0.6}
   TimeForShakeForFacility: 0.5
   StrenghtOfShakeOnHighlightingInstruments: {x: 0.6, y: 0.3, z: 0.6}
   TimeForShakeForInstruments: 0.5
+  StrenghtOfShakeOnHighlightingSupply: {x: 1, y: 0.6, z: 1}
+  TimeForShakeForSupply: 0.3
+  BaseBloomIntensityColor: 1.5
   AudioSourceVolume_incidents: 0.2
   AudioSourceVolume_instruments: 0.5
   AudioSourceVolume_crew: 0.5
   AudioSourceVolume_UI: 1
+  GameLevelsData:
+  - LevelNumber: 0
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 1
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 3
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 4
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 5
+    LevelName: 
+    StarsRequiredToEnter: 12
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 6
+    LevelName: 
+    StarsRequiredToEnter: 12
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 7
+    LevelName: 
+    StarsRequiredToEnter: 12
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 8
+    LevelName: 
+    StarsRequiredToEnter: 17
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 9
+    LevelName: 
+    StarsRequiredToEnter: 17
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 10
+    LevelName: 
+    StarsRequiredToEnter: 22
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0
+  - LevelNumber: 2
+    LevelName: 
+    StarsRequiredToEnter: 0
+    CurrentStarsProgress: 0
+    IsVisited: 0

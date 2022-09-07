@@ -142,7 +142,9 @@ public enum UIPanelTypes
     progress_bar,
     information_mark,
     health_bar,
-    alert_mark
+    alert_mark,
+    level_data_stars
+
 }
 
 public enum UIIconTypes
