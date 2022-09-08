@@ -13,7 +13,7 @@ public class MenuManagement : MonoBehaviour
     private Ray ray;
     private RaycastHit hit;
     private Sequence sequence;
-    private float shipSpeed = 0.7f;
+    private float shipSpeed = 0.5f;
 
     private bool isEngineEffectActive;
 

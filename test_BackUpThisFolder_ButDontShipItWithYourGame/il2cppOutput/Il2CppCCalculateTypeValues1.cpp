@@ -5611,14 +5611,14 @@ struct Sys_tF1509C5BE227A6095F81FBF4DEEBB0A97F4C63B6  : public RuntimeObject
 {
 };
 
-// LevelMenuManager/<playHighlightEffect>d__19
-struct U3CplayHighlightEffectU3Ed__19_tFAA26E09BF74EC23DAB0B4D111E1970FE96CA14F  : public RuntimeObject
+// LevelMenuManager/<playHighlightEffect>d__20
+struct U3CplayHighlightEffectU3Ed__20_t41CAE5811BF4C16C70DABEAEC51178C4F7B2419D  : public RuntimeObject
 {
-	// System.Int32 LevelMenuManager/<playHighlightEffect>d__19::<>1__state
+	// System.Int32 LevelMenuManager/<playHighlightEffect>d__20::<>1__state
 	int32_t ___U3CU3E1__state_0;
-	// System.Object LevelMenuManager/<playHighlightEffect>d__19::<>2__current
+	// System.Object LevelMenuManager/<playHighlightEffect>d__20::<>2__current
 	RuntimeObject* ___U3CU3E2__current_1;
-	// LevelMenuManager LevelMenuManager/<playHighlightEffect>d__19::<>4__this
+	// LevelMenuManager LevelMenuManager/<playHighlightEffect>d__20::<>4__this
 	LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5* ___U3CU3E4__this_2;
 };
 
@@ -18886,14 +18886,16 @@ struct LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5  : public Mono
 	float ___cur_time_11;
 	// System.Single LevelMenuManager::maxLight
 	float ___maxLight_12;
+	// System.Single LevelMenuManager::highlightEffect
+	float ___highlightEffect_13;
 	// System.Boolean LevelMenuManager::isON
-	bool ___isON_13;
+	bool ___isON_14;
 	// System.Boolean LevelMenuManager::isHighlightEffectInProcess
-	bool ___isHighlightEffectInProcess_14;
+	bool ___isHighlightEffectInProcess_15;
 	// System.Boolean LevelMenuManager::isLevelStarsShown
-	bool ___isLevelStarsShown_15;
+	bool ___isLevelStarsShown_16;
 	// UIManager LevelMenuManager::levelUIstars
-	UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* ___levelUIstars_16;
+	UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* ___levelUIstars_17;
 };
 
 // Unity.AI.Navigation.Samples.LocalNavMeshBuilder
@@ -18959,16 +18961,14 @@ struct MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9  : public MonoBe
 	float ___shipSpeed_10;
 	// System.Boolean MenuManagement::isEngineEffectActive
 	bool ___isEngineEffectActive_11;
-	// TMPro.TextMeshProUGUI MenuManagement::test
-	TextMeshProUGUI_t101091AF4B578BB534C92E9D1EEAF0611636D957* ___test_12;
 	// UIManager MenuManagement::levelUI
-	UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* ___levelUI_14;
+	UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* ___levelUI_13;
 };
 
 struct MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9_StaticFields
 {
 	// MenuManagement/BaseUIHandler MenuManagement::MainUIHandler
-	BaseUIHandler_t130DDD1489F5FF07AB704C3D5F511CC3CB01C7BE* ___MainUIHandler_13;
+	BaseUIHandler_t130DDD1489F5FF07AB704C3D5F511CC3CB01C7BE* ___MainUIHandler_12;
 };
 
 // Unity.AI.Navigation.Samples.MeshTool
@@ -21157,7 +21157,7 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize5592 = { sizeof(Languages_t3
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5593;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize5593 = { sizeof(localization_tB74593EE6F848A5F947B998C792EF6B0099B8F06), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5594;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize5594 = { sizeof(U3CplayHighlightEffectU3Ed__19_tFAA26E09BF74EC23DAB0B4D111E1970FE96CA14F), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize5594 = { sizeof(U3CplayHighlightEffectU3Ed__20_t41CAE5811BF4C16C70DABEAEC51178C4F7B2419D), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5595;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize5595 = { sizeof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5596;

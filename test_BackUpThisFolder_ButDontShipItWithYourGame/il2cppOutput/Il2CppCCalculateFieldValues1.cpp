@@ -8533,14 +8533,14 @@ struct U3CU3Ec_tA740A8D6DF3EABD2FC61E867744D9F8E4E8CCC94_StaticFields
 	Func_2_t49236B9EA14C72C8FFE252C9FA0F309EB5CA6DB5* ___U3CU3E9__8_0_8;
 };
 
-// LevelMenuManager/<playHighlightEffect>d__19
-struct U3CplayHighlightEffectU3Ed__19_tFAA26E09BF74EC23DAB0B4D111E1970FE96CA14F  : public RuntimeObject
+// LevelMenuManager/<playHighlightEffect>d__20
+struct U3CplayHighlightEffectU3Ed__20_t41CAE5811BF4C16C70DABEAEC51178C4F7B2419D  : public RuntimeObject
 {
-	// System.Int32 LevelMenuManager/<playHighlightEffect>d__19::<>1__state
+	// System.Int32 LevelMenuManager/<playHighlightEffect>d__20::<>1__state
 	int32_t ___U3CU3E1__state_0;
-	// System.Object LevelMenuManager/<playHighlightEffect>d__19::<>2__current
+	// System.Object LevelMenuManager/<playHighlightEffect>d__20::<>2__current
 	RuntimeObject* ___U3CU3E2__current_1;
-	// LevelMenuManager LevelMenuManager/<playHighlightEffect>d__19::<>4__this
+	// LevelMenuManager LevelMenuManager/<playHighlightEffect>d__20::<>4__this
 	LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5* ___U3CU3E4__this_2;
 };
 
@@ -36453,14 +36453,16 @@ struct LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5  : public Mono
 	float ___cur_time_11;
 	// System.Single LevelMenuManager::maxLight
 	float ___maxLight_12;
+	// System.Single LevelMenuManager::highlightEffect
+	float ___highlightEffect_13;
 	// System.Boolean LevelMenuManager::isON
-	bool ___isON_13;
+	bool ___isON_14;
 	// System.Boolean LevelMenuManager::isHighlightEffectInProcess
-	bool ___isHighlightEffectInProcess_14;
+	bool ___isHighlightEffectInProcess_15;
 	// System.Boolean LevelMenuManager::isLevelStarsShown
-	bool ___isLevelStarsShown_15;
+	bool ___isLevelStarsShown_16;
 	// UIManager LevelMenuManager::levelUIstars
-	UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* ___levelUIstars_16;
+	UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* ___levelUIstars_17;
 };
 
 // UnityEngine.U2D.Light2DBase
@@ -36533,16 +36535,14 @@ struct MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9  : public MonoBe
 	float ___shipSpeed_10;
 	// System.Boolean MenuManagement::isEngineEffectActive
 	bool ___isEngineEffectActive_11;
-	// TMPro.TextMeshProUGUI MenuManagement::test
-	TextMeshProUGUI_t101091AF4B578BB534C92E9D1EEAF0611636D957* ___test_12;
 	// UIManager MenuManagement::levelUI
-	UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* ___levelUI_14;
+	UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* ___levelUI_13;
 };
 
 struct MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9_StaticFields
 {
 	// MenuManagement/BaseUIHandler MenuManagement::MainUIHandler
-	BaseUIHandler_t130DDD1489F5FF07AB704C3D5F511CC3CB01C7BE* ___MainUIHandler_13;
+	BaseUIHandler_t130DDD1489F5FF07AB704C3D5F511CC3CB01C7BE* ___MainUIHandler_12;
 };
 
 // ObjectPooling
@@ -45433,13 +45433,13 @@ IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5593[1] =
 	static_cast<int32_t>(offsetof(localization_tB74593EE6F848A5F947B998C792EF6B0099B8F06, ___LoginText_0)),};
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5594[3] = 
 {
-	static_cast<int32_t>(offsetof(U3CplayHighlightEffectU3Ed__19_tFAA26E09BF74EC23DAB0B4D111E1970FE96CA14F, ___U3CU3E1__state_0)),static_cast<int32_t>(offsetof(U3CplayHighlightEffectU3Ed__19_tFAA26E09BF74EC23DAB0B4D111E1970FE96CA14F, ___U3CU3E2__current_1)),static_cast<int32_t>(offsetof(U3CplayHighlightEffectU3Ed__19_tFAA26E09BF74EC23DAB0B4D111E1970FE96CA14F, ___U3CU3E4__this_2)),};
-IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5595[13] = 
+	static_cast<int32_t>(offsetof(U3CplayHighlightEffectU3Ed__20_t41CAE5811BF4C16C70DABEAEC51178C4F7B2419D, ___U3CU3E1__state_0)),static_cast<int32_t>(offsetof(U3CplayHighlightEffectU3Ed__20_t41CAE5811BF4C16C70DABEAEC51178C4F7B2419D, ___U3CU3E2__current_1)),static_cast<int32_t>(offsetof(U3CplayHighlightEffectU3Ed__20_t41CAE5811BF4C16C70DABEAEC51178C4F7B2419D, ___U3CU3E4__this_2)),};
+IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5595[14] = 
 {
-	static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___LevelNumber_4)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___GeneralSettings_5)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___timeToShine_6)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___timeToOff_7)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___mesh_8)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___material_9)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___color_10)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___cur_time_11)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___maxLight_12)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___isON_13)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___isHighlightEffectInProcess_14)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___isLevelStarsShown_15)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___levelUIstars_16)),};
-IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5597[11] = 
+	static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___LevelNumber_4)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___GeneralSettings_5)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___timeToShine_6)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___timeToOff_7)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___mesh_8)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___material_9)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___color_10)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___cur_time_11)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___maxLight_12)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___highlightEffect_13)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___isON_14)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___isHighlightEffectInProcess_15)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___isLevelStarsShown_16)),static_cast<int32_t>(offsetof(LevelMenuManager_tF6BDB1EB50232D57D666B5CB913AE9B1282F14C5, ___levelUIstars_17)),};
+IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5597[10] = 
 {
-	static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___GeneralSettings_4)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___mainCam_5)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___mainShip_6)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___ray_7)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___hit_8)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___sequence_9)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___shipSpeed_10)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___isEngineEffectActive_11)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___test_12)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9_StaticFields, ___MainUIHandler_13)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___levelUI_14)),};
+	static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___GeneralSettings_4)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___mainCam_5)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___mainShip_6)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___ray_7)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___hit_8)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___sequence_9)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___shipSpeed_10)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___isEngineEffectActive_11)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9_StaticFields, ___MainUIHandler_12)),static_cast<int32_t>(offsetof(MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9, ___levelUI_13)),};
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable5599[12] = 
 {
 	static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___AllMonitorsAndElectrics_4)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___ShipReactors_5)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___ShipEngines_6)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___MovingEffects_7)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___limitAmountOfCrew_8)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___pointsOfCrewResp_9)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___DefaultPointOfCrewResp_10)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___mainShipTransform_11)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___shipHealth_12)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___EnginesProductivity_13)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___shipSpeed_14)),static_cast<int32_t>(offsetof(ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646, ___energy_15)),};

@@ -16,6 +16,7 @@ public class LevelMenuManager : MonoBehaviour
     private Color color;
     private float cur_time;
     private float maxLight = 2;
+    private float highlightEffect = 0.5f;
     private bool isON, isHighlightEffectInProcess, isLevelStarsShown;
 
 
@@ -67,6 +68,7 @@ public class LevelMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (!isLevelStarsShown)
         {
             if (cur_time > timeToOff)
@@ -80,13 +82,13 @@ public class LevelMenuManager : MonoBehaviour
                 if (IsON) IsON = false;
             }
         }
-        
+        */
         
     }
 
     public void PlayHighlight()
     {
-        if (!isHighlightEffectInProcess)
+        if (!isHighlightEffectInProcess && !isLevelStarsShown)
         {
             StartCoroutine(playHighlightEffect());
         }
@@ -95,8 +97,8 @@ public class LevelMenuManager : MonoBehaviour
     private IEnumerator playHighlightEffect()
     {
         isHighlightEffectInProcess = true;
-        transform.DOPunchScale(Vector3.one, 1.5f);
-        yield return new WaitForSeconds(1.5f);
+        transform.DOPunchScale(Vector3.one, highlightEffect);
+        yield return new WaitForSeconds(highlightEffect);
         isHighlightEffectInProcess = false;
     }
 
