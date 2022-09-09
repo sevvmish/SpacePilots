@@ -10869,8 +10869,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MenuManagement_OnApplicationQuit_mA92FB5
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MenuManagement__ctor_mA9579EA349FF34C1956189FCD5C2AF4B714F7E13 (MenuManagement_t70DF8860F2FDB5A3EC8971B5D6FF130B46999EC9* __this, const RuntimeMethod* method) 
 {
 	{
-		// private float shipSpeed = 0.7f;
-		__this->___shipSpeed_10 = (0.699999988f);
+		// private float shipSpeed = 0.5f;
+		__this->___shipSpeed_10 = (0.5f);
 		MonoBehaviour__ctor_m592DB0105CA0BC97AA1C5F4AD27B12D68A3B7C1E(__this, NULL);
 		return;
 	}
