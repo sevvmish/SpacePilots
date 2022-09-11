@@ -20,10 +20,12 @@ public class Languages : MonoBehaviour
 public class localization
 {
     public string LoginText = "ENTER";
+    public string PlayText = "PLAY";
 
     public void Rus()
     {
         LoginText = "¬Œ…“»";
+        PlayText = "»√–¿“‹";
     }
     
 }

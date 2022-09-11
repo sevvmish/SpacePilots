@@ -16,7 +16,7 @@ public class GameManagement : MonoBehaviour
     [SerializeField] private AudioManager audio;
     [SerializeField] private Light directionalLight;
     [SerializeField] private Joystick joystick;
-    
+    [SerializeField] private Material screenEffect;
 
     //colors for directional light
     private Color currentDirectionalLightColor;
@@ -75,7 +75,9 @@ public class GameManagement : MonoBehaviour
         //init highlight and audio listener
         InitHighlightPlayer();
         levelDesign(GeneralSettings.CurrentLevel);
-                
+
+        makeScreenOn();
+
     }
 
     // Update is called once per frame
@@ -160,7 +162,26 @@ public class GameManagement : MonoBehaviour
         if (MainUIHandler != null) MainUIHandler(mainCam);
     }
 
-   
+    public void makeScreenOff()
+    {
+        GameObject.Find("screen effect canvas").transform.GetChild(0).gameObject.SetActive(true);
+        screenEffect.DOFloat(0, "_slider", 0);
+        screenEffect.DOFloat(1, "_slider", 1);
+    }
+
+    public void makeScreenOn()
+    {
+        GameObject.Find("screen effect canvas").transform.GetChild(0).gameObject.SetActive(true);
+        screenEffect.DOFloat(1, "_slider", 0);
+        screenEffect.DOFloat(0, "_slider", 1);
+        Invoke("ScreenObjectOff", 1);
+    }
+
+    public void ScreenObjectOff()
+    {
+        GameObject.Find("screen effect canvas").transform.GetChild(0).gameObject.SetActive(false);
+    }
+
     private void AddCrewMember(CrewSpecialization _spec, Vector3 location)
     {
         GameObject player = Instantiate(CrewManager.GetCrewPrefab(_spec), location, Quaternion.Euler(0, 0, 0), GameObject.Find("SpaceShip").transform);

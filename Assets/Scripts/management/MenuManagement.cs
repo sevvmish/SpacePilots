@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
 
 public class MenuManagement : MonoBehaviour
 {
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private Camera mainCam;
     [SerializeField] private Transform mainShip;
+    [SerializeField] private Material screenEffect;
 
     private Ray ray;
     private RaycastHit hit;
@@ -16,11 +18,14 @@ public class MenuManagement : MonoBehaviour
     private float shipSpeed = 0.5f;
 
     private bool isEngineEffectActive;
+    private AudioSource audio, shipAudio;
+    private AudioClip goodClick, negativeClick, openAudio;
 
     //crew UI delegates
     public delegate void BaseUIHandler(Camera camera);
     public static BaseUIHandler MainUIHandler;
-
+    public static LevelMenuManager currentLevel;
+    private HashSet<LevelMenuManager> nearLevel = new HashSet<LevelMenuManager>();
     private UIManager levelUI;
 
     // Start is called before the first frame update
@@ -34,13 +39,19 @@ public class MenuManagement : MonoBehaviour
 #if (UNITY_EDITOR)
         Camera.main.aspect = 16f/9f;
 #endif
+        audio = GetComponent<AudioSource>();
+        goodClick = Resources.Load<AudioClip>("audio/sounds/bonus sound short");
+        negativeClick = Resources.Load<AudioClip>("audio/sounds/negative click");
+        openAudio = Resources.Load<AudioClip>("audio/sounds/grab something");
 
         if (SaveLoad.isDataSaved())
         {
             GeneralSettings.GameLevelsData = SaveLoad.Load();
         }
 
+        makeScreenOn();
 
+        shipAudio = mainShip.GetChild(0).transform.GetChild(0).GetComponent<AudioSource>();
         turnOffEngineEffect();
     }
 
@@ -60,9 +71,30 @@ public class MenuManagement : MonoBehaviour
                     sequence.Append(mainShip.DOMove(hit.point, Vector3.Distance(hit.point, mainShip.position) * shipSpeed));
                     sequence.Join(mainShip.DOLookAt(hit.point, 0.3f));
                     
-                    if (hit.collider.CompareTag("Supply"))
+                    if (hit.collider.TryGetComponent(out LevelMenuManager _level))
                     {
-                        hit.collider.GetComponent<LevelMenuManager>().PlayHighlight();
+                        if (currentLevel != _level)
+                        {
+                            currentLevel?.StopHighlight();
+                            _level.PlayHighlight();
+                            currentLevel = _level;
+                        }
+                            
+                        if (GeneralSettings.GameLevelsData[_level.LevelNumber].StarsRequiredToEnter > GeneralSettings.CurrentStars)
+                        {
+                            audio.clip = negativeClick;
+                            audio.Play();
+                        }
+                        else
+                        {
+                            audio.clip = goodClick;
+                            audio.Play();
+                        }
+                    }
+                    else
+                    {
+                        currentLevel?.StopHighlight();
+                        currentLevel = null;
                     }
 
                 }
@@ -95,14 +127,54 @@ public class MenuManagement : MonoBehaviour
         if (MainUIHandler != null) MainUIHandler(mainCam);
     }
 
+    public void PlayGoodClick()
+    {
+        audio.clip = goodClick;
+        audio.Play();
+    }
+
+    public void PlayNegativeClick()
+    {
+        audio.clip = negativeClick;
+        audio.Play();
+    }
+
+    public void PlayOpenClick()
+    {
+        audio.clip = openAudio;
+        audio.Play();
+    }
+
+    public void makeScreenOff()
+    {
+        GameObject.Find("screen effect canvas").transform.GetChild(0).gameObject.SetActive(true);
+        screenEffect.DOFloat(0, "_slider", 0);
+        screenEffect.DOFloat(1, "_slider", 1);
+    }
+
+    public void makeScreenOn()
+    {
+        GameObject.Find("screen effect canvas").transform.GetChild(0).gameObject.SetActive(true);
+        screenEffect.DOFloat(1, "_slider", 0);
+        screenEffect.DOFloat(0, "_slider", 1);
+        Invoke("ScreenObjectOff", 1);
+    }
+
+    public void ScreenObjectOff()
+    {
+        GameObject.Find("screen effect canvas").transform.GetChild(0).gameObject.SetActive(false);
+    }
+
     private void turnOnEngineEffect()
     {
+        shipAudio.Play();
         isEngineEffectActive = true;
         mainShip.GetChild(0).transform.GetChild(0).transform.DOScale(Vector3.one, 0.3f);
     }
 
     private void turnOffEngineEffect()
     {
+        shipAudio.Stop();
         isEngineEffectActive = false;
         mainShip.GetChild(0).transform.GetChild(0).transform.DOScale(Vector3.zero, 0.3f);
     }
@@ -111,5 +183,6 @@ public class MenuManagement : MonoBehaviour
     {
         SaveLoad.Save(GeneralSettings.GameLevelsData);
     }
+        
 
 }

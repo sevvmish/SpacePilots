@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelMenuManager : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class LevelMenuManager : MonoBehaviour
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private float timeToShine = 0.6f;
     [SerializeField] private float timeToOff = 0.5f;
+    [SerializeField] private MenuManagement menuManager;
 
     private MeshRenderer mesh;
     private Material material;
@@ -17,10 +20,11 @@ public class LevelMenuManager : MonoBehaviour
     private float cur_time;
     private float maxLight = 2;
     private float highlightEffect = 0.5f;
-    private bool isON, isHighlightEffectInProcess, isLevelStarsShown;
+    private bool isON, isShipCollided;
 
+    
 
-    private UIManager levelUIstars;
+    private UIManager levelUIstars, levelUISelect;
 
     public bool IsON
     {
@@ -59,71 +63,86 @@ public class LevelMenuManager : MonoBehaviour
         levelUIstars = new UIManager(transform, UIPanelTypes.level_data_stars);
         levelUIstars.HideUI();
 
-        if (GeneralSettings.GameLevelsData[LevelNumber] != null && GeneralSettings.GameLevelsData[LevelNumber].IsVisited)
+        
+
+        if (GeneralSettings.GameLevelsData[LevelNumber] != null)
         {
             OpenLevelStarsUI();
         }
+
+        Invoke("InitSelectableUI", 0.1f);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void InitSelectableUI()
     {
-        /*
-        if (!isLevelStarsShown)
+        levelUISelect = new UIManager(transform, UIPanelTypes.level_data_select);
+        levelUISelect.HideUI();
+        levelUISelect.SetPosition(150, 113);
+
+        levelUISelect.yesButton().onClick.AddListener(() =>
         {
-            if (cur_time > timeToOff)
-            {
-                cur_time = 0;
-                IsON = true;
-            }
-            else
-            {
-                cur_time += Time.deltaTime;
-                if (IsON) IsON = false;
-            }
-        }
-        */
-        
+            menuManager.PlayGoodClick();
+            menuManager.makeScreenOff();
+            UIManager.ResetHandlers();
+            Invoke("ChangeSceneToGame", 1);
+        });
+
+        levelUISelect.noButton().onClick.AddListener(() =>
+        {
+            menuManager.PlayNegativeClick();
+            levelUISelect.HideUI();
+        });
     }
 
-    public void PlayHighlight()
-    {
-        if (!isHighlightEffectInProcess && !isLevelStarsShown)
-        {
-            StartCoroutine(playHighlightEffect());
-        }
-    }
+    public void PlayHighlight() => levelUIstars.ShowHighLight();
+    public void StopHighlight() => levelUIstars.HideHighLight();
+
 
     private IEnumerator playHighlightEffect()
     {
-        isHighlightEffectInProcess = true;
+        //isHighlightEffectInProcess = true;
         transform.DOPunchScale(Vector3.one, highlightEffect);
         yield return new WaitForSeconds(highlightEffect);
-        isHighlightEffectInProcess = false;
+        //isHighlightEffectInProcess = false;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other!=null && other.CompareTag("Player"))
-        {
-            print(other.name);
-
-            if (GeneralSettings.GameLevelsData[LevelNumber] != null && !GeneralSettings.GameLevelsData[LevelNumber].IsVisited)
-            {                
-                OpenLevelStarsUI();
-
-                SaveLoad.Save(GeneralSettings.GameLevelsData);
-            }
-        }
-    }
-
+    
     private void OpenLevelStarsUI()
     {
         GeneralSettings.GameLevelsData[LevelNumber].IsVisited = true;
-        isLevelStarsShown = true;
         IsON = false;
-        levelUIstars.ShowUI();
-        levelUIstars.SetStarsForLevelData(GeneralSettings.GameLevelsData[LevelNumber].CurrentStarsProgress);
-        levelUIstars.SetLevelNumber(GeneralSettings.GameLevelsData[LevelNumber].LevelNumber);
+        levelUIstars.ShowUI(GeneralSettings.GameLevelsData[LevelNumber], GeneralSettings.CurrentStars);        
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!isShipCollided && MenuManagement.currentLevel == this && GeneralSettings.GameLevelsData[LevelNumber].StarsRequiredToEnter <= GeneralSettings.CurrentStars)
+        {
+            isShipCollided = true;            
+            levelUISelect.ShowUI();
+            menuManager.PlayOpenClick();
+            
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isShipCollided = false;
+        }
+
+        if (levelUISelect.isShown())
+        {
+            levelUISelect.HideUI();
+        }
+    }
+
+    private void ChangeSceneToGame()
+    {
+        
+        GeneralSettings.CurrentLevel = LevelNumber;
+        
+        SceneManager.LoadScene("GameScene");
     }
 }

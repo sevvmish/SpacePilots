@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
 
     private MakeActiveInTimer blinker;
 
+    private float positionDeltaX, positionDeltaY;
+
     float scaleKoeff;
     //==================
 
@@ -134,22 +136,32 @@ public class UIManager : MonoBehaviour
                 break;
 
             case UIPanelTypes.level_data_stars:
-                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y);
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
                 break;
 
             case UIPanelTypes.progress_bar:
                 uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
                 break;
 
+            case UIPanelTypes.level_data_select:               
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x + positionDeltaX, OnScreenPosition.y + positionDeltaY);
+                break;
+
         }
-        
-        uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
+       
     }
 
 
     public bool isShown()
     {
         return uiMarkRect.gameObject.activeSelf;
+    }
+
+    public static void ResetHandlers()
+    {
+        
+        GameManagement.MainUIHandler = null;
+        MenuManagement.MainUIHandler = null;
     }
 
     public void ShowUI()
@@ -186,41 +198,110 @@ public class UIManager : MonoBehaviour
         //uiMarkRect.DOPunchScale(Vector3.one * scaleKoeff, _time);
     }
 
-    public void SetLevelNumber(int number)
-    {
-        uiMark.transform.GetChild(9).GetComponent<TextMeshProUGUI>().text = number.ToString();
-    }
 
-    public void SetStarsForLevelData(int howManyStars)
+    public void ShowHighLight()
     {
-        switch(howManyStars)
+        switch (currentUIPanelType)
         {
-            case 0:
-                uiMark.transform.GetChild(5).gameObject.SetActive(false);
-                uiMark.transform.GetChild(6).gameObject.SetActive(false);
-                uiMark.transform.GetChild(7).gameObject.SetActive(false);
-                break;
-
-            case 1:
-                uiMark.transform.GetChild(5).gameObject.SetActive(true);
-                uiMark.transform.GetChild(6).gameObject.SetActive(false);
-                uiMark.transform.GetChild(7).gameObject.SetActive(false);
-                break;
-
-            case 2:
-                uiMark.transform.GetChild(5).gameObject.SetActive(true);
-                uiMark.transform.GetChild(6).gameObject.SetActive(true);
-                uiMark.transform.GetChild(7).gameObject.SetActive(false);
-                break;
-
-            case 3:
-                uiMark.transform.GetChild(5).gameObject.SetActive(true);
-                uiMark.transform.GetChild(6).gameObject.SetActive(true);
-                uiMark.transform.GetChild(7).gameObject.SetActive(true);
+            case UIPanelTypes.level_data_stars:
+                uiMark.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(true);
+                uiMark.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(true);
                 break;
         }
     }
 
+    public void HideHighLight()
+    {
+        switch (currentUIPanelType)
+        {
+            case UIPanelTypes.level_data_stars:
+                uiMark.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
+                uiMark.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
+                break;
+        }
+    }
+
+
+    public void ShowUI(levels _data, int currentStars)
+    {
+        if (!uiMarkRect.gameObject.activeSelf)
+        {
+            GameManagement.MainUIHandler += UpdateUIPosition;
+            MenuManagement.MainUIHandler += UpdateUIPosition;
+            uiMarkRect.gameObject.SetActive(true);
+        }
+
+        if (currentStars >= _data.StarsRequiredToEnter)
+        {
+            uiMark.transform.GetChild(0).gameObject.SetActive(true);
+            uiMark.transform.GetChild(1).gameObject.SetActive(false);
+            SetLevelNumber(_data.CurrentStarsProgress);
+            SetLevelNumber(_data.LevelNumber);
+        }
+        else
+        {
+            uiMark.transform.GetChild(0).gameObject.SetActive(false);
+            uiMark.transform.GetChild(1).gameObject.SetActive(true);
+            SetStarsNeeded(_data.StarsRequiredToEnter);
+        }
+    }
+
+    public void SetPosition(float x, float y)
+    {
+        positionDeltaX = x;
+        positionDeltaY = y;
+    }
+
+    public Button yesButton()
+    {
+        return uiMark.transform.GetChild(2).GetComponent<Button>();
+    }
+
+    public Button noButton()
+    {
+        return uiMark.transform.GetChild(3).GetComponent<Button>();
+    }
+
+    private void SetStarsNeeded(int number)
+    {
+        uiMark.transform.GetChild(1).transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = number.ToString();
+    }
+
+    private void SetLevelNumber(int number)
+    {
+        uiMark.transform.GetChild(0).transform.GetChild(8).GetComponent<TextMeshProUGUI>().text = number.ToString();
+    }
+
+    private void SetStarsForLevelData(int howManyStars)
+    {
+        switch(howManyStars)
+        {
+            case 0:
+                uiMark.transform.GetChild(0).transform.GetChild(4).gameObject.SetActive(false);
+                uiMark.transform.GetChild(0).transform.GetChild(5).gameObject.SetActive(false);
+                uiMark.transform.GetChild(0).transform.GetChild(6).gameObject.SetActive(false);
+                break;
+
+            case 1:
+                uiMark.transform.GetChild(0).transform.GetChild(4).gameObject.SetActive(true);
+                uiMark.transform.GetChild(0).transform.GetChild(5).gameObject.SetActive(false);
+                uiMark.transform.GetChild(0).transform.GetChild(6).gameObject.SetActive(false);
+                break;
+
+            case 2:
+                uiMark.transform.GetChild(0).transform.GetChild(4).gameObject.SetActive(true);
+                uiMark.transform.GetChild(0).transform.GetChild(5).gameObject.SetActive(true);
+                uiMark.transform.GetChild(0).transform.GetChild(6).gameObject.SetActive(false);
+                break;
+
+            case 3:
+                uiMark.transform.GetChild(0).transform.GetChild(4).gameObject.SetActive(true);
+                uiMark.transform.GetChild(0).transform.GetChild(5).gameObject.SetActive(true);
+                uiMark.transform.GetChild(0).transform.GetChild(6).gameObject.SetActive(true);
+                break;
+        }
+    }
+    
 
     public static Sprite GetUIIconSprite(UIIconTypes _panel)
     {
@@ -300,6 +381,10 @@ public class UIManager : MonoBehaviour
 
             case UIPanelTypes.level_data_stars:
                 result = Resources.Load<GameObject>("prefabs/UI/level data stars");
+                break;
+
+            case UIPanelTypes.level_data_select:
+                result = Resources.Load<GameObject>("prefabs/UI/menu data select");
                 break;
         }
 
