@@ -5,13 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider))]
 public class DamageDealer : MonoBehaviour
 {
-    [SerializeField] private float damageAmount;
-    [SerializeField] private NegativeEffects currentEffect;
+    private float damageAmount;
 
+    [SerializeField] private NegativeEffects currentEffect;
+    [SerializeField] private settings GeneralSettings;
 
     private Dictionary<GameObject, DamageData> objectsToDamage = new Dictionary<GameObject, DamageData>();
-    
 
+    private void OnEnable()
+    {
+        switch (currentEffect)
+        {
+            case NegativeEffects.burning:
+                damageAmount = GeneralSettings.FireDamageAmount;
+                break;
+
+            case NegativeEffects.poisoned:
+                damageAmount = GeneralSettings.PoisonDamageAmount;
+                break;
+        }
+    }
 
     public float GetDamageAmount()
     {
@@ -47,11 +60,12 @@ public class DamageDealer : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        
+        /*
         if (!objectsToDamage.ContainsKey(other.gameObject) && other.TryGetComponent(out IHealthDestroyable victim) && victim.IsDestroyable())
         {
             objectsToDamage.Add(other.gameObject, new DamageData(other.gameObject));
         }
+        */
 
         foreach (var key in objectsToDamage.Keys)
         {

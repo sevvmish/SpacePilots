@@ -211,7 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209bf8d1fc956bb41ab3c1ee05586a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
   isIncidentActive: 0
   whatInstrumentDealThisIncident: 1
   currentIncidentType: 1
@@ -235,8 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57192606eee2f44fb8cd08595864ab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 1
   currentEffect: 0
+  GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
 --- !u!82 &1005158078248861973
 AudioSource:
   m_ObjectHideFlags: 0

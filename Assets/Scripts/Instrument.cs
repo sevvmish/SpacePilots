@@ -196,7 +196,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     {
         //currentIncidentInAction = null;
 
-        if (other.TryGetComponent(out Incident currentIncident) && currentIncident.IncidentHealth > 0)
+        if (other.TryGetComponent(out Incident currentIncident) && currentIncident.IncidentHealth > 0 && !isCanBeTakenByCrew)
         {   
             if (!checkCurrentDealingWithIncident.ContainsKey(currentIncident))
             {

@@ -77,7 +77,7 @@ public class LevelMenuManager : MonoBehaviour
     {
         levelUISelect = new UIManager(transform, UIPanelTypes.level_data_select);
         levelUISelect.HideUI();
-        levelUISelect.SetPosition(150, 113);
+        levelUISelect.SetPositionOffset(150, 113);
 
         levelUISelect.yesButton().onClick.AddListener(() =>
         {

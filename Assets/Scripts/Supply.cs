@@ -32,6 +32,7 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
     //health bar UI
     private GameObject uiHealthBar;
     private RectTransform uiHealthBarRect;
+    private float deltaYUI;
     //=============
 
     private float modelAngle, health;
@@ -75,11 +76,14 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
         {
             baseMaterialsForHiglight.Add(baseRenderersForHiglight[i].material);
         }      
+
+
     }
 
 
     private void OnEnable()
     {
+        
         health = maxHealth;
 
         currentTransform = GetComponent<Transform>();
@@ -131,6 +135,8 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
 
     public void MakeThrownAway()
     {
+        deltaYUI = isDestroyable ? 0 : 20;
+
         currentTransform.rotation = Quaternion.Euler(Vector3.zero);
         currentTransform.localScale = Vector3.one;
         
@@ -176,7 +182,7 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
     {
         if (isCanBeTakenByCrew)
         {
-            //currentCollider.enabled = false;
+            deltaYUI = 20;
             isCanBeTakenByCrew = false;
             currentVisualTransform.localEulerAngles = modelStandartRotation;
             return gameObject;
@@ -234,7 +240,7 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
     {
         Health -= amount;
         //print(Health + " - supply");
-        UpdateUIHealthData();
+        
     }
 
     public void UpdateUIHealthData()
@@ -242,13 +248,19 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
         uiHealthBarRect.transform.GetChild(1).GetComponent<Image>().fillAmount = Health / maxHealth;
     }
 
+    private void OnDisable()
+    {
+        if (uiHealthBarRect != null) HideUI();
+    }
+
 
     public void UpdateUIPosition(Camera camera)
     {
         if (uiHealthBarRect.gameObject.activeSelf)
         {
-            OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
+            OnScreenPosition = isCanBeTakenByCrew ? camera.WorldToScreenPoint(UIPositionPoint.position) : camera.WorldToScreenPoint(currentTransform.position);
             uiHealthBarRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
+            UpdateUIHealthData();
         }
         else
         {

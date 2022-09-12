@@ -8,7 +8,7 @@ using DG.Tweening;
 [RequireComponent(typeof(SphereCollider))]
 public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
 {
-    public float maxHealth;
+    
     public bool isIncidentActive;
 
     [SerializeField] private InstrumentsType whatInstrumentDealThisIncident;
@@ -18,8 +18,9 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private AudioSource audiosource;
 
+    private float maxHealth;
     private Material baseMaterial;
-    private bool isHighlightEffectInProgress;
+    private bool isHighlightEffectInProgress, isInActivated;
     private float health;
     private int timesToShowHealthBar = 0;
 
@@ -41,6 +42,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
             if (value<0)
             {
                 health = 0;
+                isInActivated = true;
                 StartCoroutine(makeThisIncidentInactive());
             }
             else if(value >= maxHealth)
@@ -78,6 +80,18 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
         }
 
         timesToShowHealthBar = 0;
+
+        switch(currentIncidentType)
+        {
+            case IncidentsType.fire:
+                maxHealth = GeneralSettings.IncidentBaseHealth_fire * GeneralSettings.IncidentHealthKoeff_fire;
+                break;
+
+            case IncidentsType.simple_wreck:
+                maxHealth = GeneralSettings.IncidentBaseHealth_wreck * GeneralSettings.IncidentHealthKoeff_wreck;
+                break;
+        }
+
         health = maxHealth;
         isIncidentActive = true;
 
@@ -92,6 +106,15 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
         }        
     }
 
+
+    private void Update()
+    {
+        if (IncidentHealth < maxHealth && !isInActivated)
+        {
+            IncidentHealth += Time.deltaTime / 10f;
+        }
+    }
+
     public void SetMaxHealth(float max_health, float _health)
     {
         maxHealth = max_health;
@@ -100,7 +123,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
 
     public void InitUI()
     {        
-        uiProgressBar = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.progress_bar), GameObject.Find("MainCanvas").transform);
+        uiProgressBar = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.round_progress_bar), GameObject.Find("MainCanvas").transform);
         uiProgressBarRect = uiProgressBar.GetComponent<RectTransform>();
 
         uiProgressBarRect.gameObject.SetActive(false);
@@ -140,7 +163,8 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
         if (uiProgressBarRect.gameObject.activeSelf)
         {
             OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
-            uiProgressBarRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
+            uiProgressBarRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y);
+            UpdateUIHealthData();
         }   
         else
         {
@@ -174,6 +198,9 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
             case IncidentsType.poison_patch:
                 result = Resources.Load<GameObject>("prefabs/incidents/PoisonPatch");
                 break;
+            case IncidentsType.death:
+                result = Resources.Load<GameObject>("prefabs/incidents/death effect");
+                break;
         }
 
         return result;
@@ -184,7 +211,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
     {
         IncidentHealth -= amount;
         //print(IncidentHealth + " - incident");
-        UpdateUIHealthData();
+        
     }
 
 
@@ -203,8 +230,22 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
     public IEnumerator ShowUIBarWhileActive()
     {        
         isShowingUIBar = true;
-        ShowUI();
-        yield return new WaitForSeconds(2);
+       
+        
+
+        for (float i = 0; i < 2f; i+=0.1f)
+        {
+            ShowUI();
+
+            if (isInActivated)
+            {
+                HideUI();
+                yield break;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
         
         isShowingUIBar = false;
 

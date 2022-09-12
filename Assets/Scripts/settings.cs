@@ -31,6 +31,12 @@ public class settings : ScriptableObject
     //crew settings
     public Vector3 StrenghtOfShakeOnHighlightingCrew = new Vector3(0.6f, 0.15f, 0.6f);
     public float TimeForShakeForCrew = 0.5f;
+    public float CrewBaseSpeed = 5f;
+    public float CrewSpeedKoeff = 1f;
+    public float CrewBaseHealth = 10f;
+    public float CrewHealthKoeff = 1f;
+    public float CrewHealthRegenPerSecond = 0.1f;
+    public float CrewRespawnTime = 5f;
 
     //Facility settings
     public Vector3 StrenghtOfShakeOnHighlightingFacility = new Vector3(0.6f, 0.3f, 0.6f);
@@ -39,6 +45,16 @@ public class settings : ScriptableObject
     //instrument settings
     public Vector3 StrenghtOfShakeOnHighlightingInstruments = new Vector3(0.8f, 0.5f, 0.8f);
     public float TimeForShakeForInstruments = 0.4f;
+
+    //incident settings
+    public float IncidentBaseHealth_fire = 2f;
+    public float IncidentHealthKoeff_fire = 1f;
+    
+    public float IncidentBaseHealth_wreck = 2f;
+    public float IncidentHealthKoeff_wreck = 1f;
+
+    public float FireDamageAmount = 1f;
+    public float PoisonDamageAmount = 1f;
 
     //supply settings
     public Vector3 StrenghtOfShakeOnHighlightingSupply = new Vector3(1f, 0.6f, 1f);

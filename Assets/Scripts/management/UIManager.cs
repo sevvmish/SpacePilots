@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     //UI information mark
     private GameObject uiMark;
     private RectTransform uiMarkRect;
-    private Vector3 OnScreenPosition;
+    private Vector3 OnScreenPosition, newCoordsToChange = new Vector3(999,999,999);
     private UIPanelTypes currentUIPanelType;
     private Transform UIPositionPoint;
 
@@ -115,11 +115,24 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ChangePosition(Vector3 _position)
+    {
+        newCoordsToChange = _position;
+    }
 
 
     private void UpdateUIPosition(Camera camera)
     {
-        OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
+        if (newCoordsToChange == new Vector3(999,999,999))
+        {
+            OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
+        }
+        else
+        {
+            OnScreenPosition = camera.WorldToScreenPoint(newCoordsToChange);
+            newCoordsToChange = new Vector3(999, 999, 999);
+        }
+        
         
         switch(currentUIPanelType)
         {
@@ -147,6 +160,21 @@ public class UIManager : MonoBehaviour
                 uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x + positionDeltaX, OnScreenPosition.y + positionDeltaY);
                 break;
 
+            case UIPanelTypes.round_progress_bar:
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y);
+                break;
+
+            case UIPanelTypes.respawn_bar:
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y - 30);
+                break;
+
+            case UIPanelTypes.ok_green:
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
+                break;
+
+            case UIPanelTypes.no_red:
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
+                break;
         }
        
     }
@@ -162,6 +190,11 @@ public class UIManager : MonoBehaviour
         
         GameManagement.MainUIHandler = null;
         MenuManagement.MainUIHandler = null;
+    }
+
+    public void ShowTimeOnRespawnTimer(int number)
+    {
+        uiMark.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = number.ToString();
     }
 
     public void ShowUI()
@@ -246,7 +279,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SetPosition(float x, float y)
+    public void SetPositionOffset(float x, float y)
     {
         positionDeltaX = x;
         positionDeltaY = y;
@@ -385,6 +418,22 @@ public class UIManager : MonoBehaviour
 
             case UIPanelTypes.level_data_select:
                 result = Resources.Load<GameObject>("prefabs/UI/menu data select");
+                break;
+
+            case UIPanelTypes.round_progress_bar:
+                result = Resources.Load<GameObject>("prefabs/UI/round progress bar");
+                break;
+
+            case UIPanelTypes.respawn_bar:
+                result = Resources.Load<GameObject>("prefabs/UI/respawn timer");
+                break;
+
+            case UIPanelTypes.ok_green:
+                result = Resources.Load<GameObject>("prefabs/UI/OK");
+                break;
+
+            case UIPanelTypes.no_red:
+                result = Resources.Load<GameObject>("prefabs/UI/NO");
                 break;
         }
 

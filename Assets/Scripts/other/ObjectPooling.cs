@@ -13,7 +13,7 @@ public class ObjectPooling : MonoBehaviour
     
     //PUBLIC STATIC
     //incidents
-    public static ObjectPooling fireIncident_pool, simpleWreckIncident_pool, smokeAfterFire_pool, repairAfterWreck_pool, poisonPatchAfterBarrel_pool;
+    public static ObjectPooling fireIncident_pool, simpleWreckIncident_pool, smokeAfterFire_pool, repairAfterWreck_pool, poisonPatchAfterBarrel_pool, death_pool;
     //instruments
     public static ObjectPooling fireExtInstrument_pool, simpleRepairerInstrument_pool;
     //supply
@@ -26,6 +26,7 @@ public class ObjectPooling : MonoBehaviour
 
         //objectpooling 
         //incidents
+        death_pool = new ObjectPooling(size, Incident.GetIncidentPrefab(IncidentsType.death), _transform);
         fireIncident_pool = new ObjectPooling(size, Incident.GetIncidentPrefab(IncidentsType.fire), _transform);
         simpleWreckIncident_pool = new ObjectPooling(size, Incident.GetIncidentPrefab(IncidentsType.simple_wreck), _transform);
         smokeAfterFire_pool = new ObjectPooling(size, Incident.GetIncidentPrefab(IncidentsType.smoke_after_fire), _transform);
@@ -59,6 +60,10 @@ public class ObjectPooling : MonoBehaviour
 
             case IncidentsType.poison_patch:
                 incident = poisonPatchAfterBarrel_pool.GetObject();
+                break;
+
+            case IncidentsType.death:
+                incident = death_pool.GetObject();
                 break;
 
         }

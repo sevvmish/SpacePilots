@@ -60,7 +60,7 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
         //icon of overheating
 
         alertMark = new UIManager(UIPositionPoint, UIPanelTypes.alert_mark, UIIconTypes.radiation, Color.red, Color.white);
-        readyMark = new UIManager(UIPositionPoint, UIPanelTypes.information_mark, UIIconTypes.ok, Color.black, Color.white);
+        readyMark = new UIManager(UIPositionPoint, UIPanelTypes.ok_green);
 
         explosion.SetActive(false);
         EmptyRecharger();

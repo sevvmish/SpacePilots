@@ -1177,11 +1177,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b673d5ee169de84496bb7b1ff4531fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
   crewName: 
   crewSpec: 1
   crewState: 0
-  maxHealth: 10
-  maxSpeed: 6
   currentBaseTransform: {fileID: 5935403337018365864}
   currentModelTransform: {fileID: 2165839101111809852}
   UIPositionPoint: {fileID: 5133991696588073910}

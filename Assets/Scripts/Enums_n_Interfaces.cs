@@ -121,7 +121,8 @@ public enum IncidentsType
     smoke_after_fire,
     after_wreck,
     none,
-    poison_patch
+    poison_patch,
+    death
 }
 //===================================================================
 
@@ -144,7 +145,11 @@ public enum UIPanelTypes
     health_bar,
     alert_mark,
     level_data_stars,
-    level_data_select
+    level_data_select,
+    round_progress_bar,
+    respawn_bar,
+    ok_green,
+    no_red
 
 
 }

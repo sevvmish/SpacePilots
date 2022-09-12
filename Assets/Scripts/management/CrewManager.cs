@@ -6,6 +6,7 @@ using Unity.AI.Navigation;
 using UnityEngine.AI;
 using DG.Tweening;
 using UnityEngine.UI;
+using EZCameraShake;
 
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -13,17 +14,20 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Animator))]
 public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 {
+    public bool isDead;
+
     [SerializeField] private string crewName;
     [SerializeField] private CrewSpecialization crewSpec;
-    [SerializeField] private CrewMemberStates crewState;
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float maxSpeed;
+    [SerializeField] private CrewMemberStates crewState;    
     [SerializeField] private Transform currentBaseTransform, currentModelTransform, UIPositionPoint, Effects, baseHighLight, leftHand, rightHand;
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private Transform wrenchExample, hammerExample;
     [SerializeField] private AudioSource audio;
     [SerializeField] private bool isDestroyable = true;
+
+    private float maxHealth;
+    private float maxSpeed;
 
     private AudioClip grabSound, grabOff;
     private Material baseMaterial;
@@ -51,7 +55,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
     private GameObject uiHealthBar;
     private RectTransform uiHealthBarRect;
 
-    private UIManager whaaatMark;
+    private UIManager whaaatMark, respawnMark;
 
 
     public GameObject CurrentTakenObject
@@ -105,6 +109,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
             if (value < 0)
             {
                 health = 0;
+                if (!isDead) StartCoroutine(crewMemberKilled());
             }
             else if (value >= maxHealth)
             {
@@ -152,14 +157,17 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
     // Start is called before the first frame update
     void OnEnable()
-    {        
+    {
+        isDead = false;
+        
         if (audio == null) audio = GetComponent<AudioSource>();
         audio.volume = GeneralSettings.AudioSourceVolume_crew;
         if (baseMaterial == null) baseMaterial = Highlighting.GetBaseMaterial(baseHighLight);
 
+        maxHealth = GeneralSettings.CrewBaseHealth * GeneralSettings.CrewHealthKoeff;
         health = maxHealth;
         currentBaseTransform.position = pointOfRespawn;
-
+        currentModelTransform.gameObject.SetActive(true);
         PlaceOfDestination = null;
         PlaceOfCurrentLocation = null;
         currentTakenObject = null;
@@ -169,6 +177,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                 
 
         navAgent = GetComponent<NavMeshAgent>();
+        maxSpeed = GeneralSettings.CrewBaseSpeed * GeneralSettings.CrewSpeedKoeff;
         Speed = maxSpeed;
         navAgent.speed = maxSpeed;
         currentBaseTransform = transform;
@@ -182,7 +191,38 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         DeactivateAnyHandsInstruments();
 
         whaaatMark = new UIManager(UIPositionPoint, UIPanelTypes.information_mark, UIIconTypes.whaaat, new Color(0,0,0,0), Color.white);
-        whaaatMark.ChangeScale(1.2f);        
+        whaaatMark.ChangeScale(1.2f);
+        
+        respawnMark = new UIManager(UIPositionPoint, UIPanelTypes.respawn_bar);
+        respawnMark.HideUI();
+    }
+
+    private void restart()
+    {
+        isDead = false;
+        
+        maxHealth = GeneralSettings.CrewBaseHealth * GeneralSettings.CrewHealthKoeff;
+        health = maxHealth;
+        currentBaseTransform.position = pointOfRespawn;
+        currentModelTransform.gameObject.SetActive(true);
+        PlaceOfDestination = null;
+        PlaceOfCurrentLocation = null;
+        currentTakenObject = null;
+
+        damagingObjects.Clear();
+        activatedEffects.Clear();
+                        
+        maxSpeed = GeneralSettings.CrewBaseSpeed * GeneralSettings.CrewSpeedKoeff;
+        Speed = maxSpeed;
+        navAgent.speed = maxSpeed;
+        
+        crewState = CrewMemberStates.idle;
+        
+        animator.SetLayerWeight(1, 0);
+                
+        makeIdleAnimation();
+        DeactivateAnyHandsInstruments();
+
     }
 
     public void InitUI()
@@ -203,14 +243,18 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         else
         {
             GameManagement.MainUIHandler -= UpdateUIPosition;
-            print("!!!!!!!!!!!");
+            
         }
     }
 
     public void ShowUI()
     {
-        if (!uiHealthBarRect.gameObject.activeSelf) uiHealthBarRect.gameObject.SetActive(true);
-        GameManagement.MainUIHandler += UpdateUIPosition;
+        if (!uiHealthBarRect.gameObject.activeSelf)
+        {
+            uiHealthBarRect.gameObject.SetActive(true);
+            GameManagement.MainUIHandler += UpdateUIPosition;
+        }
+            
     }
 
     public void HideUI()
@@ -237,6 +281,14 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
     // Update is called once per frame
     void Update()
     {
+        if (!isDead)
+        {
+            if (Health < maxHealth)
+            {
+                Health += Time.deltaTime * GeneralSettings.CrewHealthRegenPerSecond;
+            }
+        }
+
         if (CurrentTakenObject != null && isTakenObjectDestroyable)
         {
             if (!CurrentTakenObject.activeSelf || CurrentTakenObject.GetComponent<IHealthDestroyable>().CurrentHealthAmount() <= 0)
@@ -288,7 +340,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         {
             
             Transform aim = CurrentTakenObject.GetComponent<Instrument>().GetCurrentIncidentInAction();
-            currentBaseTransform.LookAt(new Vector3(aim.position.x, 0, aim.position.z));
+            //currentBaseTransform.LookAt(new Vector3(aim.position.x, 0, aim.position.z));
                    
             switch((InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject())
             {
@@ -320,13 +372,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                     
     }
 
-    public void GetCorrectionForPosition(Vector3 pos)
-    {
-        //navAgent.destination += pos;
-        //currentBaseTransform.position += pos;
-        //navAgent.Warp(navAgent.nextPosition + pos);
-    }
-
+    
     public void MoveCrewMemberTo(Vector3 destination, GameObject _objectOfDestination) 
     {
        
@@ -363,13 +409,16 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
     {
         if (PlaceOfCurrentLocation != other.gameObject) PlaceOfCurrentLocation = other.gameObject;
                
-
-        if (PlaceOfCurrentLocation == PlaceOfDestination)
+        if (PlaceOfDestination!=null && PlaceOfCurrentLocation == PlaceOfDestination)
         {
+            if (CurrentTakenObject == null && (other.GetComponent<Incident>()!=null || other.GetComponent<FacilityConsumer>() != null))
+            {
+                StartCoroutine(PlayMarkOfWrongInteraction());
+            }
+
             if (other.TryGetComponent(out ITakenAndMovable canBeTaken) && canBeTaken.IsCanBeTakenByCrew())
             {
                 
-
                 if (currentTakenObject != null && currentTakenObject.TryGetComponent(out ITakenAndMovable allreadyTaken) 
                     && (canBeTaken.GetTypeOfObject().GetType() != allreadyTaken.GetTypeOfObject().GetType() ||
                      ((canBeTaken.GetTypeOfObject().GetType() == typeof(SuppliesType) && (SuppliesType)canBeTaken.GetTypeOfObject() != (SuppliesType)allreadyTaken.GetTypeOfObject()) || (canBeTaken.GetTypeOfObject().GetType() == typeof(InstrumentsType) && (InstrumentsType)canBeTaken.GetTypeOfObject() != (InstrumentsType)allreadyTaken.GetTypeOfObject())))
@@ -631,7 +680,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         if (!isShowingUIBar) HideUI();
     }
 
-   
+       
     public bool IsDestroyable()
     {
         return isDestroyable;
@@ -681,6 +730,8 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
     private void ThrowAwayCurrentTakenObject()
     {
+        if (CurrentTakenObject == null) return;
+
         CurrentTakenObject.GetComponent<Transform>().SetParent(GameObject.Find("SpaceShip").transform);
         CurrentTakenObject.transform.position = currentBaseTransform.position;
         CurrentTakenObject.GetComponent<ITakenAndMovable>().MakeThrownAway();
@@ -702,6 +753,59 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         whaaatMark.MakeShake(0.7f);
         yield return new WaitForSeconds(1f);
         whaaatMark.HideUI();
+    }
+
+    private IEnumerator crewMemberKilled()
+    {
+        //Effects.GetChild(2).gameObject.SetActive(true);
+        GameObject deathEffect = ObjectPooling.death_pool.GetObject();
+        deathEffect.transform.position = new Vector3(currentBaseTransform.position.x, 0.5f, currentBaseTransform.position.z);
+        deathEffect.transform.SetParent(GameObject.Find("SpaceShip").transform);
+        deathEffect.SetActive(true);
+
+        Effects.GetChild(3).gameObject.SetActive(false);
+
+        isDead = true;
+        GameManagement.crewMemberDead.Add(this);
+        ThrowAwayCurrentTakenObject();
+        navAgent.isStopped = true;
+        PlaceOfCurrentLocation = null;
+        PlaceOfDestination = null;
+        
+
+        //death effect
+
+        whaaatMark.HideUI();
+        HideUI();
+        
+        currentBaseTransform.position = new Vector3(pointOfRespawn.x, 0, pointOfRespawn.z);
+        
+        currentBaseTransform.GetChild(0).gameObject.SetActive(false);
+        navAgent.enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
+
+        respawnMark.ChangePosition(pointOfRespawn);
+        respawnMark.ShowUI();
+
+        for (float i = GeneralSettings.CrewRespawnTime+10; i > 0; i--)
+        {
+            respawnMark.ShowTimeOnRespawnTimer((int)i);
+            yield return new WaitForSeconds(1f);
+        }
+
+        //Effects.GetChild(2).gameObject.SetActive(false);
+        ObjectPooling.death_pool.ReturnObject(deathEffect);
+
+        Effects.GetChild(3).gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
+        CameraShaker.Instance.ShakeOnce(3, 5, 0.2f, 1);
+        currentBaseTransform.GetChild(0).gameObject.SetActive(true);
+        navAgent.enabled = true;
+        GetComponent<CapsuleCollider>().enabled = true;
+        
+        respawnMark.HideUI();
+        restart();
     }
 
 }
