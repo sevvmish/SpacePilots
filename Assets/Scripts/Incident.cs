@@ -90,6 +90,10 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
             case IncidentsType.simple_wreck:
                 maxHealth = GeneralSettings.IncidentBaseHealth_wreck * GeneralSettings.IncidentHealthKoeff_wreck;
                 break;
+
+            case IncidentsType.none:
+                maxHealth = 1;
+                break;
         }
 
         health = maxHealth;
@@ -109,7 +113,7 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
 
     private void Update()
     {
-        if (IncidentHealth < maxHealth && !isInActivated)
+        if (IncidentHealth < maxHealth && !isInActivated && currentIncidentType != IncidentsType.none)
         {
             IncidentHealth += Time.deltaTime / 10f;
         }
@@ -218,6 +222,11 @@ public class Incident : MonoBehaviour, IPointOfInteraction, IHighlightable
     public InstrumentsType GetInstrumentTypeToDealWithIncident()
     {
         return whatInstrumentDealThisIncident;
+    }
+
+    public IncidentsType GetTypeOfIncident()
+    {
+        return currentIncidentType;
     }
 
 

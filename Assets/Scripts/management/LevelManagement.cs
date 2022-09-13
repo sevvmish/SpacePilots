@@ -6,13 +6,16 @@ using System;
 
 public class LevelManagement : MonoBehaviour
 {
+    public float MainGameTimer;
+    public int ShipMaxHealth;
+    public int ShipCurrentHealth;
+
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private Transform cameraBody;
     [SerializeField] private Camera mainCam;
     [SerializeField] private Light directionalLight;
     
-    private AudioManager audio;
-    private float gameTimer;
+    private AudioManager audio;    
 
     //colors for directional light
     private Color currentDirectionalLightColor;
@@ -43,8 +46,15 @@ public class LevelManagement : MonoBehaviour
     private Transform STORAGE;
 
     //incidents handling
-    public delegate void BaseIncidentHandler(float timer);
-    public static BaseIncidentHandler PlayIncident;
+    private delegate void BaseIncidentHandler(float timer, ref int health);
+    private BaseIncidentHandler PlayIncident;
+
+    private Action<int> healthHandler;
+
+    //ZONES
+    private float[] incidentZone_fire;
+    private float[] incidentZone_wreck;
+
 
     private void Start()
     {
@@ -55,7 +65,9 @@ public class LevelManagement : MonoBehaviour
    
     private void Update()
     {
-        gameTimer += Time.deltaTime;
+        MainGameTimer += Time.deltaTime;
+
+        print(ShipCurrentHealth + " curr health");
 
         //change light when power off, on
         if (shipManager.Energy <= 0 && !isEnergyOffColors)
@@ -76,7 +88,7 @@ public class LevelManagement : MonoBehaviour
         if (isFloating) HandleShipFloatingEffect?.Invoke();
 
         //incident play
-        if (PlayIncident != null) PlayIncident(Time.deltaTime);
+        if (PlayIncident != null) PlayIncident(Time.deltaTime, ref ShipCurrentHealth);
     }
 
 
@@ -146,8 +158,8 @@ public class LevelManagement : MonoBehaviour
 
     private void level_1()
     {        
-        directionalLight.intensity = 1.4f;
-        currentDirectionalLightIntensity = 1.4f;
+        directionalLight.intensity = 1.3f;
+        currentDirectionalLightIntensity = 1.3f;
         directionalLight.color = type1_directionalLight_Color;
         currentDirectionalLightColor = type1_directionalLight_Color;
         mainCam.backgroundColor = type1_cameraBackGround_Color;
@@ -156,14 +168,19 @@ public class LevelManagement : MonoBehaviour
         AddMainShip("small ship 1");
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
+        ShipMaxHealth = 15;
+        ShipCurrentHealth = ShipMaxHealth;
 
         //init objects
         ObjectPooling.InitPools(50, STORAGE);
 
         //start logic
+        incidentZone_fire = new float[] { 0,0,  1,0,  -1,0,  0,1,  0,-1,  -1,-1,  1,1,  -1,1,  1,-1 };
 
-        IncidentManager i = new IncidentManager(IncidentsType.fire, 10);
-        PlayIncident += i.play;
+        
+
+        IncidentManager fireIncidentManager = new IncidentManager(IncidentsType.fire, 10, incidentZone_fire);
+        PlayIncident += fireIncidentManager.UpdateState;
     }
 
 
@@ -186,23 +203,70 @@ public class LevelManagement : MonoBehaviour
     {
         private float interval, currentTime;
         private IncidentsType incident;
+        private float[] zoneArray;
+        private List<GameObject> incidentsGameObjects;
 
-        public IncidentManager(IncidentsType _incident, float _interval)
+        public IncidentManager(IncidentsType _incident, float _interval, float [] data)
         {
             interval = _interval;
             incident = _incident;
             currentTime = 0;
+            zoneArray = data;
+            incidentsGameObjects = new List<GameObject>();
         }
 
-        public void play(float deltaTime)
+        public void UpdateState(float deltaTime, ref int shipHealth)
         {
             currentTime += deltaTime;
+
+            if (incidentsGameObjects.Count > 0)
+            {
+                for (int i = 0; i < incidentsGameObjects.Count; i++)
+                {
+                    if (!incidentsGameObjects[i].activeSelf)
+                    {
+                        shipHealth++;
+                        incidentsGameObjects.Remove(incidentsGameObjects[i]);
+                    }
+                }
+            }
             
             if (currentTime>=interval)
             {
                 currentTime = 0;
-                ObjectPooling.AddIncident(incident, new Vector3(UnityEngine.Random.Range(-2f, 2f), 0, UnityEngine.Random.Range(-2f, 2f)));
+                shipHealth--;
+                GameObject _incident = ObjectPooling.AddIncidentGameObject(incident, GetCoordsForIncident());                
+                incidentsGameObjects.Add(_incident);
             }
+        }
+
+        private Vector3 GetCoordsForIncident()
+        {
+            Vector3 result = Vector3.zero;
+            float delta = 0.25f;
+
+            switch(incident)
+            {
+                case IncidentsType.fire:
+                    delta = 0.25f;
+                    break;
+            }
+
+            int index = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                index = UnityEngine.Random.Range(0, zoneArray.Length);
+
+                if (index % 2 == 0)
+                {
+                    break;
+                }
+            }
+
+            result = new Vector3(zoneArray[index] + UnityEngine.Random.Range(-delta, delta), 0.01f, zoneArray[index + 1] + UnityEngine.Random.Range(-delta, delta));
+
+            return result;
         }
     }
 }

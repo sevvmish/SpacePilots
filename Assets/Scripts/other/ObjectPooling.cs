@@ -72,6 +72,64 @@ public class ObjectPooling : MonoBehaviour
         incident.transform.position = position;
     }
 
+    public static GameObject AddIncidentGameObject(IncidentsType _type, Vector3 position)
+    {
+        GameObject incident = default;
+
+        switch (_type)
+        {
+            case IncidentsType.fire:
+                incident = fireIncident_pool.GetObject();
+                break;
+
+            case IncidentsType.simple_wreck:
+                incident = simpleWreckIncident_pool.GetObject();
+                break;
+
+            case IncidentsType.poison_patch:
+                incident = poisonPatchAfterBarrel_pool.GetObject();
+                break;
+
+            case IncidentsType.death:
+                incident = death_pool.GetObject();
+                break;
+
+        }
+
+        incident.SetActive(true);
+        incident.transform.position = position;
+        return incident;
+    }
+
+    public static bool ReturnIncidentGameObject(GameObject _incident)
+    {
+        if (_incident.GetComponent<Incident>() == null) return false;
+
+        switch (_incident.GetComponent<Incident>().GetTypeOfIncident())
+        {
+            case IncidentsType.fire:
+                fireIncident_pool.ReturnObject(_incident);
+                break;
+
+            case IncidentsType.simple_wreck:
+                simpleWreckIncident_pool.ReturnObject(_incident);
+                break;
+
+            case IncidentsType.poison_patch:
+                poisonPatchAfterBarrel_pool.ReturnObject(_incident);
+                break;
+
+            case IncidentsType.death:
+                death_pool.ReturnObject(_incident);
+                break;
+
+        }
+
+        return true;
+    }
+
+
+
 
     public static void AddInstrument(InstrumentsType _type, Vector3 position)
     {

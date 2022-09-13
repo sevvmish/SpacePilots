@@ -8,9 +8,10 @@ using UnityEngine.UI;
 public class MenuManagement : MonoBehaviour
 {
     [SerializeField] private settings GeneralSettings;
-    [SerializeField] private Camera mainCam;
-    [SerializeField] private Transform mainShip;
+    [SerializeField] private Camera mainCam;    
     [SerializeField] private Material screenEffect;
+
+    private Transform mainShip;
 
     private Ray ray;
     private RaycastHit hit;
@@ -44,6 +45,15 @@ public class MenuManagement : MonoBehaviour
         negativeClick = Resources.Load<AudioClip>("audio/sounds/negative click");
         openAudio = Resources.Load<AudioClip>("audio/sounds/grab something");
 
+        //small ship
+        GameObject mainShipGameObject = Instantiate(Resources.Load<GameObject>("prefabs/ships/menu main ship 1"));
+        mainShip = mainShipGameObject.transform;
+        mainShip.position = Vector3.zero;
+        shipAudio = mainShip.GetChild(1).GetComponent<AudioSource>();
+        turnOffEngineEffect();
+        //==================================
+
+
         if (SaveLoad.isDataSaved())
         {
             GeneralSettings.GameLevelsData = SaveLoad.Load();
@@ -51,8 +61,7 @@ public class MenuManagement : MonoBehaviour
 
         makeScreenOn();
 
-        shipAudio = mainShip.GetChild(0).transform.GetChild(0).GetComponent<AudioSource>();
-        turnOffEngineEffect();
+        
     }
 
     // Update is called once per frame
@@ -167,16 +176,16 @@ public class MenuManagement : MonoBehaviour
 
     private void turnOnEngineEffect()
     {
-        shipAudio.Play();
+        if (!shipAudio.isPlaying) shipAudio.Play();
         isEngineEffectActive = true;
-        mainShip.GetChild(0).transform.GetChild(0).transform.DOScale(Vector3.one, 0.3f);
+        mainShip.GetChild(1).transform.DOScale(Vector3.one, 0.3f);
     }
 
     private void turnOffEngineEffect()
     {
         shipAudio.Stop();
         isEngineEffectActive = false;
-        mainShip.GetChild(0).transform.GetChild(0).transform.DOScale(Vector3.zero, 0.3f);
+        mainShip.GetChild(1).transform.DOScale(Vector3.zero, 0.3f);
     }
 
     private void OnApplicationQuit()

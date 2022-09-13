@@ -148,6 +148,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
                 if (!isTooOverheated) alertMark.HideUI();//HideUI();
             }
 
+            
             if (temperature < 0.33f)
             {
                 isTooOverheated = false;
@@ -155,7 +156,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
                 if (alertMark.IsUIEnabled) alertMark.HideUI();
                 CancelBlinking();
             }
-                
+              
 
         }
     }
@@ -200,52 +201,16 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
         //icon of overheating
         alertMark = new UIManager(UIPositionPoint, UIPanelTypes.alert_mark, UIIconTypes.fire, Color.red, Color.white);
 
-        //uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
-        //uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.fire);
-        //uiInformationMark.transform.GetChild(0).GetComponent<Image>().color = Color.red;
-        //uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.white;
-        //uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
-        //GameManagement.MainUIHandler -= UpdateUIPosition;
-        //uiInformationMarkRect.gameObject.SetActive(false);
     }
 
-    /*
-    private void UpdateUIPosition(Camera camera)
-    {
-        OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
-        uiInformationMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
-    }
-
-
-
-    private void ShowUI()
-    {
-        if (!uiInformationMarkRect.gameObject.activeSelf)
-        {
-            GameManagement.MainUIHandler += UpdateUIPosition;
-            uiInformationMarkRect.gameObject.SetActive(true);
-        }
-        
-    }
-
-    private void HideUI()
-    {
-        if (uiInformationMarkRect.gameObject.activeSelf)
-        {
-            GameManagement.MainUIHandler -= UpdateUIPosition;
-            uiInformationMarkRect.gameObject.SetActive(false);
-        }
-
-        
-    }
-    */
-
+   
 
     private void Update()
     {
         rotator.rotation = Quaternion.Euler(rotatorAngle, 0, -90);
         rotatorAngle += Time.deltaTime * Productivity * Energy * 100f;
 
+        
         if (!isOverHeatInProgress)
         {
             Temperature += AssessTemperatureDelta();
@@ -257,6 +222,8 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             {
                 heatIncident.IncidentHealth += (lastHeatTemperature - heatIncident.IncidentHealth) * fireExtHardness;
             }
+                        
+
             Temperature = heatIncident.IncidentHealth;
 
             lastHeatTemperature = heatIncident.IncidentHealth;
@@ -277,8 +244,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             heatIncident.SetMaxHealth(1, Temperature);
             lastHeatTemperature = 0;
 
-            //uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
-            //uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
+            
             alertMark.IsBlinking = true;
             alertMark.IsLeaveEnabledAfterBlinking = true;
 
@@ -347,7 +313,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
         }
         else if (Energy <= 0.3f)
         {
-            //Temperature += temperatureDelta * 0;
+            result = temperatureDelta * Time.deltaTime * 0.1f;
         }
             
         return result;
