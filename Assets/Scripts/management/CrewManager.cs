@@ -42,8 +42,10 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
     private bool isTakenObjectDestroyable;
 
     private Dictionary<GameObject, DamageDealer> damagingObjects = new Dictionary<GameObject, DamageDealer>();
-    private HashSet<NegativeEffects> activatedEffects = new HashSet<NegativeEffects>(); 
-    
+    private HashSet<NegativeEffects> activatedEffects = new HashSet<NegativeEffects>();
+    private HashSet<ITakenAndMovable> objectToTake = new HashSet<ITakenAndMovable>();
+
+
     //moving to points
     private GameObject PlaceOfDestination;
     private GameObject PlaceOfCurrentLocation;
@@ -456,7 +458,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                 }
                 
 
-
+                /*
                 if (other.gameObject.GetComponent<FacilityProducer>() != null 
                     || (other.gameObject.GetComponent<Reactor>() != null && (currentTakenObject.GetComponent<Supply>() == null || (SuppliesType)currentTakenObject.GetComponent<Supply>().GetTypeOfObject() != SuppliesType.full_engine_fuel)) 
                     || other.gameObject.GetComponent<Instrument>() != null)
@@ -467,6 +469,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                 {
                     //StartCoroutine(PlayMarkOfWrongInteraction());
                 }
+                */
             }
 
             if (other.gameObject.GetComponent<SpaceControlPanel>() != null && !other.gameObject.GetComponent<SpaceControlPanel>().isChairBusy)
@@ -506,7 +509,45 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
     }
 
- 
+
+    public bool TakeObjectOnDoubleClick()
+    {
+        if (currentTakenObject != null) return false;
+
+        if (objectToTake.Count > 0)
+        {
+            foreach (ITakenAndMovable item in objectToTake)
+            {
+                if (item.IsCanBeTakenByCrew())
+                {
+                    TakeAnyObjectToCarry(item.GiveAwayTakeble());
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out ITakenAndMovable takeble))
+        {
+            objectToTake.Add(takeble);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out ITakenAndMovable takeble) && objectToTake.Contains(takeble))
+        {
+            objectToTake.Remove(takeble);
+        }
+    }
+
 
     public void SetRespawnPoint(Vector3 _point)
     {
@@ -728,15 +769,16 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         return Health;
     }
 
-    private void ThrowAwayCurrentTakenObject()
+    public bool ThrowAwayCurrentTakenObject()
     {
-        if (CurrentTakenObject == null) return;
+        if (CurrentTakenObject == null) return false;
 
         CurrentTakenObject.GetComponent<Transform>().SetParent(GameObject.Find("SpaceShip").transform);
         CurrentTakenObject.transform.position = currentBaseTransform.position;
         CurrentTakenObject.GetComponent<ITakenAndMovable>().MakeThrownAway();
         DeactivateAnyHandsInstruments();
         CurrentTakenObject = null;
+        return true;
     }
 
     private IEnumerator PlaySit(Vector3 pos, Vector3 look)

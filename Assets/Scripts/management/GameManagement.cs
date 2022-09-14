@@ -23,6 +23,9 @@ public class GameManagement : MonoBehaviour
 
     private Ray ray;
     private RaycastHit hit;
+    private float timerSecondClick;
+    private float secondClickResponse = 0.3f;
+
 
     //init level
     private Transform highlighter;
@@ -46,7 +49,6 @@ public class GameManagement : MonoBehaviour
 #if (UNITY_EDITOR)
         Camera.main.aspect = 16f/9f;
 #endif
-               
 
         //init highlight and audio listener
         InitHighlightPlayer();
@@ -58,7 +60,12 @@ public class GameManagement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
+        if (timerSecondClick>0)
+        {
+            timerSecondClick -= Time.deltaTime;
+        }
+
         if (crewMemberDead.Count > 0)
         {
             foreach (CrewManager item in crewMemberDead)
@@ -114,18 +121,38 @@ public class GameManagement : MonoBehaviour
                     selectedGameObject.GetComponent<IHighlightable>().HighlightCurrentObject();
                     HighlightSelectedCrewMember(hit.collider.gameObject.transform);
                     audio.MakeClick();
+
+                    timerSecondClick = secondClickResponse;
                 }
                 else
                 {
-                    if (selectedGameObject!=null && selectedGameObject.GetComponent<CrewManager>() != null && selectedGameObject != hit.collider.gameObject)
+
+                    if (selectedGameObject.TryGetComponent(out CrewManager crew) && selectedGameObject != hit.collider.gameObject)
                     {                        
                         IPointOfInteraction _point = hit.collider.gameObject.GetComponent<IPointOfInteraction>();
                         Vector3 pointToMove = _point == null ? hit.point : _point.GetPointOfInteraction();
 
-                        selectedGameObject.GetComponent<CrewManager>().MoveCrewMemberTo(pointToMove, hit.collider.gameObject);
-
-                        //levelManagement.crewMembers[selectedGameObject].MoveCrewMemberTo(pointToMove, hit.collider.gameObject);
+                        crew.MoveCrewMemberTo(pointToMove, hit.collider.gameObject);
                     }
+                    else if (crew != null && selectedGameObject == hit.collider.gameObject)
+                    {                        
+
+                        if (timerSecondClick <= 0)
+                        {
+                            timerSecondClick = secondClickResponse;
+                        }
+                        else
+                        {
+                            //second click
+                            if (!crew.ThrowAwayCurrentTakenObject())
+                            {
+                                crew.TakeObjectOnDoubleClick();
+                            }
+                            timerSecondClick = 0;
+                        }
+                    }
+
+
                 }
             }
         }

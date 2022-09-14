@@ -67,7 +67,7 @@ public class LevelManagement : MonoBehaviour
     {
         MainGameTimer += Time.deltaTime;
 
-        print(ShipCurrentHealth + " curr health");
+        //print(ShipCurrentHealth + " curr health");
 
         //change light when power off, on
         if (shipManager.Energy <= 0 && !isEnergyOffColors)

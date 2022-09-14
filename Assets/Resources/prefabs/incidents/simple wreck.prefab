@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209bf8d1fc956bb41ab3c1ee05586a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
   isIncidentActive: 0
   whatInstrumentDealThisIncident: 2
   currentIncidentType: 2
@@ -1014,6 +1013,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 44d19f5d180db944a8c78b0c8380c2e2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 44d19f5d180db944a8c78b0c8380c2e2, type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 44d19f5d180db944a8c78b0c8380c2e2, type: 3}
