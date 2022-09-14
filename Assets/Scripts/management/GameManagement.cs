@@ -20,6 +20,7 @@ public class GameManagement : MonoBehaviour
         
     private CharacterController playerCharController;
 
+
     private Ray ray;
     private RaycastHit hit;
 
