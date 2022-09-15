@@ -47,7 +47,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             {
                 playStopEngineSound();
             }
-            else if(value > 0 && energy == 0 && Productivity>0)
+            else if(value > 0 && energy <= 0 && Productivity>0)
             {
                 playStartEngineSound();
             }
@@ -79,7 +79,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             {
                 playStopEngineSound();
             }
-            else if (value > 0 && productivity == 0 && Energy > 0)
+            else if (value > 0 && productivity <= 0 && Energy > 0)
             {
                 playStartEngineSound();
             }
@@ -400,7 +400,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
     {
         startEngineSound.clip = startSound;
         startEngineSound.volume = 0.9f;
-        startEngineSound.pitch = 0.7f;
+        startEngineSound.pitch = 0.5f;
         startEngineSound.Play();
         
         CameraShaker.Instance.ShakeOnce(3, 5, 0.2f, 1);

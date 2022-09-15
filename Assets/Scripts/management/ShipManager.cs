@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class ShipManager : MonoBehaviour
 {
-    public GameObject[] AllMonitorsAndElectrics;
+    public List<GameObject> AllMonitorsAndElectrics = new List<GameObject>();
 
-    public Reactor[] ShipReactors;
+    public List<Reactor> ShipReactors = new List<Reactor>();
 
-    public Engine[] ShipEngines;
-    public Transform[] MovingEffects;
+    public List<Engine> ShipEngines = new List<Engine>();
+
+    public List<ParticleSystem> MovingEffects = new List<ParticleSystem>();
     
     private int limitAmountOfCrew;
     public Transform[] pointsOfCrewResp;
@@ -21,6 +22,11 @@ public class ShipManager : MonoBehaviour
     [SerializeField] private float EnginesProductivity;
     [SerializeField] private float shipSpeed;
     [SerializeField] private float energy = 0;
+    [SerializeField] private AudioSource audio;
+
+    private AudioClip powerOn, powerOff;
+    private bool isPowerDown;
+
 
     public float Energy
     {
@@ -28,18 +34,18 @@ public class ShipManager : MonoBehaviour
 
         set
         {
-            if (AllMonitorsAndElectrics.Length>0)
+            if (AllMonitorsAndElectrics.Count>0)
             {
                 if (value <= 0 && energy > 0)
                 {
-                    for (int i = 0; i < AllMonitorsAndElectrics.Length; i++)
+                    for (int i = 0; i < AllMonitorsAndElectrics.Count; i++)
                     {
                         AllMonitorsAndElectrics[i].SetActive(false);
                     }
                 }
                 else if (value > 0 && energy <= 0)
                 {
-                    for (int i = 0; i < AllMonitorsAndElectrics.Length; i++)
+                    for (int i = 0; i < AllMonitorsAndElectrics.Count; i++)
                     {
                         AllMonitorsAndElectrics[i].SetActive(true);
                     }
@@ -60,9 +66,9 @@ public class ShipManager : MonoBehaviour
                 energy = value;
                 
                 
-                if (ShipEngines.Length>0)
+                if (ShipEngines.Count>0)
                 {
-                    for (int i = 0; i < ShipEngines.Length; i++)
+                    for (int i = 0; i < ShipEngines.Count; i++)
                     {
                         ShipEngines[i].Energy = energy;
                     }
@@ -75,15 +81,18 @@ public class ShipManager : MonoBehaviour
 
     private void OnEnable()
     {
+        powerOn = Resources.Load<AudioClip>("audio/sounds/power on");
+        powerOff = Resources.Load<AudioClip>("audio/sounds/power off");
+
         mainShipTransform = GetComponent<Transform>();
         limitAmountOfCrew = pointsOfCrewResp.Length;
         if (DefaultPointOfCrewResp == null) DefaultPointOfCrewResp = pointsOfCrewResp[0];
 
         Energy = 0;
 
-        if (AllMonitorsAndElectrics.Length > 0 && Energy <= 0)
+        if (AllMonitorsAndElectrics.Count > 0 && Energy <= 0)
         {            
-            for (int i = 0; i < AllMonitorsAndElectrics.Length; i++)
+            for (int i = 0; i < AllMonitorsAndElectrics.Count; i++)
             {
                 AllMonitorsAndElectrics[i].SetActive(false);
             }            
@@ -91,33 +100,44 @@ public class ShipManager : MonoBehaviour
     }
 
     private void Update()
-    {
-        if (ShipEngines.Length>0)
+    {        
+        if (ShipEngines.Count>0)
         {
             EnginesProductivity = 0;
 
-            for (int i = 0; i < ShipEngines.Length; i++)
+            for (int i = 0; i < ShipEngines.Count; i++)
             {
                 EnginesProductivity += ShipEngines[i].Productivity;
             }
 
-            EnginesProductivity /= ShipEngines.Length;
+            EnginesProductivity /= ShipEngines.Count;
             SetEffectsOfMovingInParticles();
         }
 
-        if (ShipReactors.Length > 0)
+        if (ShipReactors.Count > 0)
         {
             float _energy = 0;
 
-            for (int i = 0; i < ShipReactors.Length; i++)
+            for (int i = 0; i < ShipReactors.Count; i++)
             {
                 _energy += ShipReactors[i].Energy;
             }
 
-            Energy = _energy / ShipReactors.Length;            
+            Energy = _energy / ShipReactors.Count;            
         }
 
-
+        if (!isPowerDown && Energy <= 0)
+        {
+            isPowerDown = true;
+            audio.clip = powerOff;
+            audio.Play();
+        }
+        else if (isPowerDown && Energy > 0)
+        {
+            isPowerDown = false;
+            audio.clip = powerOn;
+            audio.Play();
+        }
     }
 
     public Vector3 GetPointOfRespForCrew(int orderOfCrewMember)
@@ -129,6 +149,7 @@ public class ShipManager : MonoBehaviour
 
     public int GetLimitAmountOfCrew() {return limitAmountOfCrew;}
 
+    
     private void SetEffectsOfMovingInParticles()
     {
 
@@ -139,12 +160,12 @@ public class ShipManager : MonoBehaviour
 
         if (koef < 0.2f) timeTL = 0;
 
-        if (MovingEffects.Length>0)
+        if (MovingEffects.Count > 0)
         {
-            for (int i = 0; i < MovingEffects.Length; i++)
+            for (int i = 0; i < MovingEffects.Count; i++)
             {
-                MovingEffects[i].GetComponent<ParticleSystem>().startSpeed = koef * koef * 15f;
-                MovingEffects[i].GetComponent<ParticleSystem>().startLifetime = timeTL;                
+                MovingEffects[i].startSpeed = koef * koef * 15f;
+                MovingEffects[i].startLifetime = timeTL;                
             }
         }
     }

@@ -145,7 +145,7 @@ public class UIManager : MonoBehaviour
                 break;
 
             case UIPanelTypes.information_mark :
-                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
+                uiMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 20);
                 break;
 
             case UIPanelTypes.level_data_stars:

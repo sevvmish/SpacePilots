@@ -29,11 +29,7 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
 
     [SerializeField] private GameObject startRechargeEffect, stopRechargeEffect, giveAwayEffect, overChargeEffect, explosion;
 
-    //UI information mark
-    //private GameObject uiInformationMark;
-    //private RectTransform uiInformationMarkRect;
-    //private Vector3 OnScreenPosition;
-
+    
     private UIManager alertMark, readyMark;
 
     private Action makeBlink;

@@ -439,12 +439,23 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                     StartCoroutine(PlayMarkOfWrongInteraction());
                 }
 
-            } 
-            
+                
+
+            }
+
+
+            if (CurrentTakenObject != null && currentTakenObject.TryGetComponent(out ITakenAndMovable movable) && other.TryGetComponent(out Transceiver giveAway))
+            {
+                GameObject movableObject = currentTakenObject;
+                if (ThrowAwayCurrentTakenObject())
+                {
+                    giveAway.PlaceMovableInside(movableObject);
+                }
+            }
+
 
             if (CurrentTakenObject != null)
             {
-               
                 if (CurrentTakenObject.TryGetComponent(out Instrument instr) && other.TryGetComponent(out Incident incident))
                 {
                     if (instr.GetCurrentTypeOfInstrument() == incident.GetInstrumentTypeToDealWithIncident())
@@ -456,20 +467,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                         StartCoroutine(PlayMarkOfWrongInteraction());
                     }
                 }
-                
-
-                /*
-                if (other.gameObject.GetComponent<FacilityProducer>() != null 
-                    || (other.gameObject.GetComponent<Reactor>() != null && (currentTakenObject.GetComponent<Supply>() == null || (SuppliesType)currentTakenObject.GetComponent<Supply>().GetTypeOfObject() != SuppliesType.full_engine_fuel)) 
-                    || other.gameObject.GetComponent<Instrument>() != null)
-                {
-                    //StartCoroutine(PlayMarkOfWrongInteraction());
-                } 
-                else if (other.gameObject.GetComponent<IConsumer>() != null && (SuppliesType)CurrentTakenObject.GetComponent<ITakenAndMovable>().GetTypeOfObject() != other.gameObject.GetComponent<IConsumer>().GetFacilityConsumerSupplyType())
-                {
-                    //StartCoroutine(PlayMarkOfWrongInteraction());
-                }
-                */
+             
             }
 
             if (other.gameObject.GetComponent<SpaceControlPanel>() != null && !other.gameObject.GetComponent<SpaceControlPanel>().isChairBusy)

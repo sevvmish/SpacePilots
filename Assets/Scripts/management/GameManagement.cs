@@ -103,15 +103,13 @@ public class GameManagement : MonoBehaviour
             ray = mainCam.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 50))
-            {
-                
+            {                
                 if (hit.collider != null && !hit.collider.CompareTag("Floor"))
                 {
                     //print(hit.collider.name);
                     audio.MakeClick();
                 }
                 
-
                 
                 if (hit.collider.GetComponent<CrewManager>() != null && selectedGameObject != hit.collider.gameObject)
                 {
@@ -151,8 +149,6 @@ public class GameManagement : MonoBehaviour
                             timerSecondClick = 0;
                         }
                     }
-
-
                 }
             }
         }

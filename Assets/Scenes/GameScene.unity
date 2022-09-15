@@ -10095,7 +10095,7 @@ GameObject:
   - component: {fileID: 716022778}
   - component: {fileID: 716022777}
   m_Layer: 0
-  m_Name: Directional Light (1)
+  m_Name: Second Directional Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20432,11 +20432,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2775441bea952b8459bfafa0bafa5695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainGameTimer: 0
+  ShipMaxHealth: 0
+  ShipCurrentHealth: 0
   GeneralSettings: {fileID: 11400000, guid: a14ffe9ef31e46f4c85a1c627d9ce70d, type: 2}
   cameraBody: {fileID: 144128640}
   mainCam: {fileID: 963194227}
   directionalLight: {fileID: 705507994}
-  MainGameTimer: 0
+  secondDirectionalLight: {fileID: 716022778}
 --- !u!1 &1300048217
 GameObject:
   m_ObjectHideFlags: 0

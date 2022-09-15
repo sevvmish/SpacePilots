@@ -52,6 +52,13 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
         
     }
 
+    public void SetReactorStartFromLoaded(float amount)
+    {
+        SetStateToEmpty();
+        SetStateToLoaded();
+        currentBarrelCapacity = amount;
+    }
+
     private void OnEnable()
     {
         barrelExampleMaterial = Instantiate(barrelExample.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material);
@@ -65,16 +72,9 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
 
         loadingBarrelEffects.gameObject.SetActive(false);
 
-        //icon of overheating
-        //uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
-        //uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(UIIconTypes.energy_fuel);
-        //uiInformationMark.transform.GetChild(0).GetComponent<Image>().color = Color.black;
-        //uiInformationMark.transform.GetChild(1).GetComponent<Image>().color = Color.white;
-        //uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
-        //GameManagement.MainUIHandler -= UpdateUIPosition;
-        //uiInformationMarkRect.gameObject.SetActive(false);
-
+     
         informationMark = new UIManager(UIPositionPoint, UIPanelTypes.information_mark, UIIconTypes.energy_fuel, Color.black, Color.white);
+        
 
         if (!isStartFromLoaded)
         {
@@ -91,35 +91,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
             
     }
 
-    /*
-    private void UpdateUIPosition(Camera camera)
-    {
-        OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
-        uiInformationMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
-    }
-
-
-
-    private void ShowUI()
-    {
-        if (!uiInformationMarkRect.gameObject.activeSelf)
-        {            
-            GameManagement.MainUIHandler += UpdateUIPosition;
-            uiInformationMarkRect.gameObject.SetActive(true);
-        }
-    }
-
-    private void HideUI()
-    {
-        if (uiInformationMarkRect.gameObject.activeSelf)
-        {
-            GameManagement.MainUIHandler -= UpdateUIPosition;
-            uiInformationMarkRect.gameObject.SetActive(false);
-        }
-    }
-    */
-
-
+ 
     private void SetStateToEmpty()
     {
         //uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = false;
@@ -176,8 +148,7 @@ public class Reactor : MonoBehaviour, IPointOfInteraction, IHighlightable, ICons
                 isReactorReadyToLoadAgain = true;
                 barrelExampleMaterial.SetColor("_BaseColor", Color.red);
                 barrelExampleMaterial.SetColor("_EmissionColor", Color.red * GeneralSettings.BaseBloomIntensityColor);
-                //uiInformationMark.GetComponent<MakeActiveInTimer>().enabled = true;
-                //uiInformationMark.GetComponent<MakeActiveInTimer>().isLeaveEnabled = true;
+         
                 informationMark.IsBlinking = true;
                 informationMark.IsLeaveEnabledAfterBlinking = true;
                 makeBlink = makeBlinkOnLowCapacity;

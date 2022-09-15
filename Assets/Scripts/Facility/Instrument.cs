@@ -41,8 +41,9 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         uiInformationMark = Instantiate(UIManager.GetUIPrefab(UIPanelTypes.information_mark), GameObject.Find("MainCanvas").transform);
         uiInformationMark.transform.GetChild(1).GetComponent<Image>().sprite = UIManager.GetUIIconSprite(currentIconType);
         uiInformationMarkRect = uiInformationMark.GetComponent<RectTransform>();
-        //GameManagement.MainUIHandler += ShowUIInformationMark;
-        
+        uiInformationMarkRect.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+
+
         uiInformationMarkRect.gameObject.SetActive(false);
         HideEffectOfWorkingInstrument();
         if (isItSingleAttheBegining) MakeThrownAway();
@@ -51,7 +52,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
     private void ShowUIInformationMark(Camera camera)
     {
         OnScreenPosition = camera.WorldToScreenPoint(UIPositionPoint.position);
-        uiInformationMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 40);
+        uiInformationMarkRect.anchoredPosition = new Vector2(OnScreenPosition.x, OnScreenPosition.y + 30);
     }
 
 
