@@ -27,6 +27,9 @@ public class ShipManager : MonoBehaviour
     private AudioClip powerOn, powerOff;
     private bool isPowerDown;
 
+    public int ShipMaxHealth;
+    public int ShipCurrentHealth;
+
 
     public float Energy
     {

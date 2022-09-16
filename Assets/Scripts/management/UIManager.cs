@@ -435,6 +435,10 @@ public class UIManager : MonoBehaviour
             case UIPanelTypes.no_red:
                 result = Resources.Load<GameObject>("prefabs/UI/NO");
                 break;
+
+            case UIPanelTypes.ship_hull_health:
+                result = Resources.Load<GameObject>("prefabs/UI/ship hull health");
+                break;
         }
 
         return result;

@@ -7,9 +7,7 @@ using System;
 public class LevelManagement : MonoBehaviour
 {
     public float MainGameTimer;
-    public int ShipMaxHealth;
-    public int ShipCurrentHealth;
-
+    
     [SerializeField] private settings GeneralSettings;
     [SerializeField] private Transform cameraBody;
     [SerializeField] private Camera mainCam;
@@ -92,7 +90,7 @@ public class LevelManagement : MonoBehaviour
         if (isFloating) HandleShipFloatingEffect?.Invoke();
 
         //incident play
-        if (PlayIncident != null) PlayIncident(Time.deltaTime, ref ShipCurrentHealth);
+        if (PlayIncident != null) PlayIncident(Time.deltaTime, ref shipManager.ShipCurrentHealth);
     }
 
 
@@ -123,6 +121,7 @@ public class LevelManagement : MonoBehaviour
     private void AddCrewMember(CrewSpecialization _spec, Vector3 location)
     {
         GameObject player = Instantiate(CrewManager.GetCrewPrefab(_spec), location, Quaternion.Euler(0, 0, 0), GameObject.Find("SpaceShip").transform);
+        player.transform.rotation = Quaternion.Euler(0, 180, 0);
         crewMembers.Add(player, player.GetComponent<CrewManager>());
         player.GetComponent<CrewManager>().SetRespawnPoint(location);
         player.GetComponent<CrewManager>().InitUI();
@@ -173,8 +172,8 @@ public class LevelManagement : MonoBehaviour
         AddMainShip("small ship 1");
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(0));
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
-        ShipMaxHealth = 15;
-        ShipCurrentHealth = ShipMaxHealth;
+        shipManager.ShipMaxHealth = 15;
+        shipManager.ShipCurrentHealth = shipManager.ShipMaxHealth;
 
         //init objects and facility===================================================
         ObjectPooling.InitPools(50, STORAGE);
@@ -193,17 +192,21 @@ public class LevelManagement : MonoBehaviour
         AddFacility(FacilityObject.empty_fuel_barrel_producer1, new Vector3(-3.5f, 0, 3.8f), new Vector3(0, -20, 0));
 
         //fire ext & wrench
-        AddFacility(FacilityObject.fire_extinguisher, new Vector3(2.2f, 0.5f, -3f));
-        AddFacility(FacilityObject.wrench, new Vector3(0.8f, 0.5f, -3f));
+        AddFacility(FacilityObject.fire_extinguisher, new Vector3(2f, 0.5f, -2f));
+        AddFacility(FacilityObject.wrench, new Vector3(2f, 0.5f, -3.5f));
 
         //exact parts
         GameObject part = Instantiate(Resources.Load<GameObject>("prefabs/ship parts/exact level constructions/level1 main separator"), new Vector3(-0.5f, 0, 0), Quaternion.Euler(Vector3.zero), shipManager.mainShipTransform);
         incidentZone_fire = new float[] { -2, 0, -2, 1, -2, 2, -2, 3, -3, 2, -4, 2, -3, 1, -4, 1, -3, 0, -4, 0, -2, -1, -3, -1, -4, -1, -2, -2, -3, -2, -4, -2, -2, -3, 1, 0, 1, 1, 1, 2, 1, 3, 1, -1, 1, -2, 1, -3, 2, 0, 2, 1, 2, 2, 2, -1, 2, -2, 2, -3, 3, 0, 3, 1, 3, 2, 3, -1, 3, -2, 3, -3, 4, 0, 4, 1, 4, -1};
+        incidentZone_wreck = new float[] { -2, 0, -2, 1, -2, 2, -2, 3, -3, 2, -3, 1, -4, 1, -3, 0, -4, 0, -2, -1, -3, -1, -4, -1, -2, -2, -3, -2, -2, -3, 1, 0, 1, 1, 1, 2, 1, 3, 1, -1, 1, -2, 1, -3, 2, 0, 2, 1, 2, 2, 2, -1, 2, -2, 3, 0, 3, 1, 3, -1, 4, 0 };
 
 
         //start logic
-        IncidentManager fireIncidentManager = new IncidentManager(IncidentsType.fire, 10, incidentZone_fire);
+        IncidentManager fireIncidentManager = new IncidentManager(IncidentsType.fire, 10, 2, incidentZone_fire);
         PlayIncident += fireIncidentManager.UpdateState;
+
+        IncidentManager wreckIncidentManager = new IncidentManager(IncidentsType.simple_wreck, 15, 5, incidentZone_wreck);
+        PlayIncident += wreckIncidentManager.UpdateState;
     }
 
 
@@ -229,14 +232,14 @@ public class LevelManagement : MonoBehaviour
         private float[] zoneArray;
         private List<GameObject> incidentsGameObjects;
 
-        public IncidentManager(IncidentsType _incident, float _interval, float [] data)
+        public IncidentManager(IncidentsType _incident, float _interval, float startDelay, float [] data)
         {
             interval = _interval;
             incident = _incident;
-            currentTime = 0;
+            currentTime = startDelay;
             zoneArray = data;
 
-            if (data.Length % 2 != 0) print("erroe in number of incident points");
+            if (data.Length % 2 != 0) print("erroê in number of incident points");
 
             incidentsGameObjects = new List<GameObject>();
         }

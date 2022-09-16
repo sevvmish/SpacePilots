@@ -35,6 +35,7 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
     private float lastHeatTemperature = 0;
     private Material termoMaterial;
     private bool isOverHeatInProgress, isTooOverheated;
+    private float timerForEffect = 0;
     
 
     public float Energy
@@ -46,10 +47,12 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             if (value <= 0 && energy>0)
             {
                 playStopEngineSound();
+                SetTurnOffEffectOfEngines();
             }
             else if(value > 0 && energy <= 0 && Productivity>0)
             {
                 playStartEngineSound();
+                SetTurnOnEffectOfEngines();
             }
 
 
@@ -78,10 +81,12 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             if (value <= 0 && productivity > 0)
             {
                 playStopEngineSound();
+                
             }
             else if (value > 0 && productivity <= 0 && Energy > 0)
             {
                 playStartEngineSound();
+                SetTurnOnEffectOfEngines();
             }
 
             if (value < 0)
@@ -129,7 +134,9 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
             {
                 isTooOverheated = true;
                 CancelBlinking();
-                Productivity = 0;                
+                SetTurnOffEffectOfEngines();
+                Productivity = 0;
+                
             }
             else if(!isTooOverheated)
             {
@@ -207,6 +214,11 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
 
     private void Update()
     {
+        if (timerForEffect >0)
+        {
+            timerForEffect -= Time.deltaTime;
+        }
+
         rotator.rotation = Quaternion.Euler(rotatorAngle, 0, -90);
         rotatorAngle += Time.deltaTime * Productivity * Energy * 100f;
 
@@ -320,8 +332,41 @@ public class Engine : MonoBehaviour, IPointOfInteraction, IHighlightable
     }
 
 
+    private void SetTurnOffEffectOfEngines()
+    {        
+        if (timerForEffect <=0) timerForEffect = 1f;
+
+        if (EngineEffects.Length > 0)
+        {
+            for (int i = 0; i < EngineEffects.Length; i++)
+            {
+                EngineEffects[0].localScale = Vector3.one * 0.5f;
+                EngineEffects[0].DOScale(Vector3.zero, 1f);
+                EngineEffects[0].DOShakeScale(1f, Vector3.one * 0.4f);
+            }
+        }
+    }
+
+    private void SetTurnOnEffectOfEngines()
+    {
+        if (timerForEffect <= 0) timerForEffect = 1f;
+
+        if (EngineEffects.Length > 0)
+        {
+            for (int i = 0; i < EngineEffects.Length; i++)
+            {
+                EngineEffects[0].localScale = Vector3.one * 0.5f;
+                EngineEffects[0].DOScale(Vector3.one, 1f);
+                EngineEffects[0].DOShakeScale(1f, Vector3.one * 0.4f);
+            }
+        }
+    }
+
+
     private void SetEffectOfEnginesFlame()
     {
+        if (timerForEffect > 0) return;
+
         if (EngineEffects.Length > 0)
         {
             for (int i = 0; i < EngineEffects.Length; i++)

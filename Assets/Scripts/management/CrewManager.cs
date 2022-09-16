@@ -192,7 +192,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         makeIdleAnimation();
         DeactivateAnyHandsInstruments();
 
-        whaaatMark = new UIManager(UIPositionPoint, UIPanelTypes.information_mark, UIIconTypes.whaaat, new Color(0,0,0,0), Color.white);
+        whaaatMark = new UIManager(UIPositionPoint, UIPanelTypes.information_mark, UIIconTypes.whaaat, new Color(0,0,0,0), Color.yellow);
         whaaatMark.ChangeScale(1.2f);
         
         respawnMark = new UIManager(UIPositionPoint, UIPanelTypes.respawn_bar);
@@ -827,7 +827,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         respawnMark.ChangePosition(pointOfRespawn);
         respawnMark.ShowUI();
 
-        for (float i = GeneralSettings.CrewRespawnTime+10; i > 0; i--)
+        for (float i = GeneralSettings.CrewRespawnTime; i > 0; i--)
         {
             respawnMark.ShowTimeOnRespawnTimer((int)i);
             yield return new WaitForSeconds(1f);

@@ -189,7 +189,7 @@ public class GameManagement : MonoBehaviour
     private void InitHighlightPlayer()
     {
         //highlighting player system
-        GameObject player = Instantiate(Resources.Load<GameObject>("prefabs/highlight"), new Vector3(100,100,100), Quaternion.Euler(0, 0.03f, 0), GameObject.Find("SpaceShip").transform);
+        GameObject player = Instantiate(Resources.Load<GameObject>("prefabs/highlight"), new Vector3(100,100,100), Quaternion.Euler(0, 0, 0), GameObject.Find("SpaceShip").transform);
         highlighter = player.transform;
         highlighter.gameObject.SetActive(true);
         //highlighter.position = new Vector3(0, -1, 0);

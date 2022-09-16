@@ -149,7 +149,8 @@ public enum UIPanelTypes
     round_progress_bar,
     respawn_bar,
     ok_green,
-    no_red
+    no_red,
+    ship_hull_health
 
 
 }

@@ -5368,14 +5368,14 @@ struct U3CU3Ec_t124AFA44553F835AFE37BF9E66B435E4CA7DB8B4_StaticFields
 	EaseFunction_t0F945D9D726B0915C5FBF30862E987EC3AC12A04* ___U3CU3E9__4_35_36;
 };
 
-// Engine/<HandleCurrentHighlight>d__52
-struct U3CHandleCurrentHighlightU3Ed__52_t75642C73554C0777B3E3297A9AF9F758E3C84911  : public RuntimeObject
+// Engine/<HandleCurrentHighlight>d__55
+struct U3CHandleCurrentHighlightU3Ed__55_tF1CEE5E8EE57E404A929360D5C14153F449ED268  : public RuntimeObject
 {
-	// System.Int32 Engine/<HandleCurrentHighlight>d__52::<>1__state
+	// System.Int32 Engine/<HandleCurrentHighlight>d__55::<>1__state
 	int32_t ___U3CU3E1__state_0;
-	// System.Object Engine/<HandleCurrentHighlight>d__52::<>2__current
+	// System.Object Engine/<HandleCurrentHighlight>d__55::<>2__current
 	RuntimeObject* ___U3CU3E2__current_1;
-	// Engine Engine/<HandleCurrentHighlight>d__52::<>4__this
+	// Engine Engine/<HandleCurrentHighlight>d__55::<>4__this
 	Engine_t59D31EC59AD8AAF189236F53F6E5B083856B0F00* ___U3CU3E4__this_2;
 };
 
@@ -18573,8 +18573,10 @@ struct Engine_t59D31EC59AD8AAF189236F53F6E5B083856B0F00  : public MonoBehaviour_
 	bool ___isOverHeatInProgress_34;
 	// System.Boolean Engine::isTooOverheated
 	bool ___isTooOverheated_35;
+	// System.Single Engine::timerForEffect
+	float ___timerForEffect_36;
 	// UnityEngine.Transform[] Engine::EngineEffects
-	TransformU5BU5D_tBB9C5F5686CAE82E3D97D43DF0F3D68ABF75EC24* ___EngineEffects_36;
+	TransformU5BU5D_tBB9C5F5686CAE82E3D97D43DF0F3D68ABF75EC24* ___EngineEffects_37;
 };
 
 // Enums_n_Interfaces
@@ -21640,7 +21642,7 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize5542 = { sizeof(U3CdoorIsOpe
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5543;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize5543 = { sizeof(DoorWay_tBF0D38370D2CC12981CB12B99D00F37925F80F69), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5544;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize5544 = { sizeof(U3CHandleCurrentHighlightU3Ed__52_t75642C73554C0777B3E3297A9AF9F758E3C84911), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize5544 = { sizeof(U3CHandleCurrentHighlightU3Ed__55_tF1CEE5E8EE57E404A929360D5C14153F449ED268), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5545;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize5545 = { sizeof(Engine_t59D31EC59AD8AAF189236F53F6E5B083856B0F00), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5546;
