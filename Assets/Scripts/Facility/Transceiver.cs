@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 [RequireComponent(typeof(BoxCollider))]
 public class Transceiver : MonoBehaviour, IHighlightable
@@ -14,7 +15,10 @@ public class Transceiver : MonoBehaviour, IHighlightable
     [SerializeField] private List<MeshRenderer> baseRenderersForHiglight = new List<MeshRenderer>();
     private List<Material> baseMaterialsForHiglight = new List<Material>();
     private bool isHighlightEffectInProgress;
+
     //===========
+        
+    private GameObject objectTaken;
 
     private void Start()
     {
@@ -27,7 +31,9 @@ public class Transceiver : MonoBehaviour, IHighlightable
 
     public bool PlaceMovableInside(GameObject movable)
     {        
-        movable.transform.position = pointForLocation.position;      
+        movable.transform.position = pointForLocation.position;
+        movable.GetComponent<ITakenAndMovable>().IsInTransceiver = true;
+        objectTaken = movable;
         return true;
     }
 
@@ -74,5 +80,14 @@ public class Transceiver : MonoBehaviour, IHighlightable
         }
     }
 
-  
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == objectTaken)
+        {
+            objectTaken.GetComponent<ITakenAndMovable>().IsInTransceiver = false;
+            objectTaken = null;
+        }
+    }
+
+
 }

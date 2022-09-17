@@ -22,6 +22,7 @@ public interface ITakenAndMovable
     public void MakeThrownAway();
     public bool IsCanBeTakenByCrew();
     public void RotateWhileThrownAway();
+    public bool IsInTransceiver { get; set; }
 }
 
 public interface IHighlightable
@@ -150,7 +151,8 @@ public enum UIPanelTypes
     respawn_bar,
     ok_green,
     no_red,
-    ship_hull_health
+    ship_hull_health,
+    time_limit_progress
 
 
 }

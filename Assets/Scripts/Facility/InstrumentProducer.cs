@@ -61,4 +61,6 @@ public class InstrumentProducer : MonoBehaviour, IPointOfInteraction, ITakenAndM
     {
         return true;
     }
+
+    public bool IsInTransceiver { get; set; }
 }

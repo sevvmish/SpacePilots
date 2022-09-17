@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,9 +28,16 @@ public class ShipManager : MonoBehaviour
     private AudioClip powerOn, powerOff;
     private bool isPowerDown;
 
-    public int ShipMaxHealth;
-    public int ShipCurrentHealth;
+    private UIManager shipHullHealth, timeLimitProgress;
 
+    public int ShipMaxHealth;
+    public int ShipCurrentHealth = 0;
+
+    private delegate void HullUIHandler(float koeff);
+    private HullUIHandler SetUiHullHandler;
+
+    private delegate void timeLimiter(float koeff, float koeff2);
+    private timeLimiter SetTimeLimiter;
 
     public float Energy
     {
@@ -100,10 +108,29 @@ public class ShipManager : MonoBehaviour
                 AllMonitorsAndElectrics[i].SetActive(false);
             }            
         }
+
+        shipHullHealth = new UIManager(GameObject.Find("ShipHullHealth point").transform, UIPanelTypes.ship_hull_health);
+        shipHullHealth.ShowUI();
+        SetUiHullHandler += shipHullHealth.SetShipHullData;
+
+        
+
     }
 
+    public void SetTimeLimitProgress(int seconds)
+    {
+        timeLimitProgress = new UIManager(GameObject.Find("TimeLimitProgress").transform, UIPanelTypes.time_limit_progress);
+        timeLimitProgress.ShowUI();
+        timeLimitProgress.SetMaxTimeForTimeLimit(seconds);
+        SetTimeLimiter += timeLimitProgress.SetTimerLimitProgress;
+    }
+
+
     private void Update()
-    {        
+    {
+        if (SetUiHullHandler != null) SetUiHullHandler((float)(ShipMaxHealth - ShipCurrentHealth) / (float)ShipMaxHealth);
+        if (SetTimeLimiter != null) SetTimeLimiter(Time.deltaTime, 0.01f);
+
         if (ShipEngines.Count>0)
         {
             EnginesProductivity = 0;

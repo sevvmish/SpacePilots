@@ -369,6 +369,10 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         {
             makeCarryOffAnimation();
         }
+        else if (CurrentTakenObject.GetComponent<Instrument>().GetCurrentIncidentInAction() == null && animator.GetCurrentAnimatorStateInfo(1).IsName("Repair"))
+        {
+            makeIdleAnimation();
+        }
 
         //print("nav: " + navAgent.destination);
                     
@@ -427,7 +431,19 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                                         
                     )
                 {
-                    ThrowAwayCurrentTakenObject();
+                    if (canBeTaken.IsInTransceiver)
+                    {
+                        Transform thrownAway = CurrentTakenObject.transform;
+                        canBeTaken.IsInTransceiver = false;
+                        allreadyTaken.IsInTransceiver = true;
+                        ThrowAwayCurrentTakenObject();
+                        thrownAway.position = new Vector3(other.transform.position.x, 1, other.transform.position.z);
+                    }
+                    else
+                    {
+                        ThrowAwayCurrentTakenObject();
+                    }
+
                     TakeAnyObjectToCarry(canBeTaken.GiveAwayTakeble());
                 }
                 else if(currentTakenObject == null)
@@ -778,6 +794,19 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         CurrentTakenObject = null;
         return true;
     }
+
+    public bool ThrowAwayCurrentTakenObject(Vector3 _position)
+    {
+        if (CurrentTakenObject == null) return false;
+
+        CurrentTakenObject.GetComponent<Transform>().SetParent(GameObject.Find("SpaceShip").transform);
+        CurrentTakenObject.transform.position = _position;
+        CurrentTakenObject.GetComponent<ITakenAndMovable>().MakeThrownAway();
+        DeactivateAnyHandsInstruments();
+        CurrentTakenObject = null;
+        return true;
+    }
+
 
     private IEnumerator PlaySit(Vector3 pos, Vector3 look)
     {

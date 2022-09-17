@@ -19,7 +19,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
     private Material baseMaterial;
     private bool isCanBeTakenByCrew = false;
-    private bool isHighlightEffectInProgress;
+    private bool isHighlightEffectInProgress, isInTransceiver;
     
     private Vector3 modelStandartRotation;
     private float modelAngle;
@@ -107,6 +107,19 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
         else
         {
             modelAngle = 0;
+        }
+    }
+
+    public bool IsInTransceiver
+    {
+        get
+        {
+            return isInTransceiver;
+        }
+
+        set
+        {
+            isInTransceiver = value;
         }
     }
 

@@ -14,9 +14,13 @@ public class UIManager : MonoBehaviour
     private UIPanelTypes currentUIPanelType;
     private Transform UIPositionPoint;
 
+    private TextMeshProUGUI shipHullText, timerLimitProgressText;
+    private Image shipHullAmountImage, redTimerImage, shipTimerImage;
+    private RectTransform redProgressRect, shipProgressRect;
+
     private MakeActiveInTimer blinker;
 
-    private float positionDeltaX, positionDeltaY;
+    private float positionDeltaX, positionDeltaY, timeLimit, currentTime;
 
     float scaleKoeff;
     //==================
@@ -46,7 +50,27 @@ public class UIManager : MonoBehaviour
 
         uiMark = Instantiate(GetUIPrefab(whatTypeOfPanel), GameObject.Find("MainCanvas").transform);        
         uiMarkRect = uiMark.GetComponent<RectTransform>();
-        uiMarkRect.gameObject.SetActive(false);                
+        uiMarkRect.gameObject.SetActive(false);        
+        
+        if (currentUIPanelType == UIPanelTypes.ship_hull_health)
+        {
+            shipHullText = uiMarkRect.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            shipHullAmountImage = uiMarkRect.transform.GetChild(1).GetComponent<Image>();
+            shipHullAmountImage.fillAmount = 0;
+        }
+
+        if (currentUIPanelType == UIPanelTypes.time_limit_progress)
+        {
+            timerLimitProgressText = uiMarkRect.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            redTimerImage = uiMarkRect.transform.GetChild(2).GetComponent<Image>();
+            shipTimerImage = uiMarkRect.transform.GetChild(3).GetComponent<Image>();
+            
+            redProgressRect = redTimerImage.transform.GetChild(0).GetComponent<RectTransform>();
+            redProgressRect.anchoredPosition = new Vector2(redProgressRect.anchoredPosition.x, -100);
+
+            shipProgressRect = shipTimerImage.transform.GetChild(0).GetComponent<RectTransform>();
+            shipProgressRect.anchoredPosition = new Vector2(shipProgressRect.anchoredPosition.x, -100);
+        }
     }
 
     public bool IsBlinking
@@ -179,6 +203,67 @@ public class UIManager : MonoBehaviour
        
     }
 
+    public void SetMaxTimeForTimeLimit(float seconds)
+    {
+        timeLimit = seconds;
+        currentTime = seconds;
+    }
+   
+    public void SetTimerLimitProgress(float _time, float speedProgress)
+    {
+        if (currentTime > 0)
+        {
+            currentTime -= _time;
+        }
+
+        int currTimeInt = (int)currentTime;
+
+        if (currTimeInt >= 60)
+        {
+            int min = (int)(currTimeInt / 60f);
+            int sec = currTimeInt - min * 60;
+                       
+
+            string minS = min > 9 ? $"{min}" : $"0{min}";
+
+            if (sec >= 10)
+            {
+                timerLimitProgressText.text = $"{minS}:{sec}";
+            }
+            else
+            {
+                timerLimitProgressText.text = $"{minS}:0{sec}";
+            }
+        }
+        else
+        {
+            if (currTimeInt >= 10)
+            {
+                timerLimitProgressText.text = $"00:{currTimeInt}";
+            }
+            else
+            {
+                timerLimitProgressText.text = $"00:0{ currTimeInt}";
+            }
+            
+        }
+
+
+        float koeff = 1f - (currentTime / timeLimit);
+        redTimerImage.fillAmount = koeff;
+        shipTimerImage.fillAmount = speedProgress;
+
+        redProgressRect.anchoredPosition = new Vector2(redProgressRect.anchoredPosition.x, -100 + 200 * koeff);
+    }
+
+    public void SetShipHullData(float amount)
+    {
+        if (currentUIPanelType != UIPanelTypes.ship_hull_health) return;
+
+        if ((1f - amount) >= 0) shipHullText.text = ((1f-amount) * 100).ToString("f0") + "%";        
+        shipHullAmountImage.fillAmount = (1f-amount);
+
+    }
 
     public bool isShown()
     {
@@ -438,6 +523,10 @@ public class UIManager : MonoBehaviour
 
             case UIPanelTypes.ship_hull_health:
                 result = Resources.Load<GameObject>("prefabs/UI/ship hull health");
+                break;
+
+            case UIPanelTypes.time_limit_progress:
+                result = Resources.Load<GameObject>("prefabs/UI/time limit UI");
                 break;
         }
 

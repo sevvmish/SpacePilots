@@ -18,6 +18,8 @@ public class FacilityProducer : MonoBehaviour, IPointOfInteraction, ITakenAndMov
 
     [SerializeField] private GameObject giveAwayEffect;
 
+    public bool IsInTransceiver { get; set; }
+
     private void Start()
     {
         for (int i = 0; i < baseRenderersForHiglight.Count; i++)

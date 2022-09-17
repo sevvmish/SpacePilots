@@ -37,7 +37,7 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
 
     private float modelAngle, health;
     private Vector3 modelStandartRotation, OnScreenPosition;
-    private bool isShowingUIBar, isDestroyed;
+    private bool isShowingUIBar, isDestroyed, isInTransceiver;
 
     public float Health
     {
@@ -166,6 +166,19 @@ public class Supply : MonoBehaviour, ITakenAndMovable, IHighlightable, IHealthDe
         }
 
         return result;
+    }
+
+    public bool IsInTransceiver
+    {
+        get
+        {
+            return isInTransceiver;
+        }
+
+        set
+        {
+            isInTransceiver = value;
+        }
     }
 
     public object GetTypeOfObject()

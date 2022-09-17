@@ -49,8 +49,7 @@ public class LevelManagement : MonoBehaviour
     private delegate void BaseIncidentHandler(float timer, ref int health);
     private BaseIncidentHandler PlayIncident;
 
-    private Action<int> healthHandler;
-
+    
     //ZONES
     private float[] incidentZone_fire;
     private float[] incidentZone_wreck;
@@ -174,6 +173,7 @@ public class LevelManagement : MonoBehaviour
         AddCrewMember(CrewSpecialization.Captain, shipManager.GetPointOfRespForCrew(1));
         shipManager.ShipMaxHealth = 15;
         shipManager.ShipCurrentHealth = shipManager.ShipMaxHealth;
+        shipManager.SetTimeLimitProgress(180);
 
         //init objects and facility===================================================
         ObjectPooling.InitPools(50, STORAGE);

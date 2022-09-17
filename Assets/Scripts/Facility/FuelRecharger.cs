@@ -214,6 +214,8 @@ public class FuelRecharger : MonoBehaviour, IPointOfInteraction, ITakenAndMovabl
         
     }
 
+    public bool IsInTransceiver { get; set; }
+
     public void HighlightCurrentObject()
     {
         if (!isHighlightEffectInProgress) StartCoroutine(HandleCurrentHighlight());
