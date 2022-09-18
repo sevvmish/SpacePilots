@@ -5718,14 +5718,14 @@ struct U3CplayAfterEffectU3Ed__3_tD02C24D1DE6C93F76BEFF3E5F0CCDDC2A452CFE5  : pu
 	IncidentAfterEffect_t04BBB468299BED181A10F5508C8276219A4F23A5* ___U3CU3E4__this_2;
 };
 
-// Instrument/<HandleCurrentHighlight>d__45
-struct U3CHandleCurrentHighlightU3Ed__45_tD6F6180BD6A0A65485043B5C40A14C57C1EDFC10  : public RuntimeObject
+// Instrument/<HandleCurrentHighlight>d__46
+struct U3CHandleCurrentHighlightU3Ed__46_t9EED45120E648B1C32DDC55AC62A815B70409845  : public RuntimeObject
 {
-	// System.Int32 Instrument/<HandleCurrentHighlight>d__45::<>1__state
+	// System.Int32 Instrument/<HandleCurrentHighlight>d__46::<>1__state
 	int32_t ___U3CU3E1__state_0;
-	// System.Object Instrument/<HandleCurrentHighlight>d__45::<>2__current
+	// System.Object Instrument/<HandleCurrentHighlight>d__46::<>2__current
 	RuntimeObject* ___U3CU3E2__current_1;
-	// Instrument Instrument/<HandleCurrentHighlight>d__45::<>4__this
+	// Instrument Instrument/<HandleCurrentHighlight>d__46::<>4__this
 	Instrument_tBD61134B8BEB6820BC4C6821AF809180BA994EF7* ___U3CU3E4__this_2;
 };
 
@@ -21779,7 +21779,7 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize5558 = { sizeof(U3CplayAfter
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5559;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize5559 = { sizeof(IncidentAfterEffect_t04BBB468299BED181A10F5508C8276219A4F23A5), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5560;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize5560 = { sizeof(U3CHandleCurrentHighlightU3Ed__45_tD6F6180BD6A0A65485043B5C40A14C57C1EDFC10), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize5560 = { sizeof(U3CHandleCurrentHighlightU3Ed__46_t9EED45120E648B1C32DDC55AC62A815B70409845), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5561;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize5561 = { sizeof(Instrument_tBD61134B8BEB6820BC4C6821AF809180BA994EF7), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize5562;

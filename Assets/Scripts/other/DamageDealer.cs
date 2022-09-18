@@ -116,7 +116,8 @@ public class DamageDealer : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
         }
-                
+
+        
         data.RemoveNegativeEffect(_effect);
     }
 

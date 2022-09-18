@@ -78,6 +78,8 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
                 audio.clip = grabSound;
                 audio.Play();
+
+                makeCarryAnimation();
             }
 
             if (currentTakenObject != null && value == null)
@@ -87,6 +89,10 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
                 audio.clip = grabOff;
                 audio.Play();
+
+                //if (animator.GetLayerWeight(1) > 0) animator.SetLayerWeight(1, 0);
+                //if (!animator.GetCurrentAnimatorStateInfo(1).IsName("idle 2")) animator.Play("idle 2");
+                makeCarryOffAnimation();
             }
 
             currentTakenObject = value;
@@ -108,6 +114,11 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
         set
         {
+            if (value < health && !isShowingUIBar)
+            {
+                StartCoroutine(ShowUIBarWhileActive());
+            }
+
             if (value < 0)
             {
                 health = 0;
@@ -116,12 +127,12 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
             else if (value >= maxHealth)
             {
                 health = maxHealth;
-                if (!isShowingUIBar) StartCoroutine(ShowUIBarWhileActive());
+                //if (!isShowingUIBar) StartCoroutine(ShowUIBarWhileActive());
             }
             else
             {
                 health = value;
-                if (!isShowingUIBar) StartCoroutine(ShowUIBarWhileActive());
+                //if (!isShowingUIBar) StartCoroutine(ShowUIBarWhileActive());
             }
         }
     }
@@ -337,45 +348,20 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
         previousPos = currentPos;
         
-        //=================
-        if (CurrentTakenObject !=null && CurrentTakenObject.GetComponent<Instrument>() != null && CurrentTakenObject.GetComponent<Instrument>().GetCurrentIncidentInAction() != null)
+        if (CurrentTakenObject != null && CurrentTakenObject.TryGetComponent(out Instrument instrument) && instrument.IsCurrentEffectActive() && instrument.GetCurrentIncidentInAction() != null && instrument.GetCurrentIncidentInAction().GetComponent<Incident>().GetTypeOfIncident() == IncidentsType.simple_wreck)
         {
-            
-            Transform aim = CurrentTakenObject.GetComponent<Instrument>().GetCurrentIncidentInAction();
-            //currentBaseTransform.LookAt(new Vector3(aim.position.x, 0, aim.position.z));
-                   
-            switch((InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject())
-            {
-                case InstrumentsType.fire_extinguisher:
-                    break;
-
-                case InstrumentsType.repair_kit:
-                    makeRepairAnimation();
-                    break;
-            }
+            //print("wreck");
+            makeRepairAnimation();
         }
-        else if (CurrentTakenObject != null)
-        {            
-            if (CurrentTakenObject.GetComponent<Instrument>() != null && (InstrumentsType)CurrentTakenObject.GetComponent<Instrument>().GetTypeOfObject() == InstrumentsType.repair_kit) 
-            {
-                makeCarryOffAnimation();
-            }
-            else 
-            {
-                makeCarryAnimation();
-            }            
-        }
-        else if (CurrentTakenObject == null)
+        else if (CurrentTakenObject != null && CurrentTakenObject.TryGetComponent(out Instrument instrument1) && animator.GetCurrentAnimatorStateInfo(1).IsName("Repair"))
         {
-            makeCarryOffAnimation();
-        }
-        else if (CurrentTakenObject.GetComponent<Instrument>().GetCurrentIncidentInAction() == null && animator.GetCurrentAnimatorStateInfo(1).IsName("Repair"))
-        {
+            //print("stop repair !!!");
             makeIdleAnimation();
+            if (animator.GetLayerWeight(1) > 0) animator.SetLayerWeight(1, 0);
+            animator.Play("idle 2");
         }
 
-        //print("nav: " + navAgent.destination);
-                    
+                               
     }
 
     
@@ -411,6 +397,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
         if (PlaceOfDestination != _objectOfDestination && !_objectOfDestination.CompareTag("Floor")) PlaceOfDestination = _objectOfDestination;
     }
 
+
     private void OnTriggerStay(Collider other)
     {
         if (PlaceOfCurrentLocation != other.gameObject) PlaceOfCurrentLocation = other.gameObject;
@@ -423,8 +410,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
             }
 
             if (other.TryGetComponent(out ITakenAndMovable canBeTaken) && canBeTaken.IsCanBeTakenByCrew())
-            {
-                
+            {                
                 if (currentTakenObject != null && currentTakenObject.TryGetComponent(out ITakenAndMovable allreadyTaken) 
                     && (canBeTaken.GetTypeOfObject().GetType() != allreadyTaken.GetTypeOfObject().GetType() ||
                      ((canBeTaken.GetTypeOfObject().GetType() == typeof(SuppliesType) && (SuppliesType)canBeTaken.GetTypeOfObject() != (SuppliesType)allreadyTaken.GetTypeOfObject()) || (canBeTaken.GetTypeOfObject().GetType() == typeof(InstrumentsType) && (InstrumentsType)canBeTaken.GetTypeOfObject() != (InstrumentsType)allreadyTaken.GetTypeOfObject())))
@@ -452,6 +438,8 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                 }
                 else
                 {
+                    //print("yes");
+                    //currentBaseTransform.LookAt(new Vector3(other.gameObject.transform.position.x, 0, other.gameObject.transform.position.z));
                     StartCoroutine(PlayMarkOfWrongInteraction());
                 }
 
@@ -480,6 +468,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
                     }
                     else
                     {
+                        currentBaseTransform.LookAt(new Vector3(other.gameObject.transform.position.x, 0, other.gameObject.transform.position.z));
                         StartCoroutine(PlayMarkOfWrongInteraction());
                     }
                 }
@@ -674,6 +663,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
     private void makeIdleAnimation()
     {
+        
         if (crewState == CrewMemberStates.idle) return;
         crewState = CrewMemberStates.idle;
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.Play("Idle");
@@ -714,6 +704,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
     private void makeRepairAnimation()
     {
         if (animator.GetLayerWeight(1) < 1) animator.SetLayerWeight(1, 1);
+        crewState = CrewMemberStates.repairing;
         if (!animator.GetCurrentAnimatorStateInfo(1).IsName("Repair") && !animator.GetCurrentAnimatorStateInfo(1).IsName("Repair 1")) animator.Play("Repair");
     }
 
@@ -733,6 +724,7 @@ public class CrewManager : MonoBehaviour, IHighlightable, IHealthDestroyable
 
         yield return new WaitForSeconds(0.5f);
         if (!isShowingUIBar) HideUI();
+        
     }
 
        

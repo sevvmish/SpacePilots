@@ -85,6 +85,18 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
             currentEffect.gameObject.SetActive(true);
         }
 
+        switch(currentInstrumentType)
+        {
+            case InstrumentsType.repair_kit:
+
+                break;
+        }
+
+    }
+
+    public bool IsCurrentEffectActive()
+    {
+        return currentEffect.gameObject.activeSelf;
     }
 
     private void HideEffectOfWorkingInstrument()
@@ -227,7 +239,12 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
                 currentIncidentInAction = other.gameObject.transform;
                 ShowEffectOfWorkingInstrument();
                 currentIncident.DecreaseHealthAmount(instrumentHealthEffect * Time.deltaTime);
-            }              
+            }    
+            else if (currentIncident.GetInstrumentTypeToDealWithIncident() == currentInstrumentType && currentIncident.IncidentHealth <= 0)
+            {
+                HideEffectOfWorkingInstrument();
+                currentIncidentInAction = null;
+            }
             
         }
         //else if ()
@@ -235,7 +252,7 @@ public class Instrument : MonoBehaviour, ITakenAndMovable, IHighlightable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Incident currentIncident) && !checkCurrentDealingWithIncident.ContainsKey(currentIncident) && currentIncident.IncidentHealth > 0)
+        if (other.TryGetComponent(out Incident currentIncident) && currentIncident.GetInstrumentTypeToDealWithIncident() == currentInstrumentType && !checkCurrentDealingWithIncident.ContainsKey(currentIncident) && currentIncident.IncidentHealth > 0)
         {            
             checkCurrentDealingWithIncident.Add(currentIncident, 0);            
         }
