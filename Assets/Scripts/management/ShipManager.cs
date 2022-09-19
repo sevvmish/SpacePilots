@@ -120,6 +120,7 @@ public class ShipManager : MonoBehaviour
     public void SetTimeLimitProgress(int seconds)
     {
         timeLimitProgress = new UIManager(GameObject.Find("TimeLimitProgress").transform, UIPanelTypes.time_limit_progress);
+        timeLimitProgress.ChangeScale(0.8f);
         timeLimitProgress.ShowUI();
         timeLimitProgress.SetMaxTimeForTimeLimit(seconds);
         SetTimeLimiter += timeLimitProgress.SetTimerLimitProgress;

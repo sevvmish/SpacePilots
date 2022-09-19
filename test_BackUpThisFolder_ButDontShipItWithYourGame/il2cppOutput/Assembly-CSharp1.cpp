@@ -9165,6 +9165,8 @@ inline Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* Component_GetCompone
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ShipManager_set_Energy_m2E83971491B8E1E310662720D9A4CC633F75D7E7 (ShipManager_tF17E49DC8DBA50AE1E56B6BD5077E0E1668A3646* __this, float ___value0, const RuntimeMethod* method) ;
 // System.Void ShipManager/HullUIHandler::.ctor(System.Object,System.IntPtr)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void HullUIHandler__ctor_m86AD375B4F0C254A683B9555BFB51CAD32287ADC (HullUIHandler_t36433CDBEC9AB7E4E549219BA309E82FB005B90B* __this, RuntimeObject* ___object0, intptr_t ___method1, const RuntimeMethod* method) ;
+// System.Void UIManager::ChangeScale(System.Single)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UIManager_ChangeScale_m6544C0A8C2933F7223FEED0EFFBA3174AD03EA83 (UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* __this, float ___koeff0, const RuntimeMethod* method) ;
 // System.Void UIManager::SetMaxTimeForTimeLimit(System.Single)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void UIManager_SetMaxTimeForTimeLimit_m7DE36CA94E54D871E42FF19ADCBD90C060816F41 (UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* __this, float ___seconds0, const RuntimeMethod* method) ;
 // System.Void ShipManager/timeLimiter::.ctor(System.Object,System.IntPtr)
@@ -15849,25 +15851,29 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ShipManager_SetTimeLimitProgress_mC33ED8
 		UIManager__ctor_m00F97BD7141F0F227F244AA9D1C48A729087262F(L_2, L_1, ((int32_t)11), NULL);
 		__this->___timeLimitProgress_21 = L_2;
 		Il2CppCodeGenWriteBarrier((void**)(&__this->___timeLimitProgress_21), (void*)L_2);
-		// timeLimitProgress.ShowUI();
+		// timeLimitProgress.ChangeScale(0.8f);
 		UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* L_3 = __this->___timeLimitProgress_21;
 		NullCheck(L_3);
-		UIManager_ShowUI_m5340231BA2F857E7259917A25785EC4640BF81FF(L_3, NULL);
-		// timeLimitProgress.SetMaxTimeForTimeLimit(seconds);
+		UIManager_ChangeScale_m6544C0A8C2933F7223FEED0EFFBA3174AD03EA83(L_3, (0.800000012f), NULL);
+		// timeLimitProgress.ShowUI();
 		UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* L_4 = __this->___timeLimitProgress_21;
-		int32_t L_5 = ___seconds0;
 		NullCheck(L_4);
-		UIManager_SetMaxTimeForTimeLimit_m7DE36CA94E54D871E42FF19ADCBD90C060816F41(L_4, ((float)L_5), NULL);
+		UIManager_ShowUI_m5340231BA2F857E7259917A25785EC4640BF81FF(L_4, NULL);
+		// timeLimitProgress.SetMaxTimeForTimeLimit(seconds);
+		UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* L_5 = __this->___timeLimitProgress_21;
+		int32_t L_6 = ___seconds0;
+		NullCheck(L_5);
+		UIManager_SetMaxTimeForTimeLimit_m7DE36CA94E54D871E42FF19ADCBD90C060816F41(L_5, ((float)L_6), NULL);
 		// SetTimeLimiter += timeLimitProgress.SetTimerLimitProgress;
-		timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264* L_6 = __this->___SetTimeLimiter_25;
-		UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* L_7 = __this->___timeLimitProgress_21;
-		timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264* L_8 = (timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264*)il2cpp_codegen_object_new(timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264_il2cpp_TypeInfo_var);
-		NullCheck(L_8);
-		timeLimiter__ctor_mADFE1C542930C6919567BEFC36ADFC273DEEE804(L_8, L_7, (intptr_t)((void*)UIManager_SetTimerLimitProgress_mB33B9A52F9A91AC6A5D301400C8DDFF2D756B542_RuntimeMethod_var), NULL);
-		Delegate_t* L_9;
-		L_9 = Delegate_Combine_m8B9D24CED35033C7FC56501DFE650F5CB7FF012C(L_6, L_8, NULL);
-		__this->___SetTimeLimiter_25 = ((timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264*)CastclassSealed((RuntimeObject*)L_9, timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264_il2cpp_TypeInfo_var));
-		Il2CppCodeGenWriteBarrier((void**)(&__this->___SetTimeLimiter_25), (void*)((timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264*)CastclassSealed((RuntimeObject*)L_9, timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264_il2cpp_TypeInfo_var)));
+		timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264* L_7 = __this->___SetTimeLimiter_25;
+		UIManager_t16825A2483574F37D7D47AB939A6FA639678B1F3* L_8 = __this->___timeLimitProgress_21;
+		timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264* L_9 = (timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264*)il2cpp_codegen_object_new(timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264_il2cpp_TypeInfo_var);
+		NullCheck(L_9);
+		timeLimiter__ctor_mADFE1C542930C6919567BEFC36ADFC273DEEE804(L_9, L_8, (intptr_t)((void*)UIManager_SetTimerLimitProgress_mB33B9A52F9A91AC6A5D301400C8DDFF2D756B542_RuntimeMethod_var), NULL);
+		Delegate_t* L_10;
+		L_10 = Delegate_Combine_m8B9D24CED35033C7FC56501DFE650F5CB7FF012C(L_7, L_9, NULL);
+		__this->___SetTimeLimiter_25 = ((timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264*)CastclassSealed((RuntimeObject*)L_10, timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264_il2cpp_TypeInfo_var));
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___SetTimeLimiter_25), (void*)((timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264*)CastclassSealed((RuntimeObject*)L_10, timeLimiter_tEC5FE9AC36FB6DA89960541DE3FE25CF16498264_il2cpp_TypeInfo_var)));
 		// }
 		return;
 	}
